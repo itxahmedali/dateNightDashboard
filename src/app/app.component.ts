@@ -47,14 +47,14 @@ export class AppComponent {
       const color = localStorage.getItem('theme');
       this.colorTheme(color);
     } else {
-      const color = JSON.stringify(['#37e3d9', '#f79888']);
+      const color = JSON.stringify(['red', 'black']);
       this.colorTheme(color);
     }
     if (localStorage.getItem('bannertheme') != null) {
       const color = localStorage.getItem('bannertheme');
       this.colorBanner(color);
     } else {
-      const color = JSON.stringify(['#70347ade', '#005e72c7']);
+      const color = JSON.stringify(['red', 'black']);
       this.colorBanner(color);
     }
     if (localStorage.hasOwnProperty('orderview')) {

@@ -32,6 +32,18 @@ export class SidebarComponent implements OnInit {
       type: 'link',
     },
     {
+      title: 'items',
+      type: 'sub',
+      icon: 'assets/sidebarIcons/maincourse.webp',
+      active: false,
+      children: [
+        { path: 'foodItems', title: 'Food Items', type: 'link' },
+        { path: 'category', title: 'Category', type: 'link' },
+        { path: 'sub-category', title: 'Sub Category', type: 'link' },
+        { path: 'add-ons', title: 'Add Ons', type: 'link' },
+      ],
+    },
+    {
       path: 'preplandates',
       title: 'Pre Plan Dates',
       icon: 'assets/sidebarIcons/starter.webp',

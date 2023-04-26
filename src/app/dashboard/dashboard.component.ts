@@ -36,9 +36,9 @@ export class DashboardComponent {
     } else {
       this.login = false;
     }
-      const themecolor = JSON.stringify(['#37e3d9', '#f79888']);
+      const themecolor = JSON.stringify(['red', 'black']);
       this.colorTheme(themecolor);
-      const color = JSON.stringify(['#70347ade', '#005e72c7']);
+      const color = JSON.stringify(['red', 'black']);
       this.colorBanner(color);
     if (localStorage.hasOwnProperty('orderview')) {
       if (
