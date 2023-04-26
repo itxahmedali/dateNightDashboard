@@ -1,0 +1,67 @@
+<div class="cstmContainer h-100">
+  <div class="logo-wrapper">
+    <div class="logo">
+      <app-img src="{{logo}}" [styles]="{  'width': '100%', 'height': '100%', 'object-fit': 'contain' }"></app-img>
+
+    </div>
+  </div>
+  <div class="head-wrapper">
+    <h6>Categories</h6>
+  </div>
+  <div class="verticalMenu d-flex align-items-start w-100 justify-content-center">
+    <div class="nav flex-column nav-pills w-100" role="tablist" aria-orientation="vertical">
+      <ul class="sidebar-links custom-scrollbar sidebarScroll">
+        <li class="activeSide activeSideMenulink" [class]="menuItem?.headTitle1 ? 'sidebar-main-title' : 'sidebar-list'"
+          *ngFor="let menuItem of menuItems; let i = index">
+          <!-- Submenu -->
+          <a href="javascript:void(0)" class="sidebar-link sidebar-title" [class.link-nav]="!menuItem?.children"
+            *ngIf="menuItem?.type === 'sub'" (click)="toggletNavActive(menuItem)">
+            <div class="menuIcon">
+              <app-img src="{{menuItem?.icon}}"
+                [styles]="{  'width': '100%', 'height': '100%', 'object-fit': 'contain' }"></app-img>
+
+            </div>
+            <span>{{ menuItem?.title }}</span>
+            <div class="according-menu">
+              <i class="fa fa-angle-{{
+                  menuItem?.active ? 'down' : 'right'
+                }} pull-right" *ngIf="menuItem?.children"></i>
+            </div>
+          </a>
+          <ul class="sidebar-submenu scrollMenu" *ngIf="menuItem?.children"
+            [style.display]="menuItem?.active ? 'block' : 'none'">
+            <li class="activeSide submenuItems" *ngFor="let childrenItem of menuItem?.children"
+              [ngClass]="{ linkActive: childrenItem?.active }">
+              <!-- Submenu Link -->
+              <button class="w-100" (click)="routerHead($event, childrenItem?.title);toggletNavActive(menuItem)"
+                [routerLink]="childrenItem?.path" routerLinkActive="is-active">
+                <a class="submenu-title w-100" *ngIf="childrenItem?.type === 'link'">
+                  <i
+                    class="fa {{childrenItem?.title == 'Add Item' || childrenItem?.title == 'Category' || childrenItem?.title == 'Food Items' || childrenItem?.title == 'Add Ons' || childrenItem?.title == 'Sub Category' ? 'fa-plus' : 'fa-minus'}}"></i>
+                  <span>{{ childrenItem?.title }}</span>
+                </a>
+              </button>
+            </li>
+          </ul>
+          <!--Main menu Link -->
+          <button (click)="routerHead($event, menuItem?.title)" [routerLink]="menuItem?.path"
+            routerLinkActive="is-active">
+            <a class="sidebar-link sidebar-title" [class.link-nav]="!menuItem?.children"
+              *ngIf="menuItem?.type === 'link'">
+              <div class="menuIcon">
+                <app-img src="{{menuItem?.icon}}"
+                  [styles]="{  'width': '100%', 'height': '100%', 'object-fit': 'contain' }"></app-img>
+              </div>
+              <span>{{ menuItem?.title }}</span>
+              <div class="according-menu">
+                <i class="fa fa-angle-{{
+                    menuItem?.active ? 'down' : 'right'
+                  }} pull-right" *ngIf="menuItem?.children"></i>
+              </div>
+            </a>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

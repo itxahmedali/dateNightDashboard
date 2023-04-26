@@ -1,0 +1,33 @@
+<div class="cstmContainer position-relative" [ngClass]="{'headingHeight': !headingShow}">
+  <div class="row">
+    <div class="col-sm-12 d-flex justify-content-center align-items-center">
+      <div class="d-flex justify-content-center align-items-center">
+        <main role="main">
+          <h3
+            class="headingOfHeader"
+            [@animateText]="currentState"
+            (@animateText.done)="animationFinished($event)"
+            *ngIf="headingShow"
+          >
+            {{ sidebarEnable ? text : 'My Orders' }}
+          </h3>
+        </main>
+      </div>
+      <div class="iconsBtn d-flex justify-content-center align-items-center">
+        <p *ngIf="expanded">Jhon Smith</p>
+
+        <div ngbDropdown class="d-inline-block">
+          <button  id="dropdownBasic1" ngbDropdownToggle>
+            <i class="fa fa-user" aria-hidden="true"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem >
+              My Profile
+            </button>
+            <button ngbDropdownItem (click)="logout()">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
