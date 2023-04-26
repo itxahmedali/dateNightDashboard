@@ -44,7 +44,7 @@ export class SidebarComponent implements OnInit {
       ],
     },
     {
-      path: 'preplandates',
+      path: 'pre-plan-dates',
       title: 'Pre Plan Dates',
       icon: 'assets/sidebarIcons/starter.webp',
       type: 'link',

@@ -10,10 +10,12 @@ import { NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CarouselModule } from 'ngx-owl-carousel-o'; 
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { DummyComponent } from './dummy/dummy.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent],
+    DashboardComponent,
+    DummyComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
