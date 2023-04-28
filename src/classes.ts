@@ -39,21 +39,6 @@ export interface DateMode {
   description: string;
   active_status: string;
 }
-export interface Response {
-  status: boolean;
-  message: string;
-}
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  dob: string;
-  domain_id: number;
-  image: string;
-  position: string;
-  user_id: number;
-}
 export class DateMode implements DateMode {
   constructor(
     public id: number,
@@ -62,22 +47,23 @@ export class DateMode implements DateMode {
     public active_status: string
   ) {}
 }
-export class Response implements Response {
-  constructor(
-    public status: boolean,
-    public message: string
-  ) {}
+export interface Pings {
+  id: number;
+  category_id: number;
+  name: string;
+  description: string;
+  paid_or_free: string;
+  price: string;
+  active_status: string;
 }
-export class User implements User {
+export class Pings implements Pings {
   constructor(
     public id: number,
+    public category_id: number,
     public name: string,
-    public email: string,
-    public phone: string,
-    public dob: string,
-    public domain_id: number,
-    public image: string,
-    public position: string,
-    public user_id: number,
+    public description: string,
+    public paid_or_free: string,
+    public price: string,
+    public active_status: string
   ) {}
 }

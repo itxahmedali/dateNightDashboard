@@ -6,11 +6,11 @@ import { tap } from 'rxjs';
 import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from 'src/app/services/http.service';
 @Component({
-  selector: 'app-event',
-  templateUrl: './event.component.html',
-  styleUrls: ['./event.component.scss'],
+  selector: 'app-event-child',
+  templateUrl: './event-child.component.html',
+  styleUrls: ['./event-child.component.scss']
 })
-export class EventComponent {
+export class EventChildComponent {
   constructor(
     private modalService: NgbModal,
     private http: HttpService,
@@ -18,8 +18,8 @@ export class EventComponent {
     private toaster: ToastrService,
     private helper: HelperService
   ) {}
-  public events: any;
-  public selectedEvent: any;
+  public eventsChild: any;
+  public selectedEventsChild: any;
   public duePage!: any;
   public total!: any;
   public searchInput!: any;
@@ -31,8 +31,10 @@ export class EventComponent {
     { id: 2, name: 'date' },
   ];
   public data!: any;
-  public eventForm: any = this.fb.group({
-    name: [null, Validators.required],
+  public eventChildForm: any = this.fb.group({
+    value: [null, Validators.required],
+    label: [null, Validators.required],
+    event_id: [null, Validators.required],
   });
   async ngOnInit() {
     this.getEvent();
@@ -45,21 +47,23 @@ export class EventComponent {
       size: state == 'view' ? 'xl' : 'md',
     });
     this.state = state == 'edit' || 'editChild' ? true : false;
-    if (state == 'edit') {
-      const { id, name } = this.selectedEvent || {};
-      this.eventForm.addControl('id', new FormControl(id));
-      this.eventForm.patchValue({
-        ...this.eventForm.value,
-        name,
+      const { id, event_id, value, label } = this.selectedEventsChild || {};
+      console.log(this.selectedEventsChild);
+
+      this.eventChildForm.addControl('id', new FormControl(id));
+      this.eventChildForm.patchValue({
+        ...this.eventChildForm.value,
+        event_id: JSON.parse(event_id),
+        value,
+        label,
       });
-    }
   }
   proceed() {
     this.modalReference.close();
   }
-  save(modal: boolean, api: string) {
+  save(modal: boolean) {
       this.http
-        .loaderPost('events-add', this.eventForm.value, true)
+        .loaderPost('events-child-add', this.eventChildForm.value, true)
         .pipe(
           tap((res: any) => {
             this.toaster.success(res?.message ?? res?.messsage);
@@ -70,37 +74,38 @@ export class EventComponent {
             if (modal) {
               this.proceed();
             }
-            this.eventForm.reset();
+            this.getEvent();
+            this.eventChildForm.reset();
           },
           complete: () => {
-            this.getEvent();
-            this.eventForm.removeControl('id');
-            this.eventForm.removeControl('active_status');
+            this.eventChildForm.removeControl('id');
+            this.eventChildForm.removeControl('active_status');
           },
         });
-
   }
-  async stateItem(event: any, data: any, api: string) {
-      this.selectedEvent = this.events?.find((e: any) => e?.id == event.id);
-      if (this.selectedEvent) {
-        const { id, name } = this.selectedEvent;
-        const activeStatus = data.target.checked ? 1 : 0;
-        this.eventForm.patchValue({
-          ...this.eventForm.value,
-          name,
-          active_status: activeStatus,
+  async stateItem(event: any, data: any) {
+      this.selectedEventsChild = this.eventsChild?.find((e: any) => e?.id == event.id);
+      if (this.selectedEventsChild) {
+        const { id, event_id, value, label } = this.selectedEventsChild || {};
+        this.eventChildForm.patchValue({
+          ...this.eventChildForm.value,
+          event_id: JSON.parse(event_id),
+          value,
+          label,
         });
-        this.eventForm.addControl('id', new FormControl(id));
-        this.eventForm.addControl(
+        this.eventChildForm.addControl('id', new FormControl(id));
+        this.eventChildForm.addControl(
           'active_status',
           new FormControl(data.target.checked ? 1 : 0)
         );
       }
-      this.save(false, 'event');
+      console.log(this.eventChildForm);
+
+      this.save(false);
   }
   async getEvent() {
-    this.http.loaderGet('events', true).subscribe((res: any) => {
-      this.events = res?.data;
+    this.http.loaderGet('events-child', true).subscribe((res: any) => {
+      this.eventsChild = res?.data;
     });
   }
 }

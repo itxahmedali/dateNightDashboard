@@ -21,15 +21,14 @@
               <th scope="col">Email</th>
               <th scope="col">Number</th>
               <th scope="col">DOB.</th>
-              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngIf="(MenuSelected | filter: searchInput)?.length; else noData">
+            <ng-container *ngIf="(users | filter: searchInput)?.length; else noData">
               <tr *ngFor="
                   let i = index;
                   let item;
-                  of: MenuSelected | filter: searchInput | sortBy:selectedSort
+                  of: users | filter: searchInput | sortBy:selectedSort
                     | paginate
                       : {
                           itemsPerPage: 10,
@@ -39,29 +38,18 @@
                 ">
                 <th scope="row">{{ item?.id }}</th>
                 <td>{{ item?.name ? item?.name : "N/A" }}</td>
-                <td> <span class="pointer" placement="top" [ngbTooltip]="item?.description"> {{ item?.description ?
-                  (item?.description | ellipsis:20) : "N/A" }} </span></td>
-                  <td>{{ item?.price ? item?.price : "N/A" }}</td>
-                  <td>
-                  <div class="toggle d-flex align-items-center w-100 justify-content-center">
-                    <input class="checkBox" type="checkbox" [checked]="item?.out_of_stock =='1' ? true: false"
-                      [id]='"categoryStock"+i'/><label [for]='"categoryStock"+i'></label>
-                  </div>
-                </td>
-                <td class="d-flex justify-content-center align-items-center">
-                  <button class="actionbtn">
-                    <i class="fa fa-trash mlicon"></i>
-                  </button>
-                </td>
+                  <td>{{ item?.email ? item?.email : "N/A" }}</td>
+                  <td>{{ item?.phone ? item?.phone : "N/A" }}</td>
+                  <td>{{ item?.dob ? item?.dob : "N/A" }}</td>
               </tr>
             </ng-container>
             <ng-template #noData>
-              <tr *ngIf="MenuSelected?.length">
-                <td colspan="6" class="text-center white">No Matching Data Available</td>
+              <tr *ngIf="users?.length">
+                <td colspan="5" class="text-center white">No Matching Data Available</td>
               </tr>
             </ng-template>
-            <tr *ngIf="!MenuSelected?.length">
-              <td class="text-center white" colspan="6">
+            <tr *ngIf="!users?.length">
+              <td class="text-center white" colspan="5">
                 No data available
               </td>
             </tr>
@@ -69,7 +57,7 @@
         </table>
       </div>
     </div>
-    <div class="col-sm-12 d-flex justify-content-end" *ngIf="MenuSelected?.length">
+    <div class="col-sm-12 d-flex justify-content-end" *ngIf="users?.length">
       <pagination-controls previousLabel="&lsaquo;" nextLabel="&rsaquo;" (pageChange)="duePage = $event">
       </pagination-controls>
     </div>

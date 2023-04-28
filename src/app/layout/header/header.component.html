@@ -14,16 +14,11 @@
         </main>
       </div>
       <div class="iconsBtn d-flex justify-content-center align-items-center">
-        <p *ngIf="expanded">Jhon Smith</p>
-
         <div ngbDropdown class="d-inline-block">
           <button  id="dropdownBasic1" ngbDropdownToggle>
             <i class="fa fa-user" aria-hidden="true"></i>
           </button>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button ngbDropdownItem >
-              My Profile
-            </button>
             <button ngbDropdownItem (click)="logout()">Logout</button>
           </div>
         </div>

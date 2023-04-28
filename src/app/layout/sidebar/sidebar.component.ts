@@ -20,7 +20,6 @@ export class SidebarComponent implements OnInit {
   public serviceheading: any;
   public href!: string;
   public role: any;
-  public logo: any;
   public id: any;
   routes = [
     {
@@ -42,8 +41,14 @@ export class SidebarComponent implements OnInit {
       type: 'link',
     },
     {
-      path: 'activity',
-      title: 'Activity',
+      path: 'events',
+      title: 'Events',
+      icon: 'assets/sidebarIcons/starter.webp',
+      type: 'link',
+    },
+    {
+      path: 'event-details',
+      title: 'Event Details',
       icon: 'assets/sidebarIcons/starter.webp',
       type: 'link',
     },
@@ -51,12 +56,6 @@ export class SidebarComponent implements OnInit {
       path: 'pings',
       title: 'Pings',
       icon: 'assets/sidebarIcons/starter.webp',
-      type: 'link',
-    },
-    {
-      path: 'setting',
-      title: 'Setting',
-      icon: 'assets/sidebarIcons/dessert.webp',
       type: 'link',
     }
   ];

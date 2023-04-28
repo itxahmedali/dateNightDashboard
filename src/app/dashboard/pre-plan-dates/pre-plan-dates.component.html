@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row mt-5 align-items-center">
     <div class="col-sm-12 d-flex justify-content-end align-items-center">
-      <button class="addMenuBtn" (click)="open(qr,'add');">
+      <button class="addMenuBtn" (click)="open(add,'add');">
         <i class="fa fa-plus"></i> Add Pre Plan Date
       </button>
     </div>
@@ -53,11 +53,11 @@
                 <td>
                   <div class="toggle d-flex align-items-center w-100 justify-content-center">
                     <input class="checkBox" type="checkbox" [checked]="item?.active_status =='1' ? true: false"
-                      [id]='"categoryStock"+i' /><label [for]='"categoryStock"+i'></label>
+                      [id]='"categoryStock"+i' (change)="stateItem(item,$event)"/><label [for]='"categoryStock"+i'></label>
                   </div>
                 </td>
                 <td class="d-flex justify-content-center align-items-center">
-                  <button class="actionbtn" (click)="open(qr,'edit');">
+                  <button class="actionbtn" (click)="selectedPing=item;open(add,'edit');">
                     <i class="fa fa-edit mlicon"></i>
                   </button>
                   <button class="actionbtn">
@@ -88,27 +88,27 @@
 </div>
 <!-- modals -->
 <ng-container>
-  <ng-template #qr let-modal>
+  <ng-template #add let-modal>
     <div class="modal-body checkoutModal completed">
       <button class="btn-close" id="checkoutClose" aria-label="Close" (click)="proceed()"></button>
       <h5 class="modal-title">{{state ? 'Edit Pre Plan Date' : 'Add Pre Plan Date'}}</h5>
       <form [formGroup]="modeForm" class="form">
         <div class="row mt-4">
           <div class="col-lg-6 mt-3">
-            <ng-select placeholder="Select a Mode" [items]="modes" bindLabel="mode.name" bindValue="mode.id"
-              formControlName="name">
+            <ng-select placeholder="Select a Mode" (change)="getPings($event)" [items]="modes" bindLabel="name" bindValue="id"
+              formControlName="mode_id">
             </ng-select>
             <div
-              *ngIf="modeForm.controls.modeId.invalid && (modeForm.controls.modeId.dirty || modeForm.controls.modeId.touched)">
+              *ngIf="modeForm.controls.mode_id.invalid && (modeForm.controls.mode_id.dirty || modeForm.controls.mode_id.touched)">
               <small class="text-danger">Mode Id is required</small>
             </div>
           </div>
           <div class="col-lg-6 mt-3">
-            <ng-select placeholder="Select Pings" [multiple]="true" [items]="modes" bindLabel="ping.name"
-              bindValue="ping.id" formControlName="name">
+            <ng-select placeholder="Select Pings" [multiple]="true" [items]="pings" bindLabel="name"
+              bindValue="id" formControlName="ping_id">
             </ng-select>
             <div
-              *ngIf="modeForm.controls.pingId.invalid && (modeForm.controls.pingId.dirty || modeForm.controls.pingId.touched)">
+              *ngIf="modeForm.controls.ping_id.invalid && (modeForm.controls.ping_id.dirty || modeForm.controls.ping_id.touched)">
               <small class="text-danger">Ping Id's are required</small>
             </div>
           </div>
@@ -130,7 +130,7 @@
       </form>
     </div>
     <div class="modal-footer d-flex justify-content-start">
-      <button class="btn add-btn" [disabled]="modeForm.invalid" (click)="save()">Save</button>
+      <button class="btn add-btn" [disabled]="modeForm.invalid" (click)="save(true)">Save</button>
       <button class="btn cancel-btn" aria-label="Close" (click)="proceed()">
         Cancel
       </button>

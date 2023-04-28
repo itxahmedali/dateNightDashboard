@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row mt-5 align-items-center">
     <div class="col-sm-12 d-flex justify-content-end align-items-center">
-      <button class="addMenuBtn" (click)="open(addModal,'add');">
-        <i class="fa fa-plus"></i> Add Event
+      <button class="addMenuBtn" (click)="proceed();open(addChild,'add');">
+        <i class="fa fa-plus"></i> Add Event Child
       </button>
     </div>
     <div class="col-sm-6 d-flex justify-content-start align-items-center">
@@ -22,17 +22,19 @@
           <thead>
             <tr>
               <th scope="col">Id</th>
-              <th scope="col">Name</th>
+              <th scope="col">Event Id</th>
+              <th scope="col">Value</th>
+              <th scope="col">Label</th>
               <th scope="col">Status</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngIf="(events | filter: searchInput)?.length; else noData">
+            <ng-container *ngIf="(eventsChild | filter: searchInput)?.length; else noData">
               <tr *ngFor="
                   let i = index;
                   let item;
-                  of: events | filter: searchInput | sortBy:selectedSort
+                  of: eventsChild | filter: searchInput | sortBy:selectedSort
                     | paginate
                       : {
                           itemsPerPage: 10,
@@ -41,27 +43,29 @@
                         }
                 ">
                 <th scope="row">{{ item?.id }}</th>
-                <td>{{ item?.name ? item?.name : "N/A" }}</td>
+                <td>{{ item?.event_id ? item?.event_id : "N/A" }}</td>
+                  <td>{{ item?.value ? item?.value : "N/A" }}</td>
+                  <td>{{ item?.label ? item?.label : "N/A" }}</td>
                   <td>
                   <div class="toggle d-flex align-items-center w-100 justify-content-center">
                     <input class="checkBox" type="checkbox" [checked]="item?.active_status =='1' ? true: false"
-                      [id]='"categoryStock"+i' (change)="stateItem(item,$event,'event')"/><label [for]='"categoryStock"+i'></label>
+                      [id]='"categoryStock"+i' (change)="stateItem(item,$event)"/><label [for]='"categoryStock"+i'></label>
                   </div>
                 </td>
                 <td class="d-flex justify-content-center align-items-center">
-                  <button class="actionbtn" (click)="selectedEvent=item;open(addModal,'edit');">
+                  <button class="actionbtn" (click)="selectedEventsChild=item;open(addChild,'editChild');">
                     <i class="fa fa-edit mlicon"></i>
                   </button>
                 </td>
               </tr>
             </ng-container>
             <ng-template #noData>
-              <tr *ngIf="events?.length">
-                <td colspan="4" class="text-center white">No Matching Data Available</td>
+              <tr *ngIf="eventsChild?.length">
+                <td colspan="6" class="text-center white">No Matching Data Available</td>
               </tr>
             </ng-template>
-            <tr *ngIf="!events?.length">
-              <td class="text-center white" colspan="4">
+            <tr *ngIf="!eventsChild?.length">
+              <td class="text-center white" colspan="6">
                 No data available
               </td>
             </tr>
@@ -69,36 +73,42 @@
         </table>
       </div>
     </div>
-    <div class="col-sm-12 d-flex justify-content-end" *ngIf="events?.length">
+    <div class="col-sm-12 d-flex justify-content-end" *ngIf="eventsChild?.length">
       <pagination-controls previousLabel="&lsaquo;" nextLabel="&rsaquo;" (pageChange)="duePage = $event">
       </pagination-controls>
     </div>
   </div>
 </div>
-<!-- modals -->
+<!-- Add Child Modal -->
 <ng-container>
-  <ng-template #addModal let-modal>
+  <ng-template #addChild let-modal>
     <div class="modal-body checkoutModal completed">
-      <button class="btn-close" id="checkoutClose" aria-label="Close" (click)="proceed()"></button>
+      <button class="btn-close" id="checkoutClose" aria-label="Close" (click)="proceed();"></button>
       <h5 class="modal-title">{{state ? 'Edit Mode' : 'Add Mode'}}</h5>
-      <form [formGroup]="eventForm" class="form">
+      <form [formGroup]="eventChildForm" class="form">
         <div class="row mt-4">
           <div class="col-lg-6 mt-3">
-            <input formControlName="name" type="text" placeholder="Name" class="text-light w-100" />
+            <input formControlName="value" type="text" placeholder="Value" class="text-light w-100" />
             <div
-              *ngIf="eventForm.controls.name.invalid && (eventForm.controls.name.dirty || eventForm.controls.name.touched)">
-              <small class="text-danger">Name is required</small>
+              *ngIf="eventChildForm.controls.value.invalid && (eventChildForm.controls.value.dirty || eventChildForm.controls.value.touched)">
+              <small class="text-danger">Value is required</small>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-3">
+            <input formControlName="label" type="text" placeholder="Label" class="text-light w-100" />
+            <div
+              *ngIf="eventChildForm.controls.label.invalid && (eventChildForm.controls.label.dirty || eventChildForm.controls.label.touched)">
+              <small class="text-danger">Label is required</small>
             </div>
           </div>
         </div>
       </form>
     </div>
     <div class="modal-footer d-flex justify-content-start">
-      <button class="btn add-btn" [disabled]="eventForm.invalid" (click)="save(true,'event')">Save</button>
-      <button class="btn cancel-btn" aria-label="Close" (click)="proceed()">
+      <button class="btn add-btn" [disabled]="eventChildForm.invalid" (click)="save(true)">Save</button>
+      <button class="btn cancel-btn" aria-label="Close" (click)="proceed();">
         Cancel
       </button>
     </div>
   </ng-template>
 </ng-container>
-

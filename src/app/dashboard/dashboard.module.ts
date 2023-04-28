@@ -16,6 +16,8 @@ import { PrePlanDatesComponent } from './pre-plan-dates/pre-plan-dates.component
 import { UserComponent } from './user/user.component';
 import { EventComponent } from './event/event.component';
 import { PingsComponent } from './pings/pings.component';
+import { EventChildComponent } from './event-child/event-child.component';
+import { PingChildComponent } from './ping-child/ping-child.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { PingsComponent } from './pings/pings.component';
     PrePlanDatesComponent,
     UserComponent,
     EventComponent,
-    PingsComponent],
+    PingsComponent,
+    EventChildComponent,
+    PingChildComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

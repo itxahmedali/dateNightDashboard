@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from './http.service';
-import { Setting, DateMode } from 'src/classes';
+import { Setting, DateMode, Pings } from 'src/classes';
 @Injectable({
   providedIn: 'root',
 })
@@ -11,9 +11,13 @@ export class HelperService {
   public dateModes!: DateMode;
   private settingsPromise!: Promise<Setting>;
   private modePromise!: Promise<any>;
+  // private pingsPromise!: Promise<any>;
   constructor(private http: HttpService, private toastr: ToastrService) {
     // this.setSettings();
-    this.setModes();
+    if(localStorage.getItem('access_token')){
+      this.setModes();
+    }
+    // this.setPings()
   }
   fileUploadHttp(event: any): Promise<string> {
     return new Promise((resolve, reject) => {
