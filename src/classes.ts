@@ -33,21 +33,16 @@ export class Setting implements Setting {
     public theme: string[]
   ) {}
 }
-export interface Staff {
+export interface DateMode {
   id: number;
-  address: string;
-  domain_id: number;
-  father_name: string;
-  joining_date: string;
-  manager: string;
-  national_identity: string;
-  position: string;
-  salary: string;
-  shift: string;
-  user: User;
-  zipcode: string;
+  name: string;
+  description: string;
+  active_status: string;
 }
-
+export interface Response {
+  status: boolean;
+  message: string;
+}
 export interface User {
   id: number;
   name: string;
@@ -59,23 +54,20 @@ export interface User {
   position: string;
   user_id: number;
 }
-export class Staff implements Staff {
+export class DateMode implements DateMode {
   constructor(
     public id: number,
-    public address: string,
-    public domain_id: number,
-    public father_name: string,
-    public joining_date: string,
-    public manager: string,
-    public national_identity: string,
-    public position: string,
-    public salary: string,
-    public shift: string,
-    public user: User,
-    public zipcode: string,
+    public name: string,
+    public description: string,
+    public active_status: string
   ) {}
 }
-
+export class Response implements Response {
+  constructor(
+    public status: boolean,
+    public message: string
+  ) {}
+}
 export class User implements User {
   constructor(
     public id: number,

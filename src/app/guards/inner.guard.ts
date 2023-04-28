@@ -19,8 +19,8 @@ export class InnerGuard implements CanActivate {
     if(role){
       setTimeout(() => {
         if(url && !url.includes("login")){
-        if(this.router.url !== `dashboard/${url}`){
-          this.router.navigateByUrl(`dashboard/${url}`);
+        if(this.router.url !== `dashboard/modes`){
+          this.router.navigateByUrl(`dashboard/modes`);
           return false;
         }
         else {

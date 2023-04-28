@@ -11,11 +11,21 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { CarouselModule } from 'ngx-owl-carousel-o'; 
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { DummyComponent } from './dummy/dummy.component';
+import { ModesComponent } from './modes/modes.component';
+import { PrePlanDatesComponent } from './pre-plan-dates/pre-plan-dates.component';
+import { UserComponent } from './user/user.component';
+import { EventComponent } from './event/event.component';
+import { PingsComponent } from './pings/pings.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    DummyComponent],
+    DummyComponent,
+    ModesComponent,
+    PrePlanDatesComponent,
+    UserComponent,
+    EventComponent,
+    PingsComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

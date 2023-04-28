@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from './http.service';
-import { Setting, Staff } from 'src/classes';
+import { Setting, DateMode } from 'src/classes';
 @Injectable({
   providedIn: 'root',
 })
 export class HelperService {
   public domainId!: number;
   public settings!: Setting;
-  public staff!: Staff;
+  public dateModes!: DateMode;
   private settingsPromise!: Promise<Setting>;
-  private staffPromise!: Promise<Staff[]>;
+  private modePromise!: Promise<any>;
   constructor(private http: HttpService, private toastr: ToastrService) {
     // this.setSettings();
-    // this.setStaff();
+    this.setModes();
   }
   fileUploadHttp(event: any): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -78,7 +78,7 @@ export class HelperService {
       return false;
     }
   }
-  
+
   sumArrayItem(sum: any, CartItems: any) {
     sum = CartItems?.reduce((accumulator: any, object: any) => {
       return accumulator + object.price;
@@ -96,10 +96,10 @@ export class HelperService {
     }, []);
     return combinedItems;
   }
- 
 
 
-  
+
+
   addSpaces(str: string): string {
     let result = str.replace(/([a-z])([A-Z])/g, '$1 $2'); // add space between lowercase and uppercase letters
     result = result.replace(/&/, ' & '); // add spaces around "&" character
@@ -139,37 +139,28 @@ export class HelperService {
   //   }
   //   return this.settingsPromise;
   // }
-  // async setStaff() {
-  //   this.staffPromise = this.loadStaff();
-  // }
-  // public async loadStaff(): Promise<Staff[]> {
-  //   let id = localStorage.getItem('domainId');
-  //   const res: any = await this.http
-  //     .loaderPost('get-employee', { domain_id: id }, true)
-  //     .toPromise();
-  //   const staffList = res.data.map((data: Staff) => {
-  //     return new Staff(
-  //       data.id,
-  //       data.address,
-  //       data.domain_id,
-  //       data.father_name,
-  //       data.joining_date,
-  //       data.manager,
-  //       data.national_identity,
-  //       data.position,
-  //       data.salary,
-  //       data.shift,
-  //       data.user,
-  //       data.zipcode
-  //     );
-  //   });
-  //   return staffList;
-  // }
+  async setModes() {
+    this.modePromise = this.loadModes();
+  }
+  public async loadModes(): Promise<DateMode[]> {
+    const res: any = await this.http
+      .loaderGet('date-mode', true)
+      .toPromise();
+    const modesList = res.data.map((data: DateMode) => {
+      return new DateMode(
+        data.id,
+        data.name,
+        data.description,
+        data.active_status,
+      );
+    });
+    return modesList;
+  }
 
-  // public getStaff(): Promise<Staff[]> {
-  //   if (!this.staffPromise) {
-  //     this.staffPromise = this.loadStaff();
-  //   }
-  //   return this.staffPromise;
-  // }
+  public getModes(): Promise<DateMode> {
+    if (!this.modePromise) {
+      this.modePromise = this.loadModes();
+    }
+    return this.modePromise;
+  }
 }

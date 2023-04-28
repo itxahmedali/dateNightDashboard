@@ -1,5 +1,4 @@
 import { HelperService } from './../../services/helper.service';
-import { NavigationEnd, Router } from '@angular/router';
 import { UniversalService } from './../../services/universal.service';
 import {
   Component,
@@ -10,7 +9,6 @@ import {
 import * as $ from 'jquery';
 import { Location } from '@angular/common';
 import { HttpService } from 'src/app/services/http.service';
-import { Setting } from 'src/classes';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -32,20 +30,14 @@ export class SidebarComponent implements OnInit {
       type: 'link',
     },
     {
-      title: 'items',
-      type: 'sub',
-      icon: 'assets/sidebarIcons/maincourse.webp',
-      active: false,
-      children: [
-        { path: 'foodItems', title: 'Food Items', type: 'link' },
-        { path: 'category', title: 'Category', type: 'link' },
-        { path: 'sub-category', title: 'Sub Category', type: 'link' },
-        { path: 'add-ons', title: 'Add Ons', type: 'link' },
-      ],
-    },
-    {
       path: 'pre-plan-dates',
       title: 'Pre Plan Dates',
+      icon: 'assets/sidebarIcons/starter.webp',
+      type: 'link',
+    },
+    {
+      path: 'users',
+      title: 'Users',
       icon: 'assets/sidebarIcons/starter.webp',
       type: 'link',
     },

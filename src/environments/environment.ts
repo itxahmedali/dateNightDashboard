@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl:'https://buybestthemes.com/pos/api/'
+  baseUrl:'https://buybestthemes.com/date_night_api/api/'
 };
 
 /*

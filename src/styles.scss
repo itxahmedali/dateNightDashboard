@@ -650,3 +650,32 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+// modal Css
+.modal-title {
+  color: var(--headings-primary-color);
+}
+.modal-footer {
+  border-top: none;
+}
+
+.form input,
+.form textarea,
+.imgBox {
+  background-color: #3a3a3a;
+  padding: 8px 11px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+.cancel-btn {
+  background-color: #bb2b2b !important;
+  color: var(--headings-primary-color) !important;
+  padding: 5px 40px !important;
+  border-radius: 50px !important;
+}
+.add-btn {
+  background-color: #2b98bb !important;
+  padding: 5px 40px !important;
+  color: var(--headings-primary-color) !important;
+  border-radius: 50px !important;
+}

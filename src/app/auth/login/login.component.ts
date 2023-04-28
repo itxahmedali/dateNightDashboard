@@ -13,7 +13,7 @@ import { FormComponent } from 'src/app/shared/form/form.component';
 })
 export class LoginComponent {
   constructor(private http:HttpService , private toaster:ToastrService , private router:Router , private authGuardService:AuthGuardService){
-  
+
   }
   public Data: any = {};
   public formValid = false;
@@ -27,23 +27,25 @@ export class LoginComponent {
       let loginData = {
         email: formData.Email,
         password: formData.Password,
-        domain: localStorage.getItem('subDomain'),
       };
-      // this.http.loaderPost('login', loginData, false).subscribe((res: any) => {
-        // if (res) {
-        //   if (res?.hasOwnProperty('errors')) {
-        //     for (const key in res?.errors) {
-        //       this.toaster.error(res?.errors[key]);
-        //     }
-        //   } else {
-        //     this.toaster.success(res?.message);
-            localStorage.setItem('access_token', 'token');
+      this.http.loaderPost('loginadmin', loginData, false).subscribe((res: any) => {
+        if (res) {
+          if (res?.hasOwnProperty('errors')) {
+            for (const key in res?.errors) {
+              this.toaster.error(res?.errors[key]);
+            }
+          } else {
+            this.toaster.success(res?.message);
+            localStorage.setItem('access_token', res?.token);
               this.router.navigate(['/dashboard']);
               this.authGuardService.login('admin');
             AuthService.signin.next(true);
-          // }
-        // }
-      // });
+          }
+        }
+      });
+    }
+    else{
+      this.toaster.error("Invalid Form");
     }
   }
 }

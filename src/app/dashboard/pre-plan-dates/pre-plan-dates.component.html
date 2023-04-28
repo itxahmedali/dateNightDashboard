@@ -1,0 +1,139 @@
+<div class="container">
+  <div class="row mt-5 align-items-center">
+    <div class="col-sm-12 d-flex justify-content-end align-items-center">
+      <button class="addMenuBtn" (click)="open(qr,'add');">
+        <i class="fa fa-plus"></i> Add Pre Plan Date
+      </button>
+    </div>
+    <div class="col-sm-6 d-flex justify-content-start align-items-center">
+      <div class="searchField mt-1 w-100">
+        <input type="text" [(ngModel)]="searchInput" placeholder="Search Item" class="w-100 white" />
+        <i class="fa fa-search"></i>
+      </div>
+    </div>
+    <div class="col-sm-6 mt-3 mb-3 cstmDropDown">
+      <ng-select class="selectAlignment" placeholder="Sort By" [(ngModel)]="selectedSort">
+        <ng-option *ngFor="let sort of sorts" [value]="sort.name">{{sort.name}}</ng-option>
+      </ng-select>
+    </div>
+    <div class="col-sm-12 mt-1 listView">
+      <div class="table-responsive">
+        <table class="table table-dark table-borderless table-sm align-middle text-center">
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Mode Id</th>
+              <th scope="col">Ping Id's</th>
+              <th scope="col">Name</th>
+              <th scope="col">Price</th>
+              <th scope="col">Price Status</th>
+              <th scope="col">Status</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="(Dates | filter: searchInput)?.length; else noData">
+              <tr *ngFor="
+                  let i = index;
+                  let item;
+                  of: Dates | filter: searchInput | sortBy:selectedSort
+                    | paginate
+                      : {
+                          itemsPerPage: 10,
+                          currentPage: duePage,
+                          totalItems: total
+                        }
+                ">
+                <th scope="row">{{ item?.id }}</th>
+                <td>{{ item?.mode_id ? item?.mode_id : "N/A" }}</td>
+                <td>{{ item?.ping_id ? item?.ping_id : "N/A" }}</td>
+                <td>{{ item?.name ? item?.name : "N/A" }}</td>
+                <td>{{ item?.price ? (item?.price | currency : 'USD') : "N/A" }}</td>
+                <td>{{ item?.status ? item?.status : "N/A" }}</td>
+                <td>
+                  <div class="toggle d-flex align-items-center w-100 justify-content-center">
+                    <input class="checkBox" type="checkbox" [checked]="item?.active_status =='1' ? true: false"
+                      [id]='"categoryStock"+i' /><label [for]='"categoryStock"+i'></label>
+                  </div>
+                </td>
+                <td class="d-flex justify-content-center align-items-center">
+                  <button class="actionbtn" (click)="open(qr,'edit');">
+                    <i class="fa fa-edit mlicon"></i>
+                  </button>
+                  <button class="actionbtn">
+                    <i class="fa fa-trash mlicon"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-template #noData>
+              <tr *ngIf="Dates?.length">
+                <td colspan="8" class="text-center white">No Matching Data Available</td>
+              </tr>
+            </ng-template>
+            <tr *ngIf="!Dates?.length">
+              <td class="text-center white" colspan="8">
+                No data available
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-12 d-flex justify-content-end" *ngIf="Dates?.length">
+      <pagination-controls previousLabel="&lsaquo;" nextLabel="&rsaquo;" (pageChange)="duePage = $event">
+      </pagination-controls>
+    </div>
+  </div>
+</div>
+<!-- modals -->
+<ng-container>
+  <ng-template #qr let-modal>
+    <div class="modal-body checkoutModal completed">
+      <button class="btn-close" id="checkoutClose" aria-label="Close" (click)="proceed()"></button>
+      <h5 class="modal-title">{{state ? 'Edit Pre Plan Date' : 'Add Pre Plan Date'}}</h5>
+      <form [formGroup]="modeForm" class="form">
+        <div class="row mt-4">
+          <div class="col-lg-6 mt-3">
+            <ng-select placeholder="Select a Mode" [items]="modes" bindLabel="mode.name" bindValue="mode.id"
+              formControlName="name">
+            </ng-select>
+            <div
+              *ngIf="modeForm.controls.modeId.invalid && (modeForm.controls.modeId.dirty || modeForm.controls.modeId.touched)">
+              <small class="text-danger">Mode Id is required</small>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-3">
+            <ng-select placeholder="Select Pings" [multiple]="true" [items]="modes" bindLabel="ping.name"
+              bindValue="ping.id" formControlName="name">
+            </ng-select>
+            <div
+              *ngIf="modeForm.controls.pingId.invalid && (modeForm.controls.pingId.dirty || modeForm.controls.pingId.touched)">
+              <small class="text-danger">Ping Id's are required</small>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-3">
+            <input formControlName="name" type="text" placeholder="Name" class="text-light w-100" />
+            <div
+              *ngIf="modeForm.controls.name.invalid && (modeForm.controls.name.dirty || modeForm.controls.name.touched)">
+              <small class="text-danger">Name is required</small>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-3">
+            <input formControlName="price" type="text" placeholder="Price" class="text-light w-100" />
+            <div
+              *ngIf="modeForm.controls.price.invalid && (modeForm.controls.price.dirty || modeForm.controls.price.touched)">
+              <small class="text-danger">Price is required</small>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer d-flex justify-content-start">
+      <button class="btn add-btn" [disabled]="modeForm.invalid" (click)="save()">Save</button>
+      <button class="btn cancel-btn" aria-label="Close" (click)="proceed()">
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
