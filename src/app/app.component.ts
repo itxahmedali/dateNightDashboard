@@ -72,6 +72,11 @@ export class AppComponent {
   async observe() {
     AuthService.signin.subscribe((res: boolean) => {
       this.login = res;
+      this.helper.setModes();
+      this.helper.setEvents()
+      this.helper.setEventChild()
+      this.helper.setPings()
+      this.helper.setPingsChild()
       this.cd.detectChanges();
     });
     UniversalService.SideBar.subscribe(
@@ -103,8 +108,6 @@ export class AppComponent {
       (err: any) => console.log(err)
     );
     LoaderService.loader.subscribe((res: any) => {
-      console.log(res);
-      
       this.show = res;
       if (this.show == true) {
         this.document.body.classList.add('bodyLoader');

@@ -4,11 +4,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from 'src/app/services/http.service';
+import { Users } from 'src/classes';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  styleUrls: ['./user.component.scss'],
 })
 export class UserComponent {
   constructor(
@@ -18,21 +19,40 @@ export class UserComponent {
     private toaster: ToastrService,
     private helper: HelperService
   ) {}
+  public modalReference: any;
   public searchInput!: any;
   public selectedSort!: any;
   public duePage!: any;
   public total!: any;
+  public reminders!: any;
+  public dates!: any;
   public sorts = [
     { id: 1, name: 'name' },
     { id: 2, name: 'date' },
   ];
-  public users!:any
-  async ngOnInit(){
-    await this.getUsers()
+  public users!: any;
+  async ngOnInit() {
+    this.helper.setUsers();
+    this.getUsers();
   }
-  getUsers(){
-    this.http.loaderPost('all-users',{},true).subscribe((res:any)=>{
-      this.users = res
-    })
+  async open(content: any) {
+    console.log(this.dates, this.reminders);
+
+    this.modalReference = this.modalService.open(content, {
+      centered: true,
+      backdrop: 'static',
+      windowClass: 'checkoutModal',
+      size: 'xl',
+    });
+  }
+  proceed() {
+    this.modalReference.close();
+  }
+  async getUsers() {
+    await this.helper.getUsers()?.then((Users: Users) => {
+      console.log(Users);
+      
+      this.users = Users;
+    });
   }
 }

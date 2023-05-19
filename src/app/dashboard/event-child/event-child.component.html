@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row mt-5 align-items-center">
     <div class="col-sm-12 d-flex justify-content-end align-items-center">
-      <button class="addMenuBtn" (click)="proceed();open(addChild,'add');">
+      <button class="addMenuBtn" (click)="open(addChild,'add');">
         <i class="fa fa-plus"></i> Add Event Child
       </button>
     </div>
@@ -43,7 +43,7 @@
                         }
                 ">
                 <th scope="row">{{ item?.id }}</th>
-                <td>{{ item?.event_id ? item?.event_id : "N/A" }}</td>
+                <td>{{ item?.event_id ? matchEvents(item?.event_id) : "N/A" }}</td>
                   <td>{{ item?.value ? item?.value : "N/A" }}</td>
                   <td>{{ item?.label ? item?.label : "N/A" }}</td>
                   <td>
@@ -88,6 +88,16 @@
       <form [formGroup]="eventChildForm" class="form">
         <div class="row mt-4">
           <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Event</label>
+            <ng-select placeholder="Select Event" [items]="events" bindLabel="name" bindValue="id" formControlName="event_id">
+            </ng-select>
+            <div
+              *ngIf="eventChildForm.controls.event_id.invalid && (eventChildForm.controls.event_id.dirty || eventChildForm.controls.event_id.touched)">
+              <small class="text-danger">Category is required</small>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Value</label>
             <input formControlName="value" type="text" placeholder="Value" class="text-light w-100" />
             <div
               *ngIf="eventChildForm.controls.value.invalid && (eventChildForm.controls.value.dirty || eventChildForm.controls.value.touched)">
@@ -95,6 +105,7 @@
             </div>
           </div>
           <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Label</label>
             <input formControlName="label" type="text" placeholder="Label" class="text-light w-100" />
             <div
               *ngIf="eventChildForm.controls.label.invalid && (eventChildForm.controls.label.dirty || eventChildForm.controls.label.touched)">

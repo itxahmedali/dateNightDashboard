@@ -49,7 +49,7 @@ export class DateMode implements DateMode {
 }
 export interface Pings {
   id: number;
-  category_id: number;
+  mode_id: number;
   name: string;
   description: string;
   paid_or_free: string;
@@ -59,11 +59,79 @@ export interface Pings {
 export class Pings implements Pings {
   constructor(
     public id: number,
-    public category_id: number,
+    public mode_id: number,
     public name: string,
     public description: string,
     public paid_or_free: string,
     public price: string,
     public active_status: string
+  ) {}
+}
+export interface PingsChild {
+  id: number;
+  category_id: number;
+  name: string;
+  description: string;
+  active_status: string;
+}
+export class PingsChild implements PingsChild {
+  constructor(
+    public id: number,
+    public category_id: number,
+    public name: string,
+    public description: string,
+    public active_status: string
+  ) {}
+}
+export interface Events {
+  id: number;
+  name: string;
+  active_status: string;
+}
+export class Events implements Events {
+  constructor(
+    public id: number,
+    public name: string,
+    public active_status: string
+  ) {}
+}
+export interface EventChild {
+  id: number;
+  event_id: number;
+  label: string;
+  value: string;
+  active_status: string;
+}
+export class EventChild implements EventChild {
+  constructor(
+    public id: number,
+    public event_id: number,
+    public label: string,
+    public value: string,
+    public active_status: string
+  ) {}
+}
+export interface Users {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  dob: string;
+  dates: [];
+  reminders: [];
+  active_status: string;
+  type: string;
+}
+export class Users implements Users {
+  constructor(
+    public id: number,
+    public name: string,
+    public email: string,
+    public phone: string,
+    public dob: string,
+    public dates: [],
+    public reminders: [],
+    public active_status: string,
+    public type: string
   ) {}
 }

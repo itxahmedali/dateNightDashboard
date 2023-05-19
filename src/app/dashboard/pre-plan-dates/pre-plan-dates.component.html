@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row mt-5 align-items-center">
     <div class="col-sm-12 d-flex justify-content-end align-items-center">
-      <button class="addMenuBtn" (click)="open(add,'add');">
+      <button class="addMenuBtn" (click)="modeForm.reset(); open(add,'add');">
         <i class="fa fa-plus"></i> Add Pre Plan Date
       </button>
     </div>
@@ -60,9 +60,6 @@
                   <button class="actionbtn" (click)="selectedPing=item;open(add,'edit');">
                     <i class="fa fa-edit mlicon"></i>
                   </button>
-                  <button class="actionbtn">
-                    <i class="fa fa-trash mlicon"></i>
-                  </button>
                 </td>
               </tr>
             </ng-container>
@@ -95,6 +92,7 @@
       <form [formGroup]="modeForm" class="form">
         <div class="row mt-4">
           <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Mode</label>
             <ng-select placeholder="Select a Mode" (change)="getPings($event)" [items]="modes" bindLabel="name" bindValue="id"
               formControlName="mode_id">
             </ng-select>
@@ -104,6 +102,7 @@
             </div>
           </div>
           <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Pings</label>
             <ng-select placeholder="Select Pings" [multiple]="true" [items]="pings" bindLabel="name"
               bindValue="id" formControlName="ping_id">
             </ng-select>
@@ -113,6 +112,7 @@
             </div>
           </div>
           <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Name</label>
             <input formControlName="name" type="text" placeholder="Name" class="text-light w-100" />
             <div
               *ngIf="modeForm.controls.name.invalid && (modeForm.controls.name.dirty || modeForm.controls.name.touched)">
@@ -120,6 +120,7 @@
             </div>
           </div>
           <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Price</label>
             <input formControlName="price" type="text" placeholder="Price" class="text-light w-100" />
             <div
               *ngIf="modeForm.controls.price.invalid && (modeForm.controls.price.dirty || modeForm.controls.price.touched)">

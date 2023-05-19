@@ -1,1 +1,124 @@
-<p>ping-child works!</p>
+<div class="container">
+    <div class="row mt-5 align-items-center">
+      <div class="col-sm-12 d-flex justify-content-end align-items-center">
+        <button class="addMenuBtn" (click)="open(addChild,'add');">
+          <i class="fa fa-plus"></i> Add Ping
+        </button>
+      </div>
+      <div class="col-sm-6 d-flex justify-content-start align-items-center">
+        <div class="searchField mt-1 w-100">
+          <input type="text" [(ngModel)]="searchInput" placeholder="Search Item" class="w-100 white" />
+          <i class="fa fa-search"></i>
+        </div>
+      </div>
+      <div class="col-sm-6 mt-3 mb-3 cstmDropDown">
+        <ng-select class="selectAlignment" placeholder="Sort By" [(ngModel)]="selectedSort">
+          <ng-option *ngFor="let sort of sorts" [value]="sort.name">{{sort.name}}</ng-option>
+        </ng-select>
+      </div>
+      <div class="col-sm-12 mt-1 listView">
+        <div class="table-responsive">
+          <table class="table table-dark table-borderless table-sm align-middle text-center">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Category Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="(PingsChild | filter: searchInput)?.length; else noData">
+                <tr *ngFor="
+                    let i = index;
+                    let item;
+                    of: PingsChild | filter: searchInput | sortBy:selectedSort
+                      | paginate
+                        : {
+                            itemsPerPage: 10,
+                            currentPage: duePage,
+                            totalItems: total
+                          }
+                  ">
+                  <th scope="row">{{ item?.id }}</th>
+                  <td>{{ item?.category_id ? matchPings(item?.category_id) : "N/A" }}</td>
+                  <td>{{ item?.name ? item?.name : "N/A" }}</td>
+                  <td> <span class="pointer" placement="top" [ngbTooltip]="item?.description"> {{ item?.description ?
+                    (item?.description | ellipsis:20) : "N/A" }} </span></td>
+                    <td>
+                    <div class="toggle d-flex align-items-center w-100 justify-content-center">
+                      <input class="checkBox" type="checkbox" [checked]="item?.active_status == '1' ? true : false"
+                      [id]="'categoryStock' + i"
+                      (change)="stateItem(item, $event)"/><label [for]='"categoryStock"+i'></label>
+                    </div>
+                  </td>
+                  <td class="d-flex justify-content-center align-items-center">
+                    <button class="actionbtn" (click)="open(addChild,'edit');">
+                      <i class="fa fa-edit mlicon"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-template #noData>
+                <tr *ngIf="PingsChild?.length">
+                  <td colspan="7" class="text-center white">No Matching Data Available</td>
+                </tr>
+              </ng-template>
+              <tr *ngIf="!PingsChild?.length">
+                <td class="text-center white" colspan="7">
+                  No data available
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-sm-12 d-flex justify-content-end" *ngIf="PingsChild?.length">
+        <pagination-controls previousLabel="&lsaquo;" nextLabel="&rsaquo;" (pageChange)="duePage = $event">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+  <!-- Add Child Modal -->
+<ng-container>
+    <ng-template #addChild let-modal>
+      <div class="modal-body checkoutModal completed">
+        <button class="btn-close" id="checkoutClose" aria-label="Close" (click)="proceed()"></button>
+        <h5 class="modal-title">{{state ? 'Edit Ping' : 'Add Ping'}}</h5>
+        <form [formGroup]="pingForm" class="form">
+          <div class="row mt-4">
+            <div class="col-lg-6 mt-3">
+              <ng-select placeholder="Select Category" [items]="Pings" bindLabel="name" bindValue="id" formControlName="category_id">
+              </ng-select>
+              <div
+                *ngIf="pingForm.controls.category_id.invalid && (pingForm.controls.category_id.dirty || pingForm.controls.category_id.touched)">
+                <small class="text-danger">Category is required</small>
+              </div>
+            </div>
+            <div class="col-lg-6 mt-3">
+              <input formControlName="name" type="text" placeholder="Name" class="text-light w-100" />
+              <div
+                *ngIf="pingForm.controls.name.invalid && (pingForm.controls.name.dirty || pingForm.controls.name.touched)">
+                <small class="text-danger">Name is required</small>
+              </div>
+            </div>
+            <div class="col-lg-6 mt-3">
+              <input formControlName="description" type="text" placeholder="Description" class="text-light w-100" />
+              <div
+                *ngIf="pingForm.controls.description.invalid && (pingForm.controls.description.dirty || pingForm.controls.description.touched)">
+                <small class="text-danger">Description is required</small>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer d-flex justify-content-start">
+        <button class="btn add-btn" [disabled]="pingForm.invalid" (click)="save(false)">Save</button>
+        <button class="btn cancel-btn" aria-label="Close" (click)="proceed()">
+          Cancel
+        </button>
+      </div>
+    </ng-template>
+  </ng-container>

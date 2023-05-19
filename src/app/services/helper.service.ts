@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from './http.service';
-import { Setting, DateMode, Pings } from 'src/classes';
+import {
+  Setting,
+  DateMode,
+  Pings,
+  PingsChild,
+  Events,
+  EventChild,
+  Users,
+} from 'src/classes';
 @Injectable({
   providedIn: 'root',
 })
@@ -9,15 +17,28 @@ export class HelperService {
   public domainId!: number;
   public settings!: Setting;
   public dateModes!: DateMode;
-  private settingsPromise!: Promise<Setting>;
   private modePromise!: Promise<any>;
-  // private pingsPromise!: Promise<any>;
+  private pingsPromise!: Promise<any>;
+  private pingsChildPromise!: Promise<any>;
+  private EventsPromise!: Promise<any>;
+  private EventChildPromise!: Promise<any>;
+  private UsersPromise!: Promise<any>;
+  private hasAlertShown: boolean = false;
   constructor(private http: HttpService, private toastr: ToastrService) {
-    // this.setSettings();
-    if(localStorage.getItem('access_token')){
-      this.setModes();
+    if (localStorage.getItem('access_token')) {
+      setTimeout(() => {}, 1000);
     }
-    // this.setPings()
+  }
+  showAlert(path: any) {
+    if (!this.hasAlertShown) {
+      if (path == 'mode') {
+        this.setModes();
+      }
+      if (path == 'events') {
+        this.setEvents();
+      }
+      this.hasAlertShown = true;
+    }
   }
   fileUploadHttp(event: any): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -74,15 +95,12 @@ export class HelperService {
       };
     });
   }
-
-  titleCheck(title: string, value: string) {
-    if (title == value) {
-      return true;
-    } else {
-      return false;
-    }
+  addSpaces(str: string): string {
+    let result = str.replace(/([a-z])([A-Z])/g, '$1 $2'); // add space between lowercase and uppercase letters
+    result = result.replace(/&/, ' & '); // add spaces around "&" character
+    result = result.replace(/(creatediscount|staffpayroll)/, '$1 '); // add space after specific words
+    return result;
   }
-
   sumArrayItem(sum: any, CartItems: any) {
     sum = CartItems?.reduce((accumulator: any, object: any) => {
       return accumulator + object.price;
@@ -100,62 +118,17 @@ export class HelperService {
     }, []);
     return combinedItems;
   }
-
-
-
-
-  addSpaces(str: string): string {
-    let result = str.replace(/([a-z])([A-Z])/g, '$1 $2'); // add space between lowercase and uppercase letters
-    result = result.replace(/&/, ' & '); // add spaces around "&" character
-    result = result.replace(/(creatediscount|staffpayroll)/, '$1 '); // add space after specific words
-    return result;
-  }
-  // async setSettings() {
-  //   this.settingsPromise = this.loadSettings();
-  // }
-  // public async loadSettings(): Promise<Setting> {
-  //   let id = localStorage.getItem('domainId');
-  //   const res: any = await this.http
-  //     .loaderPost('get-setting', { domain_id: id }, true)
-  //     .toPromise();
-  //   this.settings = new Setting(
-  //     res.data.address,
-  //     res.data.banner,
-  //     res.data.banner_shade,
-  //     res.data.city,
-  //     res.data.description,
-  //     res.data.slogan,
-  //     res.data.domain_id,
-  //     res.data.email,
-  //     res.data.id,
-  //     res.data.logo,
-  //     res.data.phone,
-  //     res.data.profile,
-  //     res.data.restaurant_name,
-  //     res.data.theme
-  //   );
-  //   return this.settings;
-  // }
-
-  // public getSettings(): Promise<Setting> {
-  //   if (!this.settingsPromise) {
-  //     this.settingsPromise = this.loadSettings();
-  //   }
-  //   return this.settingsPromise;
-  // }
   async setModes() {
     this.modePromise = this.loadModes();
   }
   public async loadModes(): Promise<DateMode[]> {
-    const res: any = await this.http
-      .loaderGet('date-mode', true)
-      .toPromise();
+    const res: any = await this.http.loaderGet('date-mode', true).toPromise();
     const modesList = res.data.map((data: DateMode) => {
       return new DateMode(
         data.id,
         data.name,
         data.description,
-        data.active_status,
+        data.active_status
       );
     });
     return modesList;
@@ -166,5 +139,126 @@ export class HelperService {
       this.modePromise = this.loadModes();
     }
     return this.modePromise;
+  }
+  async setPings() {
+    this.pingsPromise = this.loadPings();
+  }
+  public async loadPings(): Promise<Pings[]> {
+    const res: any = await this.http
+      .loaderGet('ping-category', true)
+      .toPromise();
+    const modesList = res.data.map((data: Pings) => {
+      return new Pings(
+        data.id,
+        data.mode_id,
+        data.name,
+        data.description,
+        data.paid_or_free,
+        data.price,
+        data.active_status
+      );
+    });
+    return modesList;
+  }
+
+  public getPings(): Promise<Pings> {
+    if (!this.pingsPromise) {
+      this.pingsPromise = this.loadPings();
+    }
+    return this.pingsPromise;
+  }
+  async setPingsChild() {
+    this.pingsChildPromise = this.loadPingsChild();
+  }
+  public async loadPingsChild(): Promise<PingsChild[]> {
+    const res: any = await this.http.loaderGet('pings', true).toPromise();
+    const modesList = res.data.map((data: PingsChild) => {
+      return new PingsChild(
+        data.id,
+        data.category_id,
+        data.name,
+        data.description,
+        data.active_status
+      );
+    });
+    return modesList;
+  }
+
+  public getPingsChilds(): Promise<PingsChild> {
+    if (!this.pingsChildPromise) {
+      this.pingsChildPromise = this.loadPingsChild();
+    }
+    return this.pingsChildPromise;
+  }
+  async setEvents() {
+    this.EventsPromise = this.loadEvents();
+  }
+  public async loadEvents(): Promise<Events[]> {
+    const res: any = await this.http.loaderGet('events', true).toPromise();
+    const modesList = res.data.map((data: Events) => {
+      return new Events(data.id, data.name, data.active_status);
+    });
+    return modesList;
+  }
+
+  public getEvents(): Promise<Events> {
+    if (!this.EventsPromise) {
+      this.EventsPromise = this.loadEvents();
+    }
+    return this.EventsPromise;
+  }
+  async setEventChild() {
+    this.EventChildPromise = this.loadEventChild();
+  }
+  public async loadEventChild(): Promise<EventChild[]> {
+    const res: any = await this.http
+      .loaderGet('events-child', true)
+      .toPromise();
+    const modesList = res.data.map((data: EventChild) => {
+      return new EventChild(
+        data.id,
+        data.event_id,
+        data.label,
+        data.value,
+        data.active_status
+      );
+    });
+    return modesList;
+  }
+
+  public getEventChilds(): Promise<EventChild> {
+    if (!this.EventChildPromise) {
+      this.EventChildPromise = this.loadEventChild();
+    }
+    return this.EventChildPromise;
+  }
+  async setUsers() {
+    this.UsersPromise = this.loadUsers();
+  }
+  public async loadUsers(): Promise<Users[]> {
+    const res: any = await this.http
+      .loaderPost('all-users',{}, true)
+      .toPromise();
+    const modesList = res.map((data: Users) => {
+      return new Users(
+        data.id,
+        data.name,
+        data.email,
+        data.phone,
+        data.dob,
+        data.dates,
+        data.reminders,
+        data.active_status,
+        data.type,
+      );
+    });
+    return modesList;
+  }
+
+  public getUsers(): Promise<Users> {
+    if (!this.UsersPromise) {
+      this.UsersPromise = this.loadUsers();
+    }
+    return this.UsersPromise;
   }
 }

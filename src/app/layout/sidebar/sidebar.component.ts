@@ -25,37 +25,43 @@ export class SidebarComponent implements OnInit {
     {
       path: 'modes',
       title: 'Modes',
-      icon: 'assets/sidebarIcons/starter.webp',
+      icon: 'assets/images/mode.webp',
       type: 'link',
     },
     {
       path: 'pre-plan-dates',
       title: 'Pre Plan Dates',
-      icon: 'assets/sidebarIcons/starter.webp',
+      icon: 'assets/images/dates.webp',
       type: 'link',
     },
     {
       path: 'users',
       title: 'Users',
-      icon: 'assets/sidebarIcons/starter.webp',
+      icon: 'assets/images/users.webp',
       type: 'link',
     },
     {
       path: 'events',
       title: 'Events',
-      icon: 'assets/sidebarIcons/starter.webp',
+      icon: 'assets/images/events.webp',
       type: 'link',
     },
     {
       path: 'event-details',
       title: 'Event Details',
-      icon: 'assets/sidebarIcons/starter.webp',
+      icon: 'assets/images/event-details.webp',
+      type: 'link',
+    },
+    {
+      path: 'pings-category',
+      title: 'Pings Category',
+      icon: 'assets/images/ping-category.webp',
       type: 'link',
     },
     {
       path: 'pings',
       title: 'Pings',
-      icon: 'assets/sidebarIcons/starter.webp',
+      icon: 'assets/images/pings.webp',
       type: 'link',
     }
   ];

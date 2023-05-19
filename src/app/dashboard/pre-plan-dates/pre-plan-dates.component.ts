@@ -88,7 +88,12 @@ export class PrePlanDatesComponent {
       });
     }
   }
+  proceed() {
+    this.modalReference.close();
+  }
   async stateItem(event: any, data: any) {
+    console.log(this.Dates,"helloDates");
+    
     this.selectedPing = this.Dates?.find((e: any) => e?.id == event.id);
     if (this.selectedPing) {
       const { id, mode_id, ping_id, name, description, price } = this.selectedPing;
@@ -109,6 +114,8 @@ export class PrePlanDatesComponent {
           }
         });
       });
+      console.log(selectedModeId,selectedPings);
+      
       this.modeForm.patchValue({
         ...this.modeForm.value,
         mode_id: selectedModeId?.id,
@@ -129,13 +136,11 @@ export class PrePlanDatesComponent {
   }
   async getPings(event: any) {
     const res: any = await this.http
-      .loaderGet(`pings-by-mode/${event?.id}`, true)
+      .loaderGet(`ping-category-by-mode/${event?.id}`, true)
       .toPromise();
     this.pings = res?.data;
   }
-  proceed() {
-    this.modalReference.close();
-  }
+  
   getDates() {
     this.http.loaderGet('pre-plan-dates', true).subscribe((res: any) => {
       this.Dates = res?.data;
@@ -156,6 +161,7 @@ export class PrePlanDatesComponent {
         if(modal){
           this.proceed();
         }
+        this.modeForm.reset();
         this.getDates();
         this.toaster.success(res?.message ? res?.message : res?.messsage);
       });

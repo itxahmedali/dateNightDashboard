@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./img.component.scss'],
 })
 export class ImgComponent {
-  defaultImage: string = '../../../assets/images/imageLoader.gif';
+  defaultImage: string = 'assets/images/imageLoader.gif';
   @Input() src!: string;
   @Input() alt!: string;
   @Input() classes!: string;

@@ -38,6 +38,7 @@ export class ModesComponent {
     description: [null, Validators.required],
   });
   async ngOnInit() {
+    this.helper.showAlert('mode')
     this.getModes();
   }
   open(content: any, state: string) {
@@ -53,7 +54,6 @@ export class ModesComponent {
         name: this.selectedMode?.name,
         description: this.selectedMode?.description,
       });
-      // this.selectedMode
     }
   }
   proceed() {
