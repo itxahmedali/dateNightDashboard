@@ -1,0 +1,305 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="userHead">
+        <div class="userProfile">
+          <app-img
+            [src]="user?.image"
+            [styles]="{
+              width: '100%',
+              height: '100%',
+              'object-fit': 'contain'
+            }"
+          ></app-img>
+        </div>
+      </div>
+      <div class="userBody">
+        <div class="row">
+          <div class="col-sm-6 text-light text-center">
+            <span class="title">Name:</span>
+            <span class="content">{{ user?.name }}</span>
+          </div>
+          <div class="col-sm-6 text-light text-center">
+            <span class="title">Email:</span>
+            <span class="content">{{ user?.email }}</span>
+          </div>
+          <div class="col-sm-6 text-light text-center">
+            <span class="title">Phone:</span>
+            <span class="content">{{ user?.phone }}</span>
+          </div>
+          <div class="col-sm-6 text-light text-center">
+            <span class="title">DOB:</span>
+            <span class="content">{{ user?.dob }}</span>
+          </div>
+          <div class="col-sm-12 mt-5">
+            <div ngbAccordion [closeOthers]="true">
+              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="false">
+                <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton>Dates</button>
+                </h2>
+                <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                    <ng-template>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div ngbAccordion [closeOthers]="true">
+                            <div
+                              ngbAccordionItem
+                              [destroyOnHide]="true"
+                              [collapsed]="false"
+                            >
+                              <h2 ngbAccordionHeader>
+                                <button ngbAccordionButton>Date Person</button>
+                              </h2>
+                              <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                  <ng-template>
+                                    <app-table
+                                      tableName="date_person"
+                                      [Page]="datePersonPage"
+                                      [total]="datePersonPage"
+                                      [tableData]="user?.dates"
+                                    ></app-table>
+                                  </ng-template>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              ngbAccordionItem
+                              [destroyOnHide]="true"
+                              [collapsed]="true"
+                            >
+                              <h2 ngbAccordionHeader>
+                                <button ngbAccordionButton>Date Mode</button>
+                              </h2>
+                              <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                  <ng-template>
+                                    <app-table
+                                      tableName="date_mode"
+                                      [Page]="dateModePage"
+                                      [total]="Modetotal"
+                                      [tableData]="user?.dates"
+                                    ></app-table>
+                                  </ng-template>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              ngbAccordionItem
+                              [destroyOnHide]="true"
+                              [collapsed]="true"
+                            >
+                              <h2 ngbAccordionHeader>
+                                <button ngbAccordionButton>Date Events</button>
+                              </h2>
+                              <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                  <ng-template>
+                                    <app-table
+                                      tableName="event"
+                                      [Page]="dateEventPage"
+                                      [total]="Eventtotal"
+                                      [tableData]="user?.dates"
+                                    ></app-table>
+                                  </ng-template>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true">
+                <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton>Reminders</button>
+                </h2>
+                <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                    <ng-template>
+                      <app-table
+                        tableName="reminders"
+                        [Page]="datePingsPage"
+                        [total]="Pingstotal"
+                        [tableData]="user?.reminders"
+                      ></app-table>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true">
+                <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton>Purchases</button>
+                </h2>
+                <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                    <ng-template>
+                      <app-table
+                        tableName="purchases"
+                        [Page]="datePingsPage"
+                        [total]="Pingstotal"
+                        [tableData]="user?.user_purchases"
+                      ></app-table>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true">
+                <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton>Pre Plan Dates</button>
+                </h2>
+                <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                    <ng-template>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div ngbAccordion [closeOthers]="true">
+                            <div
+                              ngbAccordionItem
+                              [destroyOnHide]="true"
+                              [collapsed]="true"
+                            >
+                              <h2 ngbAccordionHeader>
+                                <button ngbAccordionButton>Date Mode</button>
+                              </h2>
+                              <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                  <ng-template>
+                                    <app-table
+                                      tableName="mode"
+                                      [Page]="dateModePage"
+                                      [total]="Modetotal"
+                                      [tableData]="user?.preplan_dates"
+                                    ></app-table>
+                                  </ng-template>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              ngbAccordionItem
+                              [destroyOnHide]="true"
+                              [collapsed]="true"
+                            >
+                              <h2 ngbAccordionHeader>
+                                <button ngbAccordionButton>
+                                  Date Ping Categories
+                                </button>
+                              </h2>
+                              <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                  <ng-template>
+                                    <app-table
+                                      tableName="prePlanPingsCategories"
+                                      [Page]="dateEventPage"
+                                      [total]="Eventtotal"
+                                      [tableData]="user?.preplan_dates"
+                                    ></app-table>
+                                    <div ngbAccordion [closeOthers]="true">
+                                      <div
+                                        ngbAccordionItem
+                                        [destroyOnHide]="true"
+                                        [collapsed]="true"
+                                      >
+                                        <h2 ngbAccordionHeader>
+                                          <button ngbAccordionButton>
+                                            Pre Plan Dates Pings
+                                          </button>
+                                        </h2>
+                                        <div ngbAccordionCollapse>
+                                          <div ngbAccordionBody>
+                                            <ng-template>
+                                              <app-table
+                                                tableName="prePlanPings"
+                                                [Page]="dateEventPage"
+                                                [total]="Eventtotal"
+                                                [tableData]="
+                                                  user?.preplan_dates
+                                                "
+                                              ></app-table>
+                                            </ng-template>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </ng-template>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true">
+                <h2 ngbAccordionHeader>
+                  <button ngbAccordionButton>Pings</button>
+                </h2>
+                <div ngbAccordionCollapse>
+                  <div ngbAccordionBody>
+                    <ng-template>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div ngbAccordion [closeOthers]="true">
+                            <div
+                              ngbAccordionItem
+                              [destroyOnHide]="true"
+                              [collapsed]="false"
+                            >
+                              <h2 ngbAccordionHeader>
+                                <button ngbAccordionButton>
+                                  Date Ping Categories
+                                </button>
+                              </h2>
+                              <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                  <ng-template>
+                                    <app-table
+                                      tableName="pings_category"
+                                      [Page]="datePingsPage"
+                                      [total]="Pingstotal"
+                                      [tableData]="user?.dates"
+                                    ></app-table>
+                                  </ng-template>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              ngbAccordionItem
+                              [destroyOnHide]="true"
+                              [collapsed]="true"
+                            >
+                              <h2 ngbAccordionHeader>
+                                <button ngbAccordionButton>Date Pings</button>
+                              </h2>
+                              <div ngbAccordionCollapse>
+                                <div ngbAccordionBody>
+                                  <ng-template>
+                                    <app-table
+                                      tableName="pings"
+                                      [Page]="datePingsPage"
+                                      [total]="Pingstotal"
+                                      [tableData]="user?.dates"
+                                    ></app-table>
+                                  </ng-template>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

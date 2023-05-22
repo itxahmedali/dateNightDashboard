@@ -65,7 +65,7 @@ export class PingsComponent {
   proceed() {
     this.modalReference.close();
   }
-  save() {
+  save(modal:boolean) {
     this.http
       .loaderPost('ping-category-add', this.pingForm.value, true)
       .pipe(
@@ -75,7 +75,9 @@ export class PingsComponent {
       )
       .subscribe({
         next: () => {
+          if(modal){
             this.proceed();
+          }
           this.pingForm.reset();
         },
         complete: () => {
@@ -107,7 +109,7 @@ export class PingsComponent {
         new FormControl(data.target.checked ? 1 : 0)
       );
     }
-    this.save();
+    this.save(false);
   }
   async getPingsAndModes() {
     await this.helper.getPings()?.then((Pings: Pings) => {
@@ -115,7 +117,6 @@ export class PingsComponent {
     });
     await this.helper.getModes()?.then((Modes: DateMode) => {
       this.modes = Modes;
-      console.log(this.modes);
     });
   }
 }

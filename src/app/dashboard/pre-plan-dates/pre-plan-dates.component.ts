@@ -72,7 +72,6 @@ export class PrePlanDatesComponent {
       let selectedPings: any = [];
       ping_id?.split(',').map((ping: any) => {
         this.pings?.map((mode: any) => {
-          console.log(ping, mode, 'hello');
           if (mode.id == ping) {
             selectedPings.push(mode.id);
           }
@@ -92,9 +91,9 @@ export class PrePlanDatesComponent {
     this.modalReference.close();
   }
   async stateItem(event: any, data: any) {
-    console.log(this.Dates,"helloDates");
-    
     this.selectedPing = this.Dates?.find((e: any) => e?.id == event.id);
+    console.log(this.selectedPing,event, "hellovlaue");
+    
     if (this.selectedPing) {
       const { id, mode_id, ping_id, name, description, price } = this.selectedPing;
       const activeStatus = data.target.checked ? 1 : 0;
@@ -108,14 +107,11 @@ export class PrePlanDatesComponent {
       let selectedPings: any = [];
       ping_id?.split(',').map((ping: any) => {
         this.pings?.map((mode: any) => {
-          console.log(ping, mode, 'hello');
           if (mode.id == ping) {
             selectedPings.push(mode.id);
           }
         });
       });
-      console.log(selectedModeId,selectedPings);
-      
       this.modeForm.patchValue({
         ...this.modeForm.value,
         mode_id: selectedModeId?.id,
@@ -125,12 +121,14 @@ export class PrePlanDatesComponent {
         price,
         active_status: activeStatus,
       });
-      this.modeForm.addControl('id', new FormControl(id));
+      let ids = this.selectedPing.id
+      this.modeForm.addControl('id', new FormControl(ids));
       this.modeForm.addControl(
         'active_status',
         new FormControl(data.target.checked ? 1 : 0)
       );
-
+      console.log(this.modeForm.value,"hellovlaue");
+      
       this.save(false);
     }
   }
@@ -161,6 +159,7 @@ export class PrePlanDatesComponent {
         if(modal){
           this.proceed();
         }
+        this.modeForm.removeControl('id');
         this.modeForm.reset();
         this.getDates();
         this.toaster.success(res?.message ? res?.message : res?.messsage);

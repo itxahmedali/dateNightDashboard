@@ -59,7 +59,7 @@ export class ModesComponent {
   proceed() {
     this.modalReference.close();
   }
-  save() {
+  save(modal:boolean) {
     this.http
       .loaderPost('date-mode-add', this.modeForm.value, true)
       .pipe(
@@ -69,7 +69,9 @@ export class ModesComponent {
       )
       .subscribe({
         next: () => {
-          this.proceed();
+          if(modal){
+            this.proceed();
+          }
         },
         complete: () => {
           this.helper.setModes();
@@ -81,27 +83,6 @@ export class ModesComponent {
   async getModes() {
     await this.helper.getModes()?.then((modes: DateMode) => {
       this.Modes = modes;
-      console.log(modes);
     });
-  }
-  async stateItem(event: any, data: any) {
-    this.selectedMode = this.Modes?.find((e: any) => e?.id == event.id);
-    if (this.selectedMode) {
-      const { name, description, id } = this.selectedMode;
-      const activeStatus = data.target.checked ? 1 : 0;
-      this.modeForm.patchValue({
-        name,
-        description,
-        id,
-        active_status: activeStatus,
-      });
-      this.modeForm.addControl('id', new FormControl(this.selectedMode.id));
-      this.modeForm.addControl(
-        'active_status',
-        new FormControl(data.target.checked ? 1 : 0)
-      );
-
-      this.save();
-    }
   }
 }

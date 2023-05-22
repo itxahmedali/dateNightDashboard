@@ -72,7 +72,9 @@ export class EventChildComponent {
       )
       .subscribe({
         next: () => {
-          this.proceed();
+          if(modal){
+            this.proceed();
+          }
           this.helper.setEventChild();
           this.getEvent();
           this.eventChildForm.reset();
@@ -101,8 +103,6 @@ export class EventChildComponent {
         new FormControl(data.target.checked ? 1 : 0)
       );
     }
-    console.log(this.eventChildForm);
-
     this.save(false);
   }
   async getEvent() {

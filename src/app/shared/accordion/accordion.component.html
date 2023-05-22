@@ -1,0 +1,362 @@
+<ng-container *ngIf="tableName == 'date_person'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table
+          class="table table-dark table-borderless table-sm align-middle text-center"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone</th>
+              <th scope="col">DOB.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tableData">
+              <th scope="row">{{ item?.date_person?.id }}</th>
+              <td>{{ item?.date_person?.name || "N/A" }}</td>
+              <td>{{ item?.date_person?.email || "N/A" }}</td>
+              <td>{{ item?.date_person?.phone || "N/A" }}</td>
+              <td>{{ item?.date_person?.dob || "N/A" }}</td>
+            </tr>
+            <tr *ngIf="!tableData?.length">
+              <td colspan="5" class="text-center white">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="tableName == 'date_mode'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table
+          class="table table-dark table-borderless table-sm align-middle text-center"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tableData">
+              <th scope="row">{{ item?.date_mode?.id }}</th>
+              <td>{{ item?.date_mode?.name || "N/A" }}</td>
+              <td>
+                <span
+                  class="pointer"
+                  placement="top"
+                  [ngbTooltip]="item?.date_mode?.description || 'N/A'"
+                >
+                  {{ item?.date_mode?.description | ellipsis : 20 || "N/A" }}
+                </span>
+              </td>
+            </tr>
+            <tr *ngIf="!tableData?.length">
+              <td colspan="3" class="text-center white">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="tableName == 'mode'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table
+          class="table table-dark table-borderless table-sm align-middle text-center"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tableData">
+              <th scope="row">{{ item?.mode?.id }}</th>
+              <td>{{ item?.mode?.name || "N/A" }}</td>
+              <td>
+                <span
+                  class="pointer"
+                  placement="top"
+                  [ngbTooltip]="item?.mode?.description || 'N/A'"
+                >
+                  {{ item?.mode?.description | ellipsis : 20 || "N/A" }}
+                </span>
+              </td>
+            </tr>
+            <tr *ngIf="!tableData?.length">
+              <td colspan="3" class="text-center white">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="tableName == 'event'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table
+          class="table table-dark table-borderless table-sm align-middle text-center"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Restaurant Name</th>
+              <th scope="col">Vicinity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="tableData?.length">
+              <ng-container *ngFor="let date of tableData">
+                <ng-container *ngIf="date?.event?.length">
+                  <tr *ngFor="let item of date?.event">
+                    <th scope="row">{{ item?.id }}</th>
+                    <td>{{ item?.event_type?.name || "N/A" }}</td>
+                    <td>{{ item?.restaurant_name || "N/A" }}</td>
+                    <td>{{ item?.vicinity || "N/A" }}</td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <tr *ngIf="!tableData">
+              <td class="text-center white" colspan="4">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="tableName == 'prePlanPingsCategories'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table
+          class="table table-dark table-borderless table-sm align-middle text-center"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Category Name</th>
+              <th scope="col">Status</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="tableData.length">
+              <ng-container *ngFor="let date of tableData">
+                <ng-container *ngIf="date?.ping_category?.length">
+                  <tr *ngFor="let item of date?.ping_category">
+                    <th scope="row">{{ item?.id }}</th>
+                    <td>{{ item?.name || "N/A" }}</td>
+                    <td>{{ item?.paid_or_free || "N/A" }}</td>
+                    <td>{{ (item?.price | currency : "USD") || "N/A" }}</td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <tr *ngIf="!tableData">
+              <td class="text-center white" colspan="4">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="tableName == 'prePlanPings'">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="table-responsive">
+          <table
+            class="table table-dark table-borderless table-sm align-middle text-center"
+          >
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="tableData.length">
+                <ng-container *ngFor="let date of tableData">
+                  <ng-container *ngIf="date?.ping_category?.length">
+                    <ng-container *ngFor="let item of date?.ping_category">
+                      <ng-container *ngIf="item?.pings?.length">
+                        <tr *ngFor="let ping of item?.pings">
+                          <th scope="row">{{ item?.id }}</th>
+                          <td>{{ ping?.name || "N/A" }}</td>
+                          <td>{{ ping?.paid_or_free || "N/A" }}</td>
+                          <td>{{ (ping?.price | currency : "USD") || "N/A" }}</td>
+                        </tr>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+              <tr *ngIf="!tableData">
+                <td class="text-center white" colspan="4">No data available</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+<ng-container *ngIf="tableName == 'pings_category'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table
+          class="table table-dark table-borderless table-sm align-middle text-center"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Category Name</th>
+              <th scope="col">Status</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="tableData.length">
+              <ng-container *ngFor="let date of tableData">
+                <ng-container *ngIf="date?.pings_category?.length">
+                  <tr *ngFor="let item of date?.pings_category">
+                    <th scope="row">{{ item?.id }}</th>
+                    <td>{{ item?.name || "N/A" }}</td>
+                    <td>{{ item?.paid_or_free || "N/A" }}</td>
+                    <td>{{ (item?.price | currency : "USD") || "N/A" }}</td>
+                  </tr>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <tr *ngIf="!tableData">
+              <td class="text-center white" colspan="4">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="tableName == 'pings'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table
+          class="table table-dark table-borderless table-sm align-middle text-center"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Status</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="tableData.length">
+              <ng-container *ngFor="let date of tableData">
+                <ng-container *ngIf="date?.pings_category?.length">
+                  <ng-container *ngFor="let item of date?.pings_category">
+                    <ng-container *ngIf="item?.pings?.length">
+                      <tr *ngFor="let ping of item?.pings">
+                        <th scope="row">{{ item?.id }}</th>
+                        <td>{{ ping?.name || "N/A" }}</td>
+                        <td>{{ ping?.paid_or_free || "N/A" }}</td>
+                        <td>{{ (ping?.price | currency : "USD") || "N/A" }}</td>
+                      </tr>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <tr *ngIf="!tableData">
+              <td class="text-center white" colspan="4">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="tableName == 'reminders'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table
+          class="table table-dark table-borderless table-sm align-middle text-center"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Date</th>
+              <th scope="col">Time</th>
+              <th scope="col">Repeat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tableData">
+              <th scope="row">{{ item?.id }}</th>
+              <td>{{ item?.name || "N/A" }}</td>
+              <td>{{ item?.reminder_date || "N/A" }}</td>
+              <td>{{ item?.reminder_time || "N/A" }}</td>
+              <td>{{ item?.repeat || "N/A" }}</td>
+            </tr>
+            <tr *ngIf="!tableData?.length">
+              <td colspan="5" class="text-center white">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="tableName == 'purchases'">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="table-responsive">
+        <table
+          class="table table-dark table-borderless table-sm align-middle text-center"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Type</th>
+              <th scope="col">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tableData">
+              <th scope="row">{{ item?.id }}</th>
+              <td>{{ item?.type || "N/A" }}</td>
+              <td>{{ (item?.price | currency : "USD") || "N/A" }}</td>
+            </tr>
+            <tr *ngIf="!tableData?.length">
+              <td colspan="3" class="text-center white">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ng-container>

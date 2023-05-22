@@ -66,8 +66,9 @@
                     class="actionbtn"
                     placement="top"
                     ngbTooltip="Dates"
-                    (click)="dates = item?.dates; open(viewDates)"
+                    [routerLink]="['user-detail',item?.id]"
                   >
+                  <!-- (click)="dates = item?.dates; open(viewDates)" -->
                     <i class="fa fa-calendar mlicon"></i>
                   </button>
                   <button

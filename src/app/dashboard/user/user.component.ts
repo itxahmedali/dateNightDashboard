@@ -36,8 +36,6 @@ export class UserComponent {
     this.getUsers();
   }
   async open(content: any) {
-    console.log(this.dates, this.reminders);
-
     this.modalReference = this.modalService.open(content, {
       centered: true,
       backdrop: 'static',
@@ -50,8 +48,6 @@ export class UserComponent {
   }
   async getUsers() {
     await this.helper.getUsers()?.then((Users: Users) => {
-      console.log(Users);
-      
       this.users = Users;
     });
   }

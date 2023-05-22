@@ -9,8 +9,6 @@ export class SortByPipe implements PipeTransform {
     if (!data || !selectedSort) {
       return data;
     }
-    console.log(data, selectedSort);
-
     switch (selectedSort) {
       case 'name': {
         return data?.sort((a, b) => {

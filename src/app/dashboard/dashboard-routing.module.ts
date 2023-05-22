@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-import { DummyComponent } from './dummy/dummy.component';
 import { RoleGuard } from '../guards/role.guard';
 import { ModesComponent } from './modes/modes.component';
 import { PrePlanDatesComponent } from './pre-plan-dates/pre-plan-dates.component';
@@ -10,6 +9,7 @@ import { EventComponent } from './event/event.component';
 import { PingsComponent } from './pings/pings.component';
 import { EventChildComponent } from './event-child/event-child.component';
 import { PingChildComponent } from './ping-child/ping-child.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
 const routes: Routes = [
   {
     path: '',
@@ -47,6 +47,12 @@ const routes: Routes = [
       {
         path: 'users',
         component: UserComponent,
+        canActivate: [RoleGuard],
+        data: { allowedRoles: ['admin'] },
+      },
+      {
+        path: 'users/user-detail/:id',
+        component: UserDetailComponent,
         canActivate: [RoleGuard],
         data: { allowedRoles: ['admin'] },
       },

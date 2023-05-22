@@ -69,7 +69,9 @@ export class EventComponent {
       )
       .subscribe({
         next: () => {
-          this.proceed();
+          if(modal){
+            this.proceed();
+          }
           this.eventForm.reset();
         },
         complete: () => {
@@ -79,24 +81,6 @@ export class EventComponent {
           this.eventForm.removeControl('active_status');
         },
       });
-  }
-  async stateItem(event: any, data: any, api: string) {
-    this.selectedEvent = this.events?.find((e: any) => e?.id == event.id);
-    if (this.selectedEvent) {
-      const { id, name } = this.selectedEvent;
-      const activeStatus = data.target.checked ? 1 : 0;
-      this.eventForm.patchValue({
-        ...this.eventForm.value,
-        name,
-        active_status: activeStatus,
-      });
-      this.eventForm.addControl('id', new FormControl(id));
-      this.eventForm.addControl(
-        'active_status',
-        new FormControl(data.target.checked ? 1 : 0)
-      );
-    }
-    this.save(false);
   }
   async getEvent() {
     await this.helper.getEvents()?.then((Events: Events) => {

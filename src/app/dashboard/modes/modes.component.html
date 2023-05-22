@@ -45,12 +45,6 @@
                 <td>{{ item?.name ? item?.name : "N/A" }}</td>
                 <td> <span class="pointer" placement="top" [ngbTooltip]="item?.description"> {{ item?.description ?
                   (item?.description | ellipsis:20) : "N/A" }} </span></td>
-                  <!-- <td>
-                  <div class="toggle d-flex align-items-center w-100 justify-content-center">
-                    <input class="checkBox" type="checkbox" [checked]="item?.active_status =='1' ? true: false"
-                      [id]='"categoryStock"+i' (change)="stateItem(item,$event)"/><label [for]='"categoryStock"+i'></label>
-                  </div>
-                </td> -->
                 <td class="d-flex justify-content-center align-items-center">
                   <button class="actionbtn" (click)="selectedMode = item; open(add,'edit');">
                     <i class="fa fa-edit mlicon"></i>
@@ -106,7 +100,7 @@
       </form>
     </div>
     <div class="modal-footer d-flex justify-content-start">
-      <button class="btn add-btn" [disabled]="modeForm.invalid" (click)="save()">Save</button>
+      <button class="btn add-btn" [disabled]="modeForm.invalid" (click)="save(true)">Save</button>
       <button class="btn cancel-btn" aria-label="Close" (click)="proceed()">
         Cancel
       </button>

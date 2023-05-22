@@ -1,7 +1,5 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
 import { HelperService } from '../services/helper.service';
 import { UniversalService } from '../services/universal.service';
 import { fadeIn } from 'src/animations/itemCardAnimation';

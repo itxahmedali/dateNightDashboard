@@ -109,9 +109,6 @@ export class HeaderComponent implements OnInit {
       this.text = localStorage.getItem('heading') ? localStorage.getItem('heading') : this.heading;
       this.currentState = 'visible';
     }
-    console.log('====================================');
-    console.log(this.text);
-    console.log('====================================');
   }
   logout() {
     this.authService.logout();

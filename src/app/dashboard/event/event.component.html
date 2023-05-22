@@ -7,7 +7,6 @@
             <tr>
               <th scope="col">Id</th>
               <th scope="col">Name</th>
-              <th scope="col">Status</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -26,12 +25,6 @@
                 ">
                 <th scope="row">{{ item?.id }}</th>
                 <td>{{ item?.name ? item?.name : "N/A" }}</td>
-                  <td>
-                  <div class="toggle d-flex align-items-center w-100 justify-content-center">
-                    <input class="checkBox" type="checkbox" [checked]="item?.active_status =='1' ? true: false"
-                      [id]='"categoryStock"+i' (change)="stateItem(item,$event,'event')"/><label [for]='"categoryStock"+i'></label>
-                  </div>
-                </td>
                 <td class="d-flex justify-content-center align-items-center">
                   <button class="actionbtn" (click)="selectedEvent=item;open(addModal,'edit');">
                     <i class="fa fa-edit mlicon"></i>

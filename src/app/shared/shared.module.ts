@@ -13,15 +13,15 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { ImgComponent } from './img/img.component';
 import { SortByPipe } from '../pipes/sort.pipe';
 import { FormComponent } from './form/form.component';
-// import { EllipsisPipe } from '../pipes/ellipses.pipe';
-// import { FilterPipe } from '../pipes/filter.pipe';
+import { AccordionComponent } from './accordion/accordion.component';
 @NgModule({
   declarations: [
     EllipsisPipe,
     FilterPipe,
     ImgComponent,
     SortByPipe,
-    FormComponent
+    FormComponent,
+    AccordionComponent,
   ],
   imports: [
     CommonModule,
@@ -46,7 +46,8 @@ import { FormComponent } from './form/form.component';
     FilterPipe,
     ImgComponent,
     SortByPipe,
-    FormComponent
+    FormComponent,
+    AccordionComponent
   ]
 })
 export class SharedModule { }
