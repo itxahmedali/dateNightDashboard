@@ -18,7 +18,8 @@ import { PingsComponent } from './pings/pings.component';
 import { EventChildComponent } from './event-child/event-child.component';
 import { PingChildComponent } from './ping-child/ping-child.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
-
+import { RestaurantsComponent } from './restaurants/restaurants.component';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -29,7 +30,8 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
     PingsComponent,
     EventChildComponent,
     PingChildComponent,
-    UserDetailComponent],
+    UserDetailComponent,
+    RestaurantsComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -41,7 +43,8 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
     ReactiveFormsModule,
     FormsModule,
     NgxPaginationModule,
-    CarouselModule
+    CarouselModule,
+    GooglePlaceModule
   ]
 })
 export class DashboardModule { }

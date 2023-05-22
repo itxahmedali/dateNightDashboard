@@ -1,31 +1,12 @@
 <div class="container">
   <div class="row mt-5 align-items-center">
     <div class="col-sm-12 d-flex justify-content-end align-items-center">
-      <button class="addMenuBtn" (click)="open(addModal, 'add')">
-        <i class="fa fa-plus"></i> Add Ping Category
-      </button>
-    </div>
-    <div class="col-sm-6 d-flex justify-content-start align-items-center">
-      <div class="searchField mt-1 w-100">
-        <input
-          type="text"
-          [(ngModel)]="searchInput"
-          placeholder="Search Item"
-          class="w-100 white"
-        />
-        <i class="fa fa-search"></i>
-      </div>
-    </div>
-    <div class="col-sm-6 mt-3 mb-3 cstmDropDown">
-      <ng-select
-        class="selectAlignment"
-        placeholder="Sort By"
-        [(ngModel)]="selectedSort"
+      <button
+        class="addMenuBtn"
+        (click)="restuarantForm.reset(); open(add, 'add')"
       >
-        <ng-option *ngFor="let sort of sorts" [value]="sort.name">{{
-          sort.name
-        }}</ng-option>
-      </ng-select>
+        <i class="fa fa-plus"></i> Add Restaurant
+      </button>
     </div>
     <div class="col-sm-12 mt-1 listView">
       <div class="table-responsive">
@@ -35,23 +16,24 @@
           <thead>
             <tr>
               <th scope="col">Id</th>
-              <th scope="col">Mode Id</th>
               <th scope="col">Name</th>
-              <th scope="col">Description</th>
-              <th scope="col">Price</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Website</th>
+              <th scope="col">Sponsored</th>
+              <th scope="col">Voucher</th>
               <th scope="col">Status</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
             <ng-container
-              *ngIf="(Pings | filter : searchInput)?.length; else noData"
+              *ngIf="(Restaurants | filter : searchInput)?.length; else noData"
             >
               <tr
                 *ngFor="
                   let i = index;
                   let item;
-                  of: Pings
+                  of: Restaurants
                     | filter : searchInput
                     | sortBy : selectedSort
                     | paginate
@@ -63,24 +45,11 @@
                 "
               >
                 <th scope="row">{{ item?.id }}</th>
-                <th>{{ item?.mode_id ? item?.mode_id : "N/A" }}</th>
-                <td>{{ item?.name ? item?.name : "N/A" }}</td>
-                <td>
-                  <span
-                    class="pointer"
-                    placement="top"
-                    [ngbTooltip]="item?.description"
-                  >
-                    {{
-                      item?.description
-                        ? (item?.description | ellipsis : 20)
-                        : "N/A"
-                    }}
-                  </span>
-                </td>
-                <td>
-                  {{ item?.price ? (item?.price | currency : "USD") : "N/A" }}
-                </td>
+                <td>{{ item?.name || "N/A" }}</td>
+                <td>{{ item?.phone || "N/A" }}</td>
+                <td>{{ item?.website || "N/A" }}</td>
+                <td>{{ item?.sponsored || "N/A" }}</td>
+                <td>{{ item?.voucher || "N/A" }}</td>
                 <td>
                   <div
                     class="toggle d-flex align-items-center w-100 justify-content-center"
@@ -97,7 +66,7 @@
                 <td class="d-flex justify-content-center align-items-center">
                   <button
                     class="actionbtn"
-                    (click)="selectedPing = item; open(addModal, 'edit')"
+                    (click)="selectedRestaurant = item; open(add, 'edit')"
                   >
                     <i class="fa fa-edit mlicon"></i>
                   </button>
@@ -108,20 +77,23 @@
               </tr>
             </ng-container>
             <ng-template #noData>
-              <tr *ngIf="Pings?.length">
-                <td colspan="7" class="text-center white">
+              <tr *ngIf="Restaurants?.length">
+                <td colspan="8" class="text-center white">
                   No Matching Data Available
                 </td>
               </tr>
             </ng-template>
-            <tr *ngIf="!Pings?.length">
-              <td class="text-center white" colspan="7">No data available</td>
+            <tr *ngIf="!Restaurants?.length">
+              <td class="text-center white" colspan="8">No data available</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="col-sm-12 d-flex justify-content-end" *ngIf="Pings?.length">
+    <div
+      class="col-sm-12 d-flex justify-content-end"
+      *ngIf="Restaurants?.length"
+    >
       <pagination-controls
         previousLabel="&lsaquo;"
         nextLabel="&rsaquo;"
@@ -133,7 +105,7 @@
 </div>
 <!-- modals -->
 <ng-container>
-  <ng-template #addModal let-modal>
+  <ng-template #add let-modal>
     <div class="modal-body checkoutModal completed">
       <button
         class="btn-close"
@@ -141,27 +113,27 @@
         aria-label="Close"
         (click)="proceed()"
       ></button>
-      <h5 class="modal-title">{{ state ? "Edit Mode" : "Add Mode" }}</h5>
-      <form [formGroup]="pingForm" class="form">
+      <h5 class="modal-title">
+        {{ state ? "Edit Restaurant" : "Add PRestaurant" }}
+      </h5>
+      <form [formGroup]="restuarantForm" class="form">
         <div class="row mt-4">
           <div class="col-lg-6 mt-3">
-            <label for="" class="text-light mb-3">Mode</label>
-            <ng-select
-              placeholder="Select Mode"
-              [items]="modes"
-              bindLabel="name"
-              bindValue="id"
-              formControlName="mode_id"
-            >
-            </ng-select>
+            <label for="" class="text-light mb-3">Sponsored </label>
+            <input
+              formControlName="sponsored"
+              type="text"
+              placeholder="Sponsored"
+              class="text-light w-100"
+            />
             <div
               *ngIf="
-                pingForm.controls.mode_id.invalid &&
-                (pingForm.controls.mode_id.dirty ||
-                  pingForm.controls.mode_id.touched)
+                restuarantForm.controls.sponsored.invalid &&
+                (restuarantForm.controls.sponsored.dirty ||
+                  restuarantForm.controls.sponsored.touched)
               "
             >
-              <small class="text-danger">Mode is required</small>
+              <small class="text-danger">Sponsored is required</small>
             </div>
           </div>
           <div class="col-lg-6 mt-3">
@@ -174,8 +146,9 @@
             />
             <div
               *ngIf="
-                pingForm.controls.name.invalid &&
-                (pingForm.controls.name.dirty || pingForm.controls.name.touched)
+                restuarantForm.controls.name.invalid &&
+                (restuarantForm.controls.name.dirty ||
+                  restuarantForm.controls.name.touched)
               "
             >
               <small class="text-danger">Name is required</small>
@@ -184,57 +157,85 @@
           <div class="col-lg-6 mt-3">
             <label for="" class="text-light mb-3">Description</label>
             <input
-              formControlName="description"
+              formControlName="desc"
               type="text"
               placeholder="Description"
               class="text-light w-100"
             />
             <div
               *ngIf="
-                pingForm.controls.description.invalid &&
-                (pingForm.controls.description.dirty ||
-                  pingForm.controls.description.touched)
+                restuarantForm.controls.desc.invalid &&
+                (restuarantForm.controls.desc.dirty ||
+                  restuarantForm.controls.desc.touched)
               "
             >
               <small class="text-danger">Description is required</small>
             </div>
           </div>
           <div class="col-lg-6 mt-3">
-            <label for="" class="text-light mb-3">Status</label>
-            <ng-select
-              placeholder="Select Status"
-              [items]="status"
-              bindLabel="name"
-              bindValue="name"
-              formControlName="paid_or_free"
-            >
-            </ng-select>
-            <div
-              *ngIf="
-                pingForm.controls.paid_or_free.invalid &&
-                (pingForm.controls.paid_or_free.dirty ||
-                  pingForm.controls.paid_or_free.touched)
-              "
-            >
-              <small class="text-danger">paid_or_free is required</small>
-            </div>
-          </div>
-          <div class="col-lg-6 mt-3" *ngIf="pingForm.controls.description.value == 'paid'">
-            <label for="" class="text-light mb-3">Price</label>
+            <label for="" class="text-light mb-3">Phone</label>
             <input
-              formControlName="price"
+              formControlName="phone"
+              (keypress)="numberOnly($event)"
               type="text"
-              placeholder="Price"
+              placeholder="Phone"
               class="text-light w-100"
             />
             <div
               *ngIf="
-                pingForm.controls.price.invalid &&
-                (pingForm.controls.price.dirty ||
-                  pingForm.controls.price.touched)
+                restuarantForm.controls.phone.invalid &&
+                (restuarantForm.controls.phone.dirty || restuarantForm.controls.phone.touched)
               "
             >
-              <small class="text-danger">Price is required</small>
+              <small class="text-danger">Phone is required</small>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Location</label>
+            <input
+              formControlName="location"
+              type="text"
+              placeholder="Location"
+              class="text-light w-100"
+            />
+            <div
+              *ngIf="
+                restuarantForm.controls.location.invalid &&
+                (restuarantForm.controls.location.dirty || restuarantForm.controls.location.touched)
+              "
+            >
+              <small class="text-danger">Location is required</small>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Website</label>
+            <input
+              formControlName="website"
+              type="text"
+              placeholder="Website"
+              class="text-light w-100"
+            />
+            <div
+              *ngIf="
+                restuarantForm.controls.website.invalid &&
+                (restuarantForm.controls.website.dirty || restuarantForm.controls.website.touched)
+              "
+            >
+              <small class="text-danger">Website is required</small>
+            </div>
+          </div>
+          <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Lattitude & Longitude</label>
+            <input #placesRef class="form-control" ngx-google-places-autocomplete (onAddressChange)="onPlaceSelected($event)" />
+            <div
+              *ngIf="
+                restuarantForm.controls.lat.invalid &&
+                (restuarantForm.controls.lat.dirty || restuarantForm.controls.lat.touched)
+                && restuarantForm.controls.lng.invalid &&
+                (restuarantForm.controls.lng.dirty || restuarantForm.controls.lng.touched)
+              "
+            >
+              <small class="text-danger">Location is required</small>
             </div>
           </div>
         </div>
@@ -243,7 +244,7 @@
     <div class="modal-footer d-flex justify-content-start">
       <button
         class="btn add-btn"
-        [disabled]="pingForm.invalid"
+        [disabled]="restuarantForm.invalid"
         (click)="save(true)"
       >
         Save

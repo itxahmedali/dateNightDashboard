@@ -5,7 +5,7 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
@@ -68,6 +68,11 @@ export class HttpService {
       )
       .pipe(
         finalize(() => LoaderService.loader.next(false)),
+        tap((res: any) => {
+          if (res?.message || res?.messsage) {
+            this.toastr.success(res?.message ?res?.message : res?.messsage);
+          }
+        }),
         catchError((error: HttpErrorResponse) => {
           LoaderService.loader.next(false)
           console.log(error);
@@ -101,6 +106,11 @@ export class HttpService {
       .get(environment.baseUrl + url, token ? this.headerToken : this.header)
       .pipe(
         finalize(() => LoaderService.loader.next(false)),
+        tap((res: any) => {
+          if (res?.message || res?.messsage) {
+            this.toastr.success(res?.message ?res?.message : res?.messsage);
+          }
+        }),
         catchError((error: HttpErrorResponse) => {
           LoaderService.loader.next(false)
           if (error.status === 401) {

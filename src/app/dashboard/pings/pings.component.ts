@@ -44,7 +44,7 @@ export class PingsComponent {
   });
   public status = [{ name: 'paid' }, { name: 'free' }];
   async ngOnInit() {
-    this.helper.setPings()
+    this.helper.setPings();
     this.getPingsAndModes();
   }
   open(content: any, state: string) {
@@ -64,8 +64,9 @@ export class PingsComponent {
   }
   proceed() {
     this.modalReference.close();
+    this.pingForm.reset();
   }
-  save(modal:boolean) {
+  save(modal: boolean) {
     this.http
       .loaderPost('ping-category-add', this.pingForm.value, true)
       .pipe(
@@ -75,7 +76,7 @@ export class PingsComponent {
       )
       .subscribe({
         next: () => {
-          if(modal){
+          if (modal) {
             this.proceed();
           }
           this.pingForm.reset();
@@ -118,5 +119,13 @@ export class PingsComponent {
     await this.helper.getModes()?.then((Modes: DateMode) => {
       this.modes = Modes;
     });
+  }
+  delete(id: any) {
+    this.http
+      .loaderGet(`ping-category-delete/${id}`, true)
+      .subscribe((res: any) => {
+        this.helper.setPings();
+        this.getPingsAndModes();
+      });
   }
 }

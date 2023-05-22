@@ -58,6 +58,7 @@ export class EventComponent {
   }
   proceed() {
     this.modalReference.close();
+    this.eventForm.reset();
   }
   save(modal: boolean) {
     this.http

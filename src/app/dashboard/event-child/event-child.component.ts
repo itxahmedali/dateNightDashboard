@@ -39,7 +39,7 @@ export class EventChildComponent {
     event_id: [null, Validators.required],
   });
   async ngOnInit() {
-    this.helper.setEventChild()
+    this.helper.setEventChild();
     this.getEvent();
   }
   open(content: any, state: string) {
@@ -61,6 +61,7 @@ export class EventChildComponent {
   }
   proceed() {
     this.modalReference.close();
+    this.eventChildForm.reset();
   }
   save(modal: boolean) {
     this.http
@@ -72,7 +73,7 @@ export class EventChildComponent {
       )
       .subscribe({
         next: () => {
-          if(modal){
+          if (modal) {
             this.proceed();
           }
           this.helper.setEventChild();
@@ -114,6 +115,16 @@ export class EventChildComponent {
     });
   }
   matchEvents(id: any) {
-    return this.events?.filter((event: any) => event.id == id).map((event: any) => event.name);
+    return this.events
+      ?.filter((event: any) => event.id == id)
+      .map((event: any) => event.name);
+  }
+  delete(id: any) {
+    this.http
+      .loaderGet(`events-child-delete/${id}`, true)
+      .subscribe((res: any) => {
+        this.helper.setEventChild();
+        this.getEvent();
+      });
   }
 }

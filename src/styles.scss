@@ -4,40 +4,47 @@
 // ng select
 @import "@ng-select/ng-select/themes/default.theme.css";
 // carusel
-@import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
-@import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
+@import "ngx-owl-carousel-o/lib/styles/scss/owl.carousel";
+@import "ngx-owl-carousel-o/lib/styles/scss/owl.theme.default";
 // fontawesome icons
 $font-awesome: FontAwesome;
 // toaster
-@import 'ngx-toastr/toastr';
+@import "ngx-toastr/toastr";
 // fonts families
 @font-face {
   font-family: "josefinsemibold";
-  src: local("josefinsemibold"), url(./assets/fonts/josefin/JosefinSans-SemiBold.ttf) format("truetype");
+  src: local("josefinsemibold"),
+    url(./assets/fonts/josefin/JosefinSans-SemiBold.ttf) format("truetype");
 }
 @font-face {
   font-family: "josefinbold";
-  src: local("josefinbold"), url(./assets/fonts/josefin/JosefinSans-Bold.ttf) format("truetype");
+  src: local("josefinbold"),
+    url(./assets/fonts/josefin/JosefinSans-Bold.ttf) format("truetype");
 }
 @font-face {
   font-family: "josefinsemiregular";
-  src: local("josefinsemiregular"), url(./assets/fonts/josefin/JosefinSans-Regular.ttf) format("truetype");
+  src: local("josefinsemiregular"),
+    url(./assets/fonts/josefin/JosefinSans-Regular.ttf) format("truetype");
 }
 @font-face {
   font-family: "josefinsemilight";
-  src: local("josefinsemilight"), url(./assets/fonts/josefin/JosefinSans-Light.ttf) format("truetype");
+  src: local("josefinsemilight"),
+    url(./assets/fonts/josefin/JosefinSans-Light.ttf) format("truetype");
 }
 @font-face {
   font-family: "poppinsbold";
-  src: local("poppinsbold"), url(./assets/fonts/Poppins/Poppins-Bold.ttf) format("truetype");
+  src: local("poppinsbold"),
+    url(./assets/fonts/Poppins/Poppins-Bold.ttf) format("truetype");
 }
 @font-face {
   font-family: "poppinsregular";
-  src: local("poppinsregular"), url(./assets/fonts/Poppins/Poppins-Regular.ttf) format("truetype");
+  src: local("poppinsregular"),
+    url(./assets/fonts/Poppins/Poppins-Regular.ttf) format("truetype");
 }
 @font-face {
   font-family: "poppinslight";
-  src: local("poppinslight"), url(./assets/fonts/Poppins/Poppins-Light.ttf) format("truetype");
+  src: local("poppinslight"),
+    url(./assets/fonts/Poppins/Poppins-Light.ttf) format("truetype");
 }
 // themes colors
 :root {
@@ -118,18 +125,22 @@ body {
     }
   }
 }
-td{
+td {
   text-transform: capitalize;
 }
-.mainBg{
-  &:after{
+.mainBg {
+  &:after {
     opacity: 0.7;
-    background: linear-gradient(to right, var(--banner-primary-color), var(--banner-secondary-color));
+    background: linear-gradient(
+      to right,
+      var(--banner-primary-color),
+      var(--banner-secondary-color)
+    );
   }
 }
 .welcomeForm {
   overflow: hidden;
-  &:after{
+  &:after {
     content: "";
     position: absolute;
     top: 0;
@@ -139,8 +150,13 @@ td{
     height: 100%;
     z-index: -10;
     opacity: 0.7;
-    background: linear-gradient(to bottom, var(--bannerForm-primary-color), var(--bannerForm-secondary-color));}
+    background: linear-gradient(
+      to bottom,
+      var(--bannerForm-primary-color),
+      var(--bannerForm-secondary-color)
+    );
   }
+}
 
 // backbutton
 .backBtn {
@@ -196,60 +212,58 @@ td{
     color: #2bbbbb;
   }
 }
-.table{
+.table {
   font-family: josefinsemilight;
-  thead{
-    th{
-      &:first-child{
+  thead {
+    th {
+      &:first-child {
         border-top-left-radius: 10px;
-
       }
-      &:last-child{
+      &:last-child {
         border-top-right-radius: 10px;
-
       }
     }
-
   }
-  tbody{
-    tr{
-      td,th{
-      background-color: #343434;
+  tbody {
+    tr {
+      td,
+      th {
+        background-color: #343434;
       }
-      &:last-child{
-        td{
-          &:first-child{
+      &:last-child {
+        td {
+          &:first-child {
             border-bottom-left-radius: 10px !important;
           }
-          &:last-child{
+          &:last-child {
             border-bottom-right-radius: 10px !important;
           }
-
         }
-        td,th{
-          &:first-child{
+        td,
+        th {
+          &:first-child {
             border-bottom-left-radius: 10px;
           }
         }
       }
     }
   }
-  thead,tbody{
-    tr{
-      th,td{
+  thead,
+  tbody {
+    tr {
+      th,
+      td {
         padding: 15px 0;
-
       }
     }
   }
 }
-.modal-body{
+.modal-body {
   padding: 40px 30px !important;
-  .btn-close{
+  .btn-close {
     position: absolute;
-      top: 10px;
-      left: 10px;
-
+    top: 10px;
+    left: 10px;
   }
 }
 .heading {
@@ -277,7 +291,7 @@ td{
     font-family: poppinsbold;
   }
 }
-.imgUploadedBox{
+.imgUploadedBox {
   width: 200px;
   height: 100%;
   overflow: hidden;
@@ -418,7 +432,7 @@ td{
   border-radius: 10px !important;
   border: none !important;
   min-height: 40px !important;
-  color:var(--headings-primary-color);
+  color: var(--headings-primary-color);
   height: 45px !important;
 }
 .noBg {
@@ -432,7 +446,7 @@ td{
 ::-webkit-scrollbar {
   width: 10px;
 }
-.exportFile{
+.exportFile {
   cursor: pointer;
   color: var(--headings-primary-color);
 }
@@ -464,12 +478,12 @@ td{
   margin: 10px 0;
 
   cursor: pointer;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .rad-label:hover,
 .rad-label:focus-within {
-  background: hsla(0, 0%, 80%, .14);
+  background: hsla(0, 0%, 80%, 0.14);
 }
 
 .rad-input {
@@ -487,12 +501,16 @@ td{
   height: 22px;
   border-radius: 100px;
 
-  background: linear-gradient(to right bottom, hsl(154, 97%, 62%), hsl(225, 97%, 62%));
+  background: linear-gradient(
+    to right bottom,
+    hsl(154, 97%, 62%),
+    hsl(225, 97%, 62%)
+  );
   position: relative;
 }
 
 .rad-design::before {
-  content: '';
+  content: "";
 
   display: inline-block;
   width: inherit;
@@ -501,10 +519,10 @@ td{
 
   background: hsl(0, 0%, 90%);
   transform: scale(1.1);
-  transition: .3s;
+  transition: 0.3s;
 }
 
-.rad-input:checked+.rad-design::before {
+.rad-input:checked + .rad-design::before {
   transform: scale(0);
 }
 
@@ -516,10 +534,10 @@ td{
   font-size: 18px;
   font-weight: 900;
 
-  transition: .3s;
+  transition: 0.3s;
 }
 
-.rad-input:checked~.rad-text {
+.rad-input:checked ~ .rad-text {
   color: hsl(0, 0%, 40%);
 }
 // commons
@@ -564,27 +582,27 @@ td{
     background-color: #5cf07d;
   }
 }
-.cursorPointer{
+.cursorPointer {
   cursor: pointer;
 }
 .table-dark {
   --bs-table-bg: #444444 !important;
 }
-.blod{
+.blod {
   font-weight: bold;
 }
 // qrcode scan button
-.scanButton{
+.scanButton {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100px;
-  button{
-      background: none;
-      border: none;
-      color: #5AF4FE;
-      font-size: 20px;
-      font-family: josefinbold;
+  button {
+    background: none;
+    border: none;
+    color: #5af4fe;
+    font-size: 20px;
+    font-family: josefinbold;
   }
 }
 .add-table {
@@ -593,38 +611,38 @@ td{
   background: transparent;
   border: none;
 }
-.capitalize{
+.capitalize {
   text-transform: capitalize;
 }
-button:disabled{
+button:disabled {
   cursor: not-allowed;
 }
-.white{
+.white {
   color: #fff;
 }
-.cstmDropDown.inner{
+.cstmDropDown.inner {
   background-color: #3a3a3a;
-    border-radius: 10px;
+  border-radius: 10px;
 }
-.pointer{
+.pointer {
   cursor: pointer;
 }
-.cancelconfirmation{
-  button{
+.cancelconfirmation {
+  button {
     padding: 10px 40px;
   }
 }
-.maxWidth100{
+.maxWidth100 {
   max-width: 100% !important;
 }
-.ngx-toastr{
+.ngx-toastr {
   margin-bottom: 10px !important;
 }
-button:disabled{
+button:disabled {
   cursor: not-allowed;
 }
-.expand{
-  &::before{
+.expand {
+  &::before {
     content: "";
     position: absolute;
     top: 0;
@@ -636,7 +654,7 @@ button:disabled{
     background: #0000000f;
   }
 }
-.error{
+.error {
   color: red;
 }
 /* Chrome, Safari, Edge, Opera */
@@ -647,7 +665,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 // modal Css
@@ -656,6 +674,9 @@ input[type=number] {
 }
 .modal-footer {
   border-top: none;
+}
+::ng-deep .pac-container {
+  z-index: 10000000 !important;
 }
 
 .form input,

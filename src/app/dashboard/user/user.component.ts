@@ -14,9 +14,6 @@ import { Users } from 'src/classes';
 export class UserComponent {
   constructor(
     private modalService: NgbModal,
-    private http: HttpService,
-    private fb: FormBuilder,
-    private toaster: ToastrService,
     private helper: HelperService
   ) {}
   public modalReference: any;

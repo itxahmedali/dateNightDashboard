@@ -14,6 +14,8 @@ import { ImgComponent } from './img/img.component';
 import { SortByPipe } from '../pipes/sort.pipe';
 import { FormComponent } from './form/form.component';
 import { AccordionComponent } from './accordion/accordion.component';
+
+import { AutoPlaceComponent } from './auto-place/auto-place.component';
 @NgModule({
   declarations: [
     EllipsisPipe,
@@ -22,6 +24,7 @@ import { AccordionComponent } from './accordion/accordion.component';
     SortByPipe,
     FormComponent,
     AccordionComponent,
+    AutoPlaceComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +50,8 @@ import { AccordionComponent } from './accordion/accordion.component';
     ImgComponent,
     SortByPipe,
     FormComponent,
-    AccordionComponent
+    AccordionComponent,
+    AutoPlaceComponent
   ]
 })
 export class SharedModule { }

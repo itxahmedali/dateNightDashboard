@@ -89,11 +89,10 @@ export class PrePlanDatesComponent {
   }
   proceed() {
     this.modalReference.close();
+    this.modeForm.reset();
   }
   async stateItem(event: any, data: any) {
     this.selectedPing = this.Dates?.find((e: any) => e?.id == event.id);
-    console.log(this.selectedPing,event, "hellovlaue");
-    
     if (this.selectedPing) {
       const { id, mode_id, ping_id, name, description, price } = this.selectedPing;
       const activeStatus = data.target.checked ? 1 : 0;
@@ -107,6 +106,7 @@ export class PrePlanDatesComponent {
       let selectedPings: any = [];
       ping_id?.split(',').map((ping: any) => {
         this.pings?.map((mode: any) => {
+          console.log(ping,mode, "hellovlaue");
           if (mode.id == ping) {
             selectedPings.push(mode.id);
           }
@@ -164,5 +164,10 @@ export class PrePlanDatesComponent {
         this.getDates();
         this.toaster.success(res?.message ? res?.message : res?.messsage);
       });
+  }
+  delete(id:any){
+    this.http.loaderGet(`pre-plan-dates-delete/${id}`,true).subscribe((res:any)=>{
+      this.getDates();
+    })
   }
 }

@@ -67,6 +67,7 @@ export class PingChildComponent {
   }
   proceed() {
     this.modalReference.close();
+    this.pingForm.reset();
   }
   save(modal: boolean) {
     this.http
@@ -127,5 +128,13 @@ export class PingChildComponent {
   }
   matchPings(id: any) {
     return this.Pings?.filter((ping: any) => ping.id == id).map((ping: any) => ping.name);
+  }
+  delete(id: any) {
+    this.http
+      .loaderGet(`pings-delete/${id}`, true)
+      .subscribe((res: any) => {
+        this.helper.setPingsChild();
+          this.getPingsAndModes();
+      });
   }
 }

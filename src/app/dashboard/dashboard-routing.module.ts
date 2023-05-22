@@ -10,6 +10,7 @@ import { PingsComponent } from './pings/pings.component';
 import { EventChildComponent } from './event-child/event-child.component';
 import { PingChildComponent } from './ping-child/ping-child.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { RestaurantsComponent } from './restaurants/restaurants.component';
 const routes: Routes = [
   {
     path: '',
@@ -65,6 +66,12 @@ const routes: Routes = [
       {
         path: 'pings',
         component: PingChildComponent,
+        canActivate: [RoleGuard],
+        data: { allowedRoles: ['admin'] },
+      },
+      {
+        path: 'restaurants',
+        component: RestaurantsComponent,
         canActivate: [RoleGuard],
         data: { allowedRoles: ['admin'] },
       },

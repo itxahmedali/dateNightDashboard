@@ -60,7 +60,7 @@
                   <button class="actionbtn" (click)="selectedPing=item;open(add,'edit');">
                     <i class="fa fa-edit mlicon"></i>
                   </button>
-                  <button class="actionbtn">
+                  <button class="actionbtn" (click)="delete(item?.id)">
                     <i class="fa fa-trash mlicon"></i>
                   </button>
                 </td>
