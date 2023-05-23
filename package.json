@@ -22,6 +22,7 @@
     "@ng-bootstrap/ng-bootstrap": "^14.0.1",
     "@ng-select/ng-select": "^10.0.3",
     "@popperjs/core": "^2.11.6",
+    "angular-datatables": "15.0.1",
     "animate.css": "^4.1.1",
     "apexcharts": "^3.40.0",
     "bootstrap": "^5.2.3",

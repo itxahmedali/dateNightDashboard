@@ -219,7 +219,7 @@
               <small class="text-danger">paid_or_free is required</small>
             </div>
           </div>
-          <div class="col-lg-6 mt-3" *ngIf="pingForm.controls.description.value == 'paid'">
+          <div class="col-lg-6 mt-3" *ngIf="pingForm.controls.paid_or_free.value == 'paid'">
             <label for="" class="text-light mb-3">Price</label>
             <input
               formControlName="price"
@@ -230,8 +230,7 @@
             <div
               *ngIf="
                 pingForm.controls.price.invalid &&
-                (pingForm.controls.price.dirty ||
-                  pingForm.controls.price.touched)
+                (pingForm.controls.price.dirty || pingForm.controls.price.touched)
               "
             >
               <small class="text-danger">Price is required</small>

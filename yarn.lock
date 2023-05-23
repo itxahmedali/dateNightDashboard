@@ -2014,6 +2014,11 @@ ajv@^6.12.5:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
+angular-datatables@15.0.1:
+  version "15.0.1"
+  resolved "https://registry.yarnpkg.com/angular-datatables/-/angular-datatables-15.0.1.tgz#8d85304987d7498709d6df62de1bf9fa39896056"
+  integrity sha512-dNck9aEDj9p7EzwtGfwOVS4s09f7gecgCfyPd/vwqoFVmPh5Lkb0gKofWZbaxSAx+TgU5VQhxOCdxOZh0kkIEw==
+
 animate.css@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/animate.css/-/animate.css-4.1.1.tgz#614ec5a81131d7e4dc362a58143f7406abd68075"

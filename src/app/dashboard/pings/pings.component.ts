@@ -40,7 +40,7 @@ export class PingsComponent {
     name: [null, Validators.required],
     description: [null, Validators.required],
     paid_or_free: [null, Validators.required],
-    price: [0, Validators.required],
+    price: [0],
   });
   public status = [{ name: 'paid' }, { name: 'free' }];
   async ngOnInit() {
@@ -56,9 +56,18 @@ export class PingsComponent {
     this.state = state == 'edit' ? true : false;
     if (state == 'edit') {
       this.pingForm.addControl('id', new FormControl(this.selectedPing?.id));
+      let selectedModeId: any;
+      this.modes?.map((mode: any) => {
+        if (mode.id == this.selectedPing.mode_id) {
+          selectedModeId = mode.id;
+        }
+      });
       this.pingForm.patchValue({
         name: this.selectedPing?.name,
         description: this.selectedPing?.description,
+        mode_id:selectedModeId,
+        paid_or_free:this.selectedPing.paid_or_free,
+        price:this.selectedPing.price,
       });
     }
   }

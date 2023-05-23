@@ -33,7 +33,7 @@
           </div>
           <div class="col-sm-12 mt-5">
             <div ngbAccordion [closeOthers]="true">
-              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="false">
+              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="false" *ngIf="user?.dates && user?.dates?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Dates</button>
                 </h2>
@@ -47,6 +47,7 @@
                               ngbAccordionItem
                               [destroyOnHide]="true"
                               [collapsed]="false"
+                              *ngIf="user?.dates"
                             >
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Person</button>
@@ -68,6 +69,7 @@
                               ngbAccordionItem
                               [destroyOnHide]="true"
                               [collapsed]="true"
+                              *ngIf="user?.dates"
                             >
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Mode</button>
@@ -89,6 +91,7 @@
                               ngbAccordionItem
                               [destroyOnHide]="true"
                               [collapsed]="true"
+                              *ngIf="user?.dates"
                             >
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Events</button>
@@ -113,7 +116,7 @@
                   </div>
                 </div>
               </div>
-              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true">
+              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.reminders && user?.reminders?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Reminders</button>
                 </h2>
@@ -130,7 +133,7 @@
                   </div>
                 </div>
               </div>
-              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true">
+              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.user_purchases && user?.user_purchases?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Purchases</button>
                 </h2>
@@ -147,7 +150,7 @@
                   </div>
                 </div>
               </div>
-              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true">
+              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Pre Plan Dates</button>
                 </h2>
@@ -161,6 +164,7 @@
                               ngbAccordionItem
                               [destroyOnHide]="true"
                               [collapsed]="true"
+                              *ngIf="user?.preplan_dates"
                             >
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Mode</button>
@@ -182,6 +186,7 @@
                               ngbAccordionItem
                               [destroyOnHide]="true"
                               [collapsed]="true"
+                              *ngIf="user?.preplan_dates"
                             >
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>
@@ -202,6 +207,7 @@
                                         ngbAccordionItem
                                         [destroyOnHide]="true"
                                         [collapsed]="true"
+                                        *ngIf="user?.preplan_dates"
                                       >
                                         <h2 ngbAccordionHeader>
                                           <button ngbAccordionButton>
@@ -235,7 +241,7 @@
                   </div>
                 </div>
               </div>
-              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true">
+              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Pings</button>
                 </h2>
@@ -249,6 +255,7 @@
                               ngbAccordionItem
                               [destroyOnHide]="true"
                               [collapsed]="false"
+                              *ngIf="user?.dates"
                             >
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>
@@ -272,6 +279,7 @@
                               ngbAccordionItem
                               [destroyOnHide]="true"
                               [collapsed]="true"
+                              *ngIf="user?.dates"
                             >
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Pings</button>
