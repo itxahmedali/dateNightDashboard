@@ -225,21 +225,45 @@
             </div>
           </div>
           <div class="col-lg-6 mt-3">
-            <label for="" class="text-light mb-3">Lattitude & Longitude</label>
-            <input #placesRef class="form-control" ngx-google-places-autocomplete (onAddressChange)="onPlaceSelected($event)" />
-            <div
-              *ngIf="
-                restuarantForm.controls.lat.invalid &&
-                (restuarantForm.controls.lat.dirty || restuarantForm.controls.lat.touched)
-                && restuarantForm.controls.lng.invalid &&
-                (restuarantForm.controls.lng.dirty || restuarantForm.controls.lng.touched)
-              "
-            >
-              <small class="text-danger">Location is required</small>
-            </div>
+            <label for="" class="text-light mb-3">Address</label>
+            <input [(ngModel)]="address" [ngModelOptions]="{ standalone: true }" ngx-google-places-autocomplete (onAddressChange)="onPlaceSelected($event)" placeholder="Enter Location" />
           </div>
         </div>
       </form>
+    </div>
+    <div class="modal-footer d-flex justify-content-start">
+      <button
+        class="btn add-btn"
+        [disabled]="restuarantForm.invalid"
+        (click)="save(true)"
+      >
+        Save
+      </button>
+      <button class="btn cancel-btn" aria-label="Close" (click)="proceed()">
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
+<!-- modals -->
+<ng-container>
+  <ng-template #Location let-modal>
+    <div class="modal-body checkoutModal completed">
+      <button
+        class="btn-close"
+        id="checkoutClose"
+        aria-label="Close"
+        (click)="proceed()"
+      ></button>
+      <h5 class="modal-title">
+        {{ state ? "Edit Restaurant" : "Add PRestaurant" }}
+      </h5>
+        <div class="row mt-4">
+          <div class="col-lg-12 mt-3">
+            <label for="" class="text-light mb-3">Address</label>
+            <input #placesRef class="form-control" ngx-google-places-autocomplete (onAddressChange)="onPlaceSelected($event)" />
+          </div>
+        </div>
     </div>
     <div class="modal-footer d-flex justify-content-start">
       <button

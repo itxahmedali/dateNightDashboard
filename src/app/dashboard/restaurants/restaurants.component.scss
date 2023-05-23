@@ -1,3 +1,6 @@
 ::ng-deep .pac-container {
     z-index: 10000000 !important;
   }
+  .form input, .form textarea, .imgBox {
+    color: #fff;
+}

@@ -12,7 +12,7 @@ import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
   templateUrl: './restaurants.component.html',
   styleUrls: ['./restaurants.component.scss'],
 })
-export class RestaurantsComponent {
+export default class RestaurantsComponent {
   constructor(
     private modalService: NgbModal,
     private http: HttpService,
@@ -47,7 +47,9 @@ export class RestaurantsComponent {
   public modes: any;
   public selectedRestaurant: any;
   public pings: any;
-  @ViewChild('placesRef', { static: false, read: GooglePlaceDirective }) placesRef!: any;
+  @ViewChild('placesRef', { static: false, read: GooglePlaceDirective })
+  placesRef!: any;
+  public address!:any
   async ngOnInit() {
     this.getRestaurant();
   }
@@ -77,7 +79,7 @@ export class RestaurantsComponent {
         lng,
         active_status,
       } = this.selectedRestaurant;
-      this.setPlaceByLatLng(lat,lng)
+      this.setPlaceByLatLng(lat, lng);
       this.restuarantForm.patchValue({
         ...this.restuarantForm.value,
         sponsored,
@@ -94,6 +96,9 @@ export class RestaurantsComponent {
         'active_status',
         new FormControl(active_status)
       );
+    }
+    else{
+      this.address = null
     }
   }
   proceed() {
@@ -159,21 +164,15 @@ export class RestaurantsComponent {
     const lat = predictions?.geometry.location.lat();
     const lng = predictions?.geometry.location.lng();
     this.restuarantForm.patchValue({
-      lat:lat,
-      lng:lng
-    })
+      lat: lat,
+      lng: lng,
+    });
   }
   setPlaceByLatLng(lat: number, lng: number): void {
-    const place = {
-      geometry: {
-        location: {
-          lat: () => lat,
-          lng: () => lng
-        }
-      }
-    };
-    if (this.placesRef) {
-      this.placesRef.directiveRef.setAddress(place);
-    }
-  }
+    this.http.getAddressFromLatLng(lat, lng).subscribe((res:any)=>{
+      const formattedAddress = res.results[0].formatted_address;
+      console.log(formattedAddress);
+      this.address = formattedAddress;
+    })
+  }  
 }

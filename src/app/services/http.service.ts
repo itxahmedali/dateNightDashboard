@@ -122,4 +122,28 @@ export class HttpService {
         })
       );
   }
+  getAddressFromLatLng(lat: number, lng: number) {
+    LoaderService.loader.next(true);
+    const apiKey = 'AIzaSyCYvOXB3SFyyeR0usVOgnLyoDiAd2XDunU';
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+    return this.http
+    .get(url)
+    .pipe(
+      finalize(() => LoaderService.loader.next(false)),
+      tap((res: any) => {
+        if (res?.message || res?.messsage) {
+          this.toastr.success(res?.message ?res?.message : res?.messsage);
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        LoaderService.loader.next(false)
+        if (error.status === 401) {
+          this.authService.logout();
+        } else {
+          this.toastr.error(error.message);
+        }
+        return throwError(error.message || 'Server error');
+      })
+    );
+  }
 }
