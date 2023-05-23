@@ -20,6 +20,8 @@ import { PingChildComponent } from './ping-child/ping-child.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import RestaurantsComponent from './restaurants/restaurants.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { AgmCoreModule } from '@agm/core';
+// import { AgmCoreModule } from '@agm/core';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -46,6 +48,9 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
     NgxPaginationModule,
     CarouselModule,
     GooglePlaceModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCYvOXB3SFyyeR0usVOgnLyoDiAd2XDunU'
+    })
   ],
 })
 export class DashboardModule {}

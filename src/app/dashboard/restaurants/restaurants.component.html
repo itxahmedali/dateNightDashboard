@@ -184,7 +184,8 @@
             <div
               *ngIf="
                 restuarantForm.controls.phone.invalid &&
-                (restuarantForm.controls.phone.dirty || restuarantForm.controls.phone.touched)
+                (restuarantForm.controls.phone.dirty ||
+                  restuarantForm.controls.phone.touched)
               "
             >
               <small class="text-danger">Phone is required</small>
@@ -201,7 +202,8 @@
             <div
               *ngIf="
                 restuarantForm.controls.location.invalid &&
-                (restuarantForm.controls.location.dirty || restuarantForm.controls.location.touched)
+                (restuarantForm.controls.location.dirty ||
+                  restuarantForm.controls.location.touched)
               "
             >
               <small class="text-danger">Location is required</small>
@@ -218,15 +220,46 @@
             <div
               *ngIf="
                 restuarantForm.controls.website.invalid &&
-                (restuarantForm.controls.website.dirty || restuarantForm.controls.website.touched)
+                (restuarantForm.controls.website.dirty ||
+                  restuarantForm.controls.website.touched)
               "
             >
               <small class="text-danger">Website is required</small>
             </div>
           </div>
-          <div class="col-lg-6 mt-3">
+          <div class="col-lg-12 mt-3 d-flex w-100 flex-column">
             <label for="" class="text-light mb-3">Address</label>
-            <input [(ngModel)]="address" [ngModelOptions]="{ standalone: true }" ngx-google-places-autocomplete (onAddressChange)="onPlaceSelected($event)" placeholder="Enter Location" />
+            <input
+              [(ngModel)]="address"
+              [ngModelOptions]="{ standalone: true }"
+              ngx-google-places-autocomplete
+              (onAddressChange)="onPlaceSelected($event)"
+              placeholder="Enter Location"
+            />
+            <agm-map
+              [latitude]="currentLat"
+              [longitude]="currentLng"
+              [zoom]="17"
+              [disableDefaultUI]="false"
+              [zoomControl]="false"
+            >
+              <agm-marker
+                [latitude]="currentLat"
+                [longitude]="currentLng"
+                [markerDraggable]="true"
+                (dragEnd)="markerDragEnd($event)"
+              >
+              </agm-marker>
+              <agm-circle
+                [latitude]="currentLat + 0.3"
+                [longitude]="currentLng"
+                [radius]="5000"
+                [fillColor]="'red'"
+                [circleDraggable]="true"
+                [editable]="true"
+              >
+              </agm-circle>
+            </agm-map>
           </div>
         </div>
       </form>
@@ -258,12 +291,17 @@
       <h5 class="modal-title">
         {{ state ? "Edit Restaurant" : "Add PRestaurant" }}
       </h5>
-        <div class="row mt-4">
-          <div class="col-lg-12 mt-3">
-            <label for="" class="text-light mb-3">Address</label>
-            <input #placesRef class="form-control" ngx-google-places-autocomplete (onAddressChange)="onPlaceSelected($event)" />
-          </div>
+      <div class="row mt-4">
+        <div class="col-lg-12 mt-3">
+          <label for="" class="text-light mb-3">Address</label>
+          <input
+            #placesRef
+            class="form-control"
+            ngx-google-places-autocomplete
+            (onAddressChange)="onPlaceSelected($event)"
+          />
         </div>
+      </div>
     </div>
     <div class="modal-footer d-flex justify-content-start">
       <button

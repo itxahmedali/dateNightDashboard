@@ -2,7 +2,6 @@ import { NgbCarouselModule, NgbModule, NgbTooltip } from '@ng-bootstrap/ng-boots
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedRoutingModule } from './shared-routing.module';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -14,8 +13,8 @@ import { ImgComponent } from './img/img.component';
 import { SortByPipe } from '../pipes/sort.pipe';
 import { FormComponent } from './form/form.component';
 import { AccordionComponent } from './accordion/accordion.component';
-
 import { AutoPlaceComponent } from './auto-place/auto-place.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     EllipsisPipe,
@@ -51,7 +50,8 @@ import { AutoPlaceComponent } from './auto-place/auto-place.component';
     SortByPipe,
     FormComponent,
     AccordionComponent,
-    AutoPlaceComponent
+    AutoPlaceComponent,
+    NgxPaginationModule
   ]
 })
 export class SharedModule { }

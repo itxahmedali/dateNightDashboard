@@ -6,7 +6,13 @@ import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from 'src/app/services/http.service';
 import { AutoPlaceComponent } from 'src/app/shared/auto-place/auto-place.component';
 import { DateMode } from 'src/classes';
-import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
+// import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
+interface marker {
+  lat: number;
+  lng: number;
+  label?: string;
+  draggable: boolean;
+}
 @Component({
   selector: 'app-restaurants',
   templateUrl: './restaurants.component.html',
@@ -28,12 +34,15 @@ export default class RestaurantsComponent {
   public modalReference: any;
   public MenuSelected: any;
   public state!: boolean;
-  // public pingids: any[] = [];
+  // google maps zoom level
+  zoom: number = 15;
   public sorts = [
     { id: 1, name: 'name' },
     { id: 2, name: 'date' },
   ];
   public Restaurants!: any;
+  currentLat!: number;
+  currentLng!: number;
   public restuarantForm: any = this.fb.group({
     sponsored: [null, Validators.required],
     desc: [null, Validators.required],
@@ -47,9 +56,7 @@ export default class RestaurantsComponent {
   public modes: any;
   public selectedRestaurant: any;
   public pings: any;
-  @ViewChild('placesRef', { static: false, read: GooglePlaceDirective })
-  placesRef!: any;
-  public address!:any
+  public address!: any;
   async ngOnInit() {
     this.getRestaurant();
   }
@@ -96,9 +103,13 @@ export default class RestaurantsComponent {
         'active_status',
         new FormControl(active_status)
       );
-    }
-    else{
-      this.address = null
+    } else {
+      this.address = null;
+      this.helper.getPosition().then((pos: any) => {
+        this.currentLat = pos.lat;
+        this.currentLng = pos.lng;
+        console.log(`Positon: ${pos.lng} ${pos.lat}`);
+      });
     }
   }
   proceed() {
@@ -160,19 +171,35 @@ export default class RestaurantsComponent {
     return true;
   }
   onPlaceSelected(predictions: any) {
-    console.log(predictions);
     const lat = predictions?.geometry.location.lat();
     const lng = predictions?.geometry.location.lng();
+    this.currentLat = Number(lat);
+    this.currentLng = Number(lng);
     this.restuarantForm.patchValue({
-      lat: lat,
-      lng: lng,
+      lat: this.currentLat,
+      lng: this.currentLng,
     });
   }
+  
   setPlaceByLatLng(lat: number, lng: number): void {
-    this.http.getAddressFromLatLng(lat, lng).subscribe((res:any)=>{
+    const latitude = Number(lat);
+    const longitude = Number(lng);
+    this.currentLat = latitude;
+    this.currentLng = longitude;
+    this.http.getAddressFromLatLng(latitude, longitude).subscribe((res: any) => {
       const formattedAddress = res.results[0].formatted_address;
-      console.log(formattedAddress);
       this.address = formattedAddress;
-    })
-  }  
+    });
+    this.restuarantForm.patchValue({
+      lat: latitude,
+      lng: longitude,
+    });
+  }
+  
+  markerDragEnd($event: any) {
+    this.currentLat = $event.coords.lat;
+    this.currentLng = $event.coords.lng;
+    this.setPlaceByLatLng(this.currentLat, this.currentLng);
+  }
+  
 }

@@ -143,6 +143,20 @@ export class HelperService {
   async setPings() {
     this.pingsPromise = this.loadPings();
   }
+  getPosition(): Promise<any>
+  {
+    return new Promise((resolve, reject) => {
+
+      navigator.geolocation.getCurrentPosition(resp => {
+
+          resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
+        },
+        err => {
+          reject(err);
+        });
+    });
+
+  }
   public async loadPings(): Promise<Pings[]> {
     const res: any = await this.http
       .loaderGet('ping-category', true)

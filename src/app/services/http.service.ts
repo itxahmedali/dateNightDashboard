@@ -23,7 +23,7 @@ export class HttpService {
   header = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      "Access-Control-Allow-Origin" : '*',
+      'Access-Control-Allow-Origin': '*',
     }),
   };
 
@@ -32,7 +32,7 @@ export class HttpService {
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin" : '*',
+        'Access-Control-Allow-Origin': '*',
         Authorization: `Bearer ${token}`,
       }),
     };
@@ -58,7 +58,7 @@ export class HttpService {
         })
       );
   }
-  loaderPost(link:string, data:any, token:boolean) {
+  loaderPost(link: string, data: any, token: boolean) {
     LoaderService.loader.next(true);
     return this.http
       .post(
@@ -70,11 +70,11 @@ export class HttpService {
         finalize(() => LoaderService.loader.next(false)),
         tap((res: any) => {
           if (res?.message || res?.messsage) {
-            this.toastr.success(res?.message ?res?.message : res?.messsage);
+            this.toastr.success(res?.message ? res?.message : res?.messsage);
           }
         }),
         catchError((error: HttpErrorResponse) => {
-          LoaderService.loader.next(false)
+          LoaderService.loader.next(false);
           console.log(error);
           if (error.status === 401) {
             this.authService.logout();
@@ -108,11 +108,11 @@ export class HttpService {
         finalize(() => LoaderService.loader.next(false)),
         tap((res: any) => {
           if (res?.message || res?.messsage) {
-            this.toastr.success(res?.message ?res?.message : res?.messsage);
+            this.toastr.success(res?.message ? res?.message : res?.messsage);
           }
         }),
         catchError((error: HttpErrorResponse) => {
-          LoaderService.loader.next(false)
+          LoaderService.loader.next(false);
           if (error.status === 401) {
             this.authService.logout();
           } else {
@@ -126,22 +126,11 @@ export class HttpService {
     LoaderService.loader.next(true);
     const apiKey = 'AIzaSyCYvOXB3SFyyeR0usVOgnLyoDiAd2XDunU';
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
-    return this.http
-    .get(url)
-    .pipe(
+    return this.http.get(url).pipe(
       finalize(() => LoaderService.loader.next(false)),
-      tap((res: any) => {
-        if (res?.message || res?.messsage) {
-          this.toastr.success(res?.message ?res?.message : res?.messsage);
-        }
-      }),
       catchError((error: HttpErrorResponse) => {
-        LoaderService.loader.next(false)
-        if (error.status === 401) {
-          this.authService.logout();
-        } else {
-          this.toastr.error(error.message);
-        }
+        LoaderService.loader.next(false);
+        this.toastr.error(error.message);
         return throwError(error.message || 'Server error');
       })
     );
