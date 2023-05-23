@@ -207,6 +207,7 @@
               bindLabel="name"
               bindValue="name"
               formControlName="paid_or_free"
+              (change)="setPaidStatus($event)"
             >
             </ng-select>
             <div

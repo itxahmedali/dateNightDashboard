@@ -81,6 +81,10 @@ export class PingChildComponent {
         next: () => {
           this.proceed();
           this.pingForm.reset();
+          this.pingForm.patchValue({
+            paid_or_free:'free',
+            price:0,
+          });
         },
         complete: () => {
           this.helper.setPingsChild();

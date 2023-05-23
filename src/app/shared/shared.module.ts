@@ -15,6 +15,7 @@ import { FormComponent } from './form/form.component';
 import { AccordionComponent } from './accordion/accordion.component';
 import { AutoPlaceComponent } from './auto-place/auto-place.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { DataTablesModule } from 'angular-datatables';
 @NgModule({
   declarations: [
     EllipsisPipe,
@@ -37,6 +38,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CarouselModule,
     NgbTooltip,
     LazyLoadImageModule,
+    DataTablesModule,
     ToastrModule.forRoot({
     preventDuplicates: true,
     }),

@@ -39,7 +39,7 @@ export class PingsComponent {
     mode_id: [null, Validators.required],
     name: [null, Validators.required],
     description: [null, Validators.required],
-    paid_or_free: [null, Validators.required],
+    paid_or_free: ['free', Validators.required],
     price: [0],
   });
   public status = [{ name: 'paid' }, { name: 'free' }];
@@ -89,6 +89,10 @@ export class PingsComponent {
             this.proceed();
           }
           this.pingForm.reset();
+          this.pingForm.patchValue({
+            paid_or_free:'free',
+            price:0,
+          });
         },
         complete: () => {
           this.helper.setPings();
@@ -97,6 +101,14 @@ export class PingsComponent {
           this.pingForm.removeControl('active_status');
         },
       });
+  }
+  setPaidStatus(event:any){
+    if(event.name == 'free'){
+      this.pingForm.patchValue({
+        price:0,
+      });
+    }
+    else return
   }
   async stateItem(event: any, data: any) {
     this.selectedPing = this.Pings?.find((e: any) => e?.id == event.id);
