@@ -32,6 +32,7 @@ export class ModesComponent {
     { id: 1, name: 'name' },
     { id: 2, name: 'date' },
   ];
+  
   public data!: any;
   public modeForm: any = this.fb.group({
     name: [null, Validators.required],
@@ -40,6 +41,7 @@ export class ModesComponent {
   async ngOnInit() {
     this.helper.showAlert('mode')
     this.getModes();
+    
   }
   open(content: any, state: string) {
     this.modalReference = this.modalService.open(content, {

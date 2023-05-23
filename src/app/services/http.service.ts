@@ -105,7 +105,11 @@ export class HttpService {
     return this.http
       .get(environment.baseUrl + url, token ? this.headerToken : this.header)
       .pipe(
-        finalize(() => LoaderService.loader.next(false)),
+        finalize(() => {
+          setTimeout(() => {
+            LoaderService.loader.next(false)
+          },500);
+        }),
         tap((res: any) => {
           if (res?.message || res?.messsage) {
             this.toastr.success(res?.message ? res?.message : res?.messsage);

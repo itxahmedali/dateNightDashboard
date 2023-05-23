@@ -44,8 +44,9 @@ export class PingChildComponent {
     private helper: HelperService
   ) {}
   async ngOnInit() {
-    this.helper.setPingsChild()
-    this.getPingsAndModes();
+    await this.helper.setPingsChild()
+    await this.getPingsAndModes();
+
   }
   open(content: any, state: string) {
     this.modalReference = this.modalService.open(content, {
@@ -55,14 +56,24 @@ export class PingChildComponent {
     });
     this.state = state == 'edit' ? true : false;
     if (state == 'edit') {
+      let selectedPing: any;
+        this.Pings?.map((ping: any) => {
+          if (ping.id == this.selectedPingChild.category_id) {
+            selectedPing = ping;
+          }
+        });
       this.pingForm.addControl(
         'id',
         new FormControl(this.selectedPingChild?.id)
       );
       this.pingForm.patchValue({
+        category_id:selectedPing.id,
         name: this.selectedPingChild?.name,
         description: this.selectedPingChild?.description,
-      });
+        paid_or_free:'free',
+        price:0,
+        show_everyone:1
+      });      
     }
   }
   proceed() {
@@ -84,6 +95,7 @@ export class PingChildComponent {
           this.pingForm.patchValue({
             paid_or_free:'free',
             price:0,
+            show_everyone:1
           });
         },
         complete: () => {

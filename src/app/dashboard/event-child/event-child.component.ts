@@ -28,10 +28,6 @@ export class EventChildComponent {
   public selectedSort!: any;
   public modalReference: any;
   public state!: boolean;
-  public sorts = [
-    { id: 1, name: 'name' },
-    { id: 2, name: 'date' },
-  ];
   public data!: any;
   public eventChildForm: any = this.fb.group({
     value: [null, Validators.required],

@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="table-responsive">
-        <table datatable [dtOptions]="dtOptions" class="table table-dark table-borderless table-sm align-middle text-center">
+        <table datatable [dtOptions]="dtOptions" class="table table-dark table-borderless table-sm align-middle">
           <thead>
             <tr>
               <th scope="col">Id</th>
@@ -20,9 +20,6 @@
               <td>{{ item?.date_person?.phone || "N/A" }}</td>
               <td>{{ item?.date_person?.dob || "N/A" }}</td>
             </tr>
-            <tr *ngIf="!tableData?.length">
-              <td colspan="5" class="text-center white">No data available</td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -34,7 +31,7 @@
     <div class="col-sm-12">
       <div class="table-responsive">
         <table datatable [dtOptions]="dtOptions"
-          class="table table-dark table-borderless table-sm align-middle text-center"
+          class="table table-dark table-borderless table-sm align-middle"
         >
           <thead>
             <tr>
@@ -53,12 +50,9 @@
                   placement="top"
                   [ngbTooltip]="item?.date_mode?.description || 'N/A'"
                 >
-                  {{ item?.date_mode?.description | ellipsis : 20 || "N/A" }}
+                  {{ item?.date_mode?.description ? (item?.date_mode?.description | ellipsis : 20) : "N/A" }}
                 </span>
               </td>
-            </tr>
-            <tr *ngIf="!tableData?.length">
-              <td colspan="3" class="text-center white">No data available</td>
             </tr>
           </tbody>
         </table>
@@ -71,7 +65,7 @@
     <div class="col-sm-12">
       <div class="table-responsive">
         <table datatable [dtOptions]="dtOptions"
-          class="table table-dark table-borderless table-sm align-middle text-center"
+          class="table table-dark table-borderless table-sm align-middle"
         >
           <thead>
             <tr>
@@ -90,12 +84,9 @@
                   placement="top"
                   [ngbTooltip]="item?.mode?.description || 'N/A'"
                 >
-                  {{ item?.mode?.description | ellipsis : 20 || "N/A" }}
+                  {{ item?.mode?.description ? (item?.mode?.description | ellipsis : 20) : "N/A" }}
                 </span>
               </td>
-            </tr>
-            <tr *ngIf="!tableData?.length">
-              <td colspan="3" class="text-center white">No data available</td>
             </tr>
           </tbody>
         </table>
@@ -108,7 +99,7 @@
     <div class="col-sm-12">
       <div class="table-responsive">
         <table datatable [dtOptions]="dtOptions"
-          class="table table-dark table-borderless table-sm align-middle text-center"
+          class="table table-dark table-borderless table-sm align-middle"
         >
           <thead>
             <tr>
@@ -131,9 +122,6 @@
                 </ng-container>
               </ng-container>
             </ng-container>
-            <tr *ngIf="!tableData">
-              <td class="text-center white" colspan="4">No data available</td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -145,7 +133,7 @@
     <div class="col-sm-12">
       <div class="table-responsive">
         <table datatable [dtOptions]="dtOptions"
-          class="table table-dark table-borderless table-sm align-middle text-center"
+          class="table table-dark table-borderless table-sm align-middle"
         >
           <thead>
             <tr>
@@ -156,7 +144,7 @@
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngIf="tableData.length">
+            <ng-container *ngIf="tableData?.length">
               <ng-container *ngFor="let date of tableData">
                 <ng-container *ngIf="date?.ping_category?.length">
                   <tr *ngFor="let item of date?.ping_category">
@@ -168,9 +156,6 @@
                 </ng-container>
               </ng-container>
             </ng-container>
-            <tr *ngIf="!tableData">
-              <td class="text-center white" colspan="4">No data available</td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -182,7 +167,7 @@
       <div class="col-sm-12">
         <div class="table-responsive">
           <table datatable [dtOptions]="dtOptions"
-            class="table table-dark table-borderless table-sm align-middle text-center"
+            class="table table-dark table-borderless table-sm align-middle"
           >
             <thead>
               <tr>
@@ -193,7 +178,7 @@
               </tr>
             </thead>
             <tbody>
-              <ng-container *ngIf="tableData.length">
+              <ng-container *ngIf="tableData?.length">
                 <ng-container *ngFor="let date of tableData">
                   <ng-container *ngIf="date?.ping_category?.length">
                     <ng-container *ngFor="let item of date?.ping_category">
@@ -209,9 +194,6 @@
                   </ng-container>
                 </ng-container>
               </ng-container>
-              <tr *ngIf="!tableData">
-                <td class="text-center white" colspan="4">No data available</td>
-              </tr>
             </tbody>
           </table>
         </div>
@@ -223,7 +205,7 @@
     <div class="col-sm-12">
       <div class="table-responsive">
         <table datatable [dtOptions]="dtOptions"
-          class="table table-dark table-borderless table-sm align-middle text-center"
+          class="table table-dark table-borderless table-sm align-middle"
         >
           <thead>
             <tr>
@@ -234,7 +216,7 @@
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngIf="tableData.length">
+            <ng-container *ngIf="tableData?.length">
               <ng-container *ngFor="let date of tableData">
                 <ng-container *ngIf="date?.pings_category?.length">
                   <tr *ngFor="let item of date?.pings_category">
@@ -246,9 +228,6 @@
                 </ng-container>
               </ng-container>
             </ng-container>
-            <tr *ngIf="!tableData">
-              <td class="text-center white" colspan="4">No data available</td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -260,7 +239,7 @@
     <div class="col-sm-12">
       <div class="table-responsive">
         <table datatable [dtOptions]="dtOptions"
-          class="table table-dark table-borderless table-sm align-middle text-center"
+          class="table table-dark table-borderless table-sm align-middle"
         >
           <thead>
             <tr>
@@ -271,7 +250,7 @@
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngIf="tableData.length">
+            <ng-container *ngIf="tableData?.length">
               <ng-container *ngFor="let date of tableData">
                 <ng-container *ngIf="date?.pings_category?.length">
                   <ng-container *ngFor="let item of date?.pings_category">
@@ -287,9 +266,6 @@
                 </ng-container>
               </ng-container>
             </ng-container>
-            <tr *ngIf="!tableData">
-              <td class="text-center white" colspan="4">No data available</td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -301,7 +277,7 @@
     <div class="col-sm-12">
       <div class="table-responsive">
         <table datatable [dtOptions]="dtOptions"
-          class="table table-dark table-borderless table-sm align-middle text-center"
+          class="table table-dark table-borderless table-sm align-middle"
         >
           <thead>
             <tr>
@@ -320,9 +296,6 @@
               <td>{{ item?.reminder_time || "N/A" }}</td>
               <td>{{ item?.repeat || "N/A" }}</td>
             </tr>
-            <tr *ngIf="!tableData?.length">
-              <td colspan="5" class="text-center white">No data available</td>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -334,7 +307,7 @@
     <div class="col-sm-12">
       <div class="table-responsive">
         <table datatable [dtOptions]="dtOptions"
-          class="table table-dark table-borderless table-sm align-middle text-center"
+          class="table table-dark table-borderless table-sm align-middle"
         >
           <thead>
             <tr>
@@ -348,9 +321,6 @@
               <th scope="row">{{ item?.id }}</th>
               <td>{{ item?.type || "N/A" }}</td>
               <td>{{ (item?.price | currency : "USD") || "N/A" }}</td>
-            </tr>
-            <tr *ngIf="!tableData?.length">
-              <td colspan="3" class="text-center white">No data available</td>
             </tr>
           </tbody>
         </table>

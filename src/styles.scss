@@ -678,7 +678,11 @@ input[type="number"] {
 ::ng-deep .pac-container {
   z-index: 10000000 !important;
 }
-
+.table-responsive .dataTables_paginate .paginate_button,
+.paginate_button.current,
+.table-responsive .dataTables_filter label {
+  color: white !important; /* Change the color to your desired value */
+}
 .form input,
 .form textarea,
 .imgBox {

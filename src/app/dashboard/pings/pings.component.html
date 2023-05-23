@@ -5,28 +5,6 @@
         <i class="fa fa-plus"></i> Add Ping Category
       </button>
     </div>
-    <div class="col-sm-6 d-flex justify-content-start align-items-center">
-      <div class="searchField mt-1 w-100">
-        <input
-          type="text"
-          [(ngModel)]="searchInput"
-          placeholder="Search Item"
-          class="w-100 white"
-        />
-        <i class="fa fa-search"></i>
-      </div>
-    </div>
-    <div class="col-sm-6 mt-3 mb-3 cstmDropDown">
-      <ng-select
-        class="selectAlignment"
-        placeholder="Sort By"
-        [(ngModel)]="selectedSort"
-      >
-        <ng-option *ngFor="let sort of sorts" [value]="sort.name">{{
-          sort.name
-        }}</ng-option>
-      </ng-select>
-    </div>
     <div class="col-sm-12 mt-1 listView">
       <div class="table-responsive">
         <table
@@ -182,24 +160,6 @@
             </div>
           </div>
           <div class="col-lg-6 mt-3">
-            <label for="" class="text-light mb-3">Description</label>
-            <input
-              formControlName="description"
-              type="text"
-              placeholder="Description"
-              class="text-light w-100"
-            />
-            <div
-              *ngIf="
-                pingForm.controls.description.invalid &&
-                (pingForm.controls.description.dirty ||
-                  pingForm.controls.description.touched)
-              "
-            >
-              <small class="text-danger">Description is required</small>
-            </div>
-          </div>
-          <div class="col-lg-6 mt-3">
             <label for="" class="text-light mb-3">Status</label>
             <ng-select
               placeholder="Select Status"
@@ -218,6 +178,19 @@
               "
             >
               <small class="text-danger">paid_or_free is required</small>
+            </div>
+          </div>
+          <div class="col-lg-12 mt-3">
+            <label for="" class="text-light mb-3">Description</label>
+            <textarea rows="6" formControlName="description" type="text" placeholder="Description" class="text-light w-100"></textarea>
+            <div
+              *ngIf="
+                pingForm.controls.description.invalid &&
+                (pingForm.controls.description.dirty ||
+                  pingForm.controls.description.touched)
+              "
+            >
+              <small class="text-danger">Description is required</small>
             </div>
           </div>
           <div class="col-lg-6 mt-3" *ngIf="pingForm.controls.paid_or_free.value == 'paid'">

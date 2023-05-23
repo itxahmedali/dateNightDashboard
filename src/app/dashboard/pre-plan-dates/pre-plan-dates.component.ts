@@ -136,6 +136,7 @@ export class PrePlanDatesComponent {
     const res: any = await this.http
       .loaderGet(`ping-category-by-mode/${event?.id}`, true)
       .toPromise();
+      this.modeForm.get('ping_id').reset();
     this.pings = res?.data;
   }
   

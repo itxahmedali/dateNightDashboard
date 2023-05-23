@@ -1,0 +1,25 @@
+::ng-deep .dataTables_filter {
+  margin-bottom: 1rem;
+}
+::ng-deep table.dataTable thead > tr > th.sorting,
+::ng-deep table.dataTable thead > tr > th.sorting_asc,
+::ng-deep table.dataTable thead > tr > th.sorting_desc,
+::ng-deep table.dataTable thead > tr > th.sorting_asc_disabled,
+::ng-deep table.dataTable thead > tr > th.sorting_desc_disabled,
+::ng-deep table.dataTable thead > tr > td.sorting,
+::ng-deep table.dataTable thead > tr > td.sorting_asc,
+::ng-deep table.dataTable thead > tr > td.sorting_desc,
+::ng-deep table.dataTable thead > tr > td.sorting_asc_disabled,
+::ng-deep table.dataTable thead > tr > td.sorting_desc_disabled {
+  text-align: center !important;
+}
+::ng-deep .table-responsive .dataTables_paginate .paginate_button,
+::ng-deep .paginate_button.current,
+::ng-deep .table-responsive .dataTables_filter label,
+::ng-deep .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+::ng-deep
+  .dataTables_wrapper
+  .dataTables_paginate
+  .paginate_button.current:hover {
+  color: white !important; /* Change the color to your desired value */
+}

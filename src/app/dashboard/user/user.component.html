@@ -11,17 +11,6 @@
         <i class="fa fa-search"></i>
       </div>
     </div>
-    <div class="col-sm-6 mt-3 mb-3 cstmDropDown">
-      <ng-select
-        class="selectAlignment"
-        placeholder="Sort By"
-        [(ngModel)]="selectedSort"
-      >
-        <ng-option *ngFor="let sort of sorts" [value]="sort.name">{{
-          sort.name
-        }}</ng-option>
-      </ng-select>
-    </div>
     <div class="col-sm-12 mt-1 listView">
       <div class="table-responsive">
         <table

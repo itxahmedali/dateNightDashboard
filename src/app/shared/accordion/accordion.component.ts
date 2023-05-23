@@ -5,19 +5,20 @@ import { Component, Input, TemplateRef } from '@angular/core';
   styleUrls: ['./accordion.component.scss'],
 })
 export class AccordionComponent {
-  dtOptions: DataTables.Settings = {};
   @Input() Page!: any;
   @Input() total!: any;
   @Input() tableName!: any;
   @Input() tableData!: any;
-  ngOnInit(){
+  dtOptions: DataTables.Settings = {};
+  ngOnInit() {
     this.dtOptions = {
+      pageLength: 5,
       pagingType: 'full_numbers',
-      pageLength: 10, // Adjust as needed
-      serverSide: false, // Set to true if using server-side processing
-      processing: true,
+      lengthChange: false,
+      searching: true, 
+      ordering: true, 
+      info: false,
       responsive: true,
-      // ...add more options as needed
     };
   }
 }

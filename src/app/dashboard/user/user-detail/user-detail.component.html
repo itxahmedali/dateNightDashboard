@@ -33,6 +33,8 @@
           </div>
           <div class="col-sm-12 mt-5">
             <div ngbAccordion [closeOthers]="true">
+
+              <!-- Dates -->
               <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="false" *ngIf="user?.dates && user?.dates?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Dates</button>
@@ -43,68 +45,38 @@
                       <div class="row">
                         <div class="col-sm-12">
                           <div ngbAccordion [closeOthers]="true">
-                            <div
-                              ngbAccordionItem
-                              [destroyOnHide]="true"
-                              [collapsed]="false"
-                              *ngIf="user?.dates"
-                            >
+                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="false" *ngIf="user?.dates && user?.dates?.length">
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Person</button>
                               </h2>
                               <div ngbAccordionCollapse>
                                 <div ngbAccordionBody>
                                   <ng-template>
-                                    <app-table
-                                      tableName="date_person"
-                                      [Page]="datePersonPage"
-                                      [total]="datePersonPage"
-                                      [tableData]="user?.dates"
-                                    ></app-table>
+                                    <app-table tableName="date_person" [Page]="datePersonPage" [total]="datePersonPage" [tableData]="user?.dates"></app-table>
                                   </ng-template>
                                 </div>
                               </div>
                             </div>
-                            <div
-                              ngbAccordionItem
-                              [destroyOnHide]="true"
-                              [collapsed]="true"
-                              *ngIf="user?.dates"
-                            >
+                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Mode</button>
                               </h2>
                               <div ngbAccordionCollapse>
                                 <div ngbAccordionBody>
                                   <ng-template>
-                                    <app-table
-                                      tableName="date_mode"
-                                      [Page]="dateModePage"
-                                      [total]="Modetotal"
-                                      [tableData]="user?.dates"
-                                    ></app-table>
+                                    <app-table tableName="date_mode" [Page]="dateModePage" [total]="Modetotal" [tableData]="user?.dates"></app-table>
                                   </ng-template>
                                 </div>
                               </div>
                             </div>
-                            <div
-                              ngbAccordionItem
-                              [destroyOnHide]="true"
-                              [collapsed]="true"
-                              *ngIf="user?.dates"
-                            >
+                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Events</button>
                               </h2>
                               <div ngbAccordionCollapse>
                                 <div ngbAccordionBody>
                                   <ng-template>
-                                    <app-table
-                                      tableName="event"
-                                      [Page]="dateEventPage"
-                                      [total]="Eventtotal"
-                                      [tableData]="user?.dates"
-                                    ></app-table>
+                                    <app-table tableName="event" [Page]="dateEventPage" [total]="Eventtotal" [tableData]="user?.dates"></app-table>
                                   </ng-template>
                                 </div>
                               </div>
@@ -116,6 +88,8 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Reminders -->
               <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.reminders && user?.reminders?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Reminders</button>
@@ -123,16 +97,13 @@
                 <div ngbAccordionCollapse>
                   <div ngbAccordionBody>
                     <ng-template>
-                      <app-table
-                        tableName="reminders"
-                        [Page]="datePingsPage"
-                        [total]="Pingstotal"
-                        [tableData]="user?.reminders"
-                      ></app-table>
+                      <app-table tableName="reminders" [Page]="datePingsPage" [total]="Pingstotal" [tableData]="user?.reminders"></app-table>
                     </ng-template>
                   </div>
                 </div>
               </div>
+
+              <!-- Purchases -->
               <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.user_purchases && user?.user_purchases?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Purchases</button>
@@ -140,16 +111,13 @@
                 <div ngbAccordionCollapse>
                   <div ngbAccordionBody>
                     <ng-template>
-                      <app-table
-                        tableName="purchases"
-                        [Page]="datePingsPage"
-                        [total]="Pingstotal"
-                        [tableData]="user?.user_purchases"
-                      ></app-table>
+                      <app-table tableName="purchases" [Page]="datePingsPage" [total]="Pingstotal" [tableData]="user?.user_purchases"></app-table>
                     </ng-template>
                   </div>
                 </div>
               </div>
+
+              <!-- Pre Plan Dates -->
               <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Pre Plan Dates</button>
@@ -160,71 +128,35 @@
                       <div class="row">
                         <div class="col-sm-12">
                           <div ngbAccordion [closeOthers]="true">
-                            <div
-                              ngbAccordionItem
-                              [destroyOnHide]="true"
-                              [collapsed]="true"
-                              *ngIf="user?.preplan_dates"
-                            >
+                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Mode</button>
                               </h2>
                               <div ngbAccordionCollapse>
                                 <div ngbAccordionBody>
                                   <ng-template>
-                                    <app-table
-                                      tableName="mode"
-                                      [Page]="dateModePage"
-                                      [total]="Modetotal"
-                                      [tableData]="user?.preplan_dates"
-                                    ></app-table>
+                                    <app-table tableName="mode" [Page]="dateModePage" [total]="Modetotal" [tableData]="user?.preplan_dates"></app-table>
                                   </ng-template>
                                 </div>
                               </div>
                             </div>
-                            <div
-                              ngbAccordionItem
-                              [destroyOnHide]="true"
-                              [collapsed]="true"
-                              *ngIf="user?.preplan_dates"
-                            >
+                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
                               <h2 ngbAccordionHeader>
-                                <button ngbAccordionButton>
-                                  Date Ping Categories
-                                </button>
+                                <button ngbAccordionButton>Date Ping Categories</button>
                               </h2>
                               <div ngbAccordionCollapse>
                                 <div ngbAccordionBody>
                                   <ng-template>
-                                    <app-table
-                                      tableName="prePlanPingsCategories"
-                                      [Page]="dateEventPage"
-                                      [total]="Eventtotal"
-                                      [tableData]="user?.preplan_dates"
-                                    ></app-table>
+                                    <app-table tableName="prePlanPingsCategories" [Page]="dateEventPage" [total]="Eventtotal" [tableData]="user?.preplan_dates"></app-table>
                                     <div ngbAccordion [closeOthers]="true">
-                                      <div
-                                        ngbAccordionItem
-                                        [destroyOnHide]="true"
-                                        [collapsed]="true"
-                                        *ngIf="user?.preplan_dates"
-                                      >
+                                      <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
                                         <h2 ngbAccordionHeader>
-                                          <button ngbAccordionButton>
-                                            Pre Plan Dates Pings
-                                          </button>
+                                          <button ngbAccordionButton>Pre Plan Dates Pings</button>
                                         </h2>
                                         <div ngbAccordionCollapse>
                                           <div ngbAccordionBody>
                                             <ng-template>
-                                              <app-table
-                                                tableName="prePlanPings"
-                                                [Page]="dateEventPage"
-                                                [total]="Eventtotal"
-                                                [tableData]="
-                                                  user?.preplan_dates
-                                                "
-                                              ></app-table>
+                                              <app-table tableName="prePlanPings" [Page]="dateEventPage" [total]="Eventtotal" [tableData]="user?.preplan_dates"></app-table>
                                             </ng-template>
                                           </div>
                                         </div>
@@ -241,6 +173,8 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Pings -->
               <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Pings</button>
@@ -251,48 +185,26 @@
                       <div class="row">
                         <div class="col-sm-12">
                           <div ngbAccordion [closeOthers]="true">
-                            <div
-                              ngbAccordionItem
-                              [destroyOnHide]="true"
-                              [collapsed]="false"
-                              *ngIf="user?.dates"
-                            >
+                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="false" *ngIf="user?.dates && user?.dates?.length">
                               <h2 ngbAccordionHeader>
-                                <button ngbAccordionButton>
-                                  Date Ping Categories
-                                </button>
+                                <button ngbAccordionButton>Date Ping Categories</button>
                               </h2>
                               <div ngbAccordionCollapse>
                                 <div ngbAccordionBody>
                                   <ng-template>
-                                    <app-table
-                                      tableName="pings_category"
-                                      [Page]="datePingsPage"
-                                      [total]="Pingstotal"
-                                      [tableData]="user?.dates"
-                                    ></app-table>
+                                    <app-table tableName="pings_category" [Page]="datePingsPage" [total]="Pingstotal" [tableData]="user?.dates"></app-table>
                                   </ng-template>
                                 </div>
                               </div>
                             </div>
-                            <div
-                              ngbAccordionItem
-                              [destroyOnHide]="true"
-                              [collapsed]="true"
-                              *ngIf="user?.dates"
-                            >
+                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Pings</button>
                               </h2>
                               <div ngbAccordionCollapse>
                                 <div ngbAccordionBody>
                                   <ng-template>
-                                    <app-table
-                                      tableName="pings"
-                                      [Page]="datePingsPage"
-                                      [total]="Pingstotal"
-                                      [tableData]="user?.dates"
-                                    ></app-table>
+                                    <app-table tableName="pings" [Page]="datePingsPage" [total]="Pingstotal" [tableData]="user?.dates"></app-table>
                                   </ng-template>
                                 </div>
                               </div>

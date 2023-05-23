@@ -3,9 +3,11 @@
   border-radius: 10px !important;
   border: none !important;
   min-height: 40px !important;
-  color:var(--headings-primary-color);
+  color: var(--headings-primary-color);
   height: 45px !important;
+  overflow-y: auto !important;
 }
-.selectAlignment{
+.selectAlignment {
   margin-top: 5px;
 }
+

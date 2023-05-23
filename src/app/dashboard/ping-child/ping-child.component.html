@@ -11,11 +11,6 @@
           <i class="fa fa-search"></i>
         </div>
       </div>
-      <div class="col-sm-6 mt-3 mb-3 cstmDropDown">
-        <ng-select class="selectAlignment" placeholder="Sort By" [(ngModel)]="selectedSort">
-          <ng-option *ngFor="let sort of sorts" [value]="sort.name">{{sort.name}}</ng-option>
-        </ng-select>
-      </div>
       <div class="col-sm-12 mt-1 listView">
         <div class="table-responsive">
           <table class="table table-dark table-borderless table-sm align-middle text-center">
@@ -55,7 +50,7 @@
                     </div>
                   </td>
                   <td class="d-flex justify-content-center align-items-center">
-                    <button class="actionbtn" (click)="open(addChild,'edit');">
+                    <button class="actionbtn" (click)="selectedPingChild = item;open(addChild,'edit');">
                       <i class="fa fa-edit mlicon"></i>
                     </button>
                     <button class="actionbtn" (click)="delete(item?.id)">
@@ -107,8 +102,8 @@
                 <small class="text-danger">Name is required</small>
               </div>
             </div>
-            <div class="col-lg-6 mt-3">
-              <input formControlName="description" type="text" placeholder="Description" class="text-light w-100" />
+            <div class="col-lg-12 mt-3">
+              <textarea rows="6" formControlName="description" type="text" placeholder="Description" class="text-light w-100"></textarea>
               <div
                 *ngIf="pingForm.controls.description.invalid && (pingForm.controls.description.dirty || pingForm.controls.description.touched)">
                 <small class="text-danger">Description is required</small>
