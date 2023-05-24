@@ -46,13 +46,17 @@ export class HttpService {
         token ? this.headerToken : this.header
       )
       .pipe(
+        tap((res: any) => {
+          if (res?.message || res?.messsage) {
+            this.toastr.success(res?.message ? res?.message : res?.messsage);
+          }
+        }),
         catchError((error: HttpErrorResponse) => {
           LoaderService.loader.next(false);
-          console.log(error);
           if (error.status === 401) {
             this.authService.logout();
           } else {
-            this.toastr.error(error?.error?.message);
+            this.toastr.error(error.message);
           }
           return throwError(error.message || 'Server error');
         })
@@ -90,7 +94,13 @@ export class HttpService {
     return this.http
       .get(environment.baseUrl + url, token ? this.headerToken : this.header)
       .pipe(
+        tap((res: any) => {
+          if (res?.message || res?.messsage) {
+            this.toastr.success(res?.message ? res?.message : res?.messsage);
+          }
+        }),
         catchError((error: HttpErrorResponse) => {
+          LoaderService.loader.next(false);
           if (error.status === 401) {
             this.authService.logout();
           } else {
@@ -105,11 +115,7 @@ export class HttpService {
     return this.http
       .get(environment.baseUrl + url, token ? this.headerToken : this.header)
       .pipe(
-        finalize(() => {
-          setTimeout(() => {
-            LoaderService.loader.next(false)
-          },500);
-        }),
+        finalize(() => LoaderService.loader.next(false)),
         tap((res: any) => {
           if (res?.message || res?.messsage) {
             this.toastr.success(res?.message ? res?.message : res?.messsage);
