@@ -32,7 +32,7 @@ export class EventChildComponent {
   public eventChildForm: any = this.fb.group({
     value: [null, Validators.required],
     label: [null, Validators.required],
-    event_id: [null, Validators.required],
+    event_id: [null],
   });
   async ngOnInit() {
     this.helper.setEventChild();
@@ -52,7 +52,7 @@ export class EventChildComponent {
       ...this.eventChildForm.value,
       event_id: JSON.parse(event_id),
       value,
-      label,
+      label:label,
     });
   }
   proceed() {
@@ -60,6 +60,9 @@ export class EventChildComponent {
     this.eventChildForm.reset();
   }
   save(modal: boolean) {
+    this.eventChildForm.patchValue({
+      label:this.eventChildForm.get('value').value,
+    });
     this.http
       .loaderPost('events-child-add', this.eventChildForm.value, true)
       .pipe(

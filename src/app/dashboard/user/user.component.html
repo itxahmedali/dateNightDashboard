@@ -59,6 +59,10 @@
                   >
                     <i class="fa fa-share mlicon"></i>
                   </button>
+                  <div class="toggle d-flex align-items-center w-100 justify-content-center">
+                    <input class="checkBox" type="checkbox" [checked]="item?.active_status =='1' ? true: false"
+                      [id]='"categoryStock"+i' /><label [for]='"categoryStock"+i'></label>
+                  </div>
                 </td>
               </tr>
             </ng-container>
