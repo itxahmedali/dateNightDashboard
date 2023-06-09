@@ -23,6 +23,7 @@
               <th scope="col">Email</th>
               <th scope="col">Number</th>
               <th scope="col">DOB.</th>
+              <th scope="col">Status</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -50,6 +51,12 @@
                 <td>{{ item?.email ? item?.email : "N/A" }}</td>
                 <td>{{ item?.phone ? item?.phone : "N/A" }}</td>
                 <td>{{ item?.dob ? item?.dob : "N/A" }}</td>
+                <td>
+                  <div class="toggle d-flex align-items-center w-100 justify-content-center">
+                    <input class="checkBox" type="checkbox" [checked]="item?.active_status =='1' ? true: false"
+                      [id]='"categoryStock"+i' /><label [for]='"categoryStock"+i'></label>
+                  </div>
+                </td>
                 <td class="d-flex justify-content-center align-items-center">
                   <button
                     class="actionbtn"
@@ -59,22 +66,25 @@
                   >
                     <i class="fa fa-share mlicon"></i>
                   </button>
-                  <div class="toggle d-flex align-items-center w-100 justify-content-center">
-                    <input class="checkBox" type="checkbox" [checked]="item?.active_status =='1' ? true: false"
-                      [id]='"categoryStock"+i' /><label [for]='"categoryStock"+i'></label>
-                  </div>
+                  <button
+                    class="actionbtn"
+                    placement="top"
+                    ngbTooltip="Edit User"
+                  >
+                    <i class="fa fa-edit mlicon"></i>
+                  </button>
                 </td>
               </tr>
             </ng-container>
             <ng-template #noData>
               <tr *ngIf="users?.length">
-                <td colspan="6" class="text-center white">
+                <td colspan="7" class="text-center white">
                   No Matching Data Available
                 </td>
               </tr>
             </ng-template>
             <tr *ngIf="!users?.length">
-              <td class="text-center white" colspan="6">No data available</td>
+              <td class="text-center white" colspan="7">No data available</td>
             </tr>
           </tbody>
         </table>
@@ -90,3 +100,38 @@
     </div>
   </div>
 </div>
+<!-- Edit User -->
+<ng-container>
+  <ng-template #addChild let-modal>
+    <div class="modal-body checkoutModal completed">
+      <button class="btn-close" id="checkoutClose" aria-label="Close" (click)="proceed();"></button>
+      <h5 class="modal-title">Update User</h5>
+      <form [formGroup]="EditUserForm" class="form">
+        <div class="row mt-4">
+          <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Value</label>
+            <input formControlName="value" type="text" placeholder="Value" class="text-light w-100" />
+            <div
+              *ngIf="EditUserForm.controls.value.invalid && (EditUserForm.controls.value.dirty || EditUserForm.controls.value.touched)">
+              <small class="text-danger">Value is required</small>
+            </div>
+          </div>
+          <!-- <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Label</label>
+            <input formControlName="label" type="text" placeholder="Label" class="text-light w-100" />
+            <div
+              *ngIf="EditUserForm.controls.label.invalid && (EditUserForm.controls.label.dirty || EditUserForm.controls.label.touched)">
+              <small class="text-danger">Label is required</small>
+            </div>
+          </div> -->
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer d-flex justify-content-start">
+      <button class="btn add-btn" [disabled]="EditUserForm.invalid" (click)="save(true)">Save</button>
+      <button class="btn cancel-btn" aria-label="Close" (click)="proceed();">
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+</ng-container>
