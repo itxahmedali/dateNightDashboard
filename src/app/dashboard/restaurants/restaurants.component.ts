@@ -44,14 +44,14 @@ export default class RestaurantsComponent {
   currentLat!: number;
   currentLng!: number;
   public restuarantForm: any = this.fb.group({
-    sponsored: [null, Validators.required],
-    desc: [null, Validators.required],
-    name: [null, Validators.required],
-    phone: [null, Validators.required],
-    location: [null, Validators.required],
-    website: [null, Validators.required],
-    lat: [null, Validators.required],
-    lng: [null, Validators.required],
+    sponsored: [null],
+    desc: [null],
+    name: [null],
+    phone: [null],
+    location: [null],
+    website: [null],
+    lat: [null],
+    lng: [null],
   });
   public modes: any;
   public selectedRestaurant: any;

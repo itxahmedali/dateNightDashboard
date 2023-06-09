@@ -2,7 +2,7 @@
   <div class="row mt-5 align-items-center">
     <div class="col-sm-12 d-flex justify-content-end align-items-center">
       <button class="addMenuBtn" (click)="open(addChild,'add');">
-        <i class="fa fa-plus"></i> Add Event Child
+        <i class="fa fa-plus"></i> Add Event Filters
       </button>
     </div>
     <div class="col-sm-6 d-flex justify-content-start align-items-center">
@@ -102,14 +102,14 @@
               <small class="text-danger">Value is required</small>
             </div>
           </div>
-          <div class="col-lg-6 mt-3">
+          <!-- <div class="col-lg-6 mt-3">
             <label for="" class="text-light mb-3">Label</label>
             <input formControlName="label" type="text" placeholder="Label" class="text-light w-100" />
             <div
               *ngIf="eventChildForm.controls.label.invalid && (eventChildForm.controls.label.dirty || eventChildForm.controls.label.touched)">
               <small class="text-danger">Label is required</small>
             </div>
-          </div>
+          </div> -->
         </div>
       </form>
     </div>
