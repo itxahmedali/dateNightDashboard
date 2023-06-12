@@ -1,142 +1,164 @@
 <div class="container">
-    <div class="row mt-5 align-items-center">
-        <div class="col-sm-12 d-flex justify-content-end align-items-center">
-            <button class="addMenuBtn" (click)="open(addModal, 'add')">
-                <i class="fa fa-plus"></i> Add Question
-              </button>
-          </div>
-      <div class="col-sm-6 d-flex justify-content-start align-items-center">
-        <div class="searchField mt-1 w-100">
-          <input
-            type="text"
-            [(ngModel)]="searchInput"
-            placeholder="Search Item"
-            class="w-100 white"
-          />
-          <i class="fa fa-search"></i>
-        </div>
-      </div>
-      <div class="col-sm-12 mt-1 listView">
-        <div class="table-responsive">
-          <table
-            class="table table-dark table-borderless table-sm align-middle text-center"
-          >
-            <thead>
-              <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Question</th>
-                <th scope="col">Answer</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <ng-container
-                *ngIf="(faqs | filter : searchInput)?.length; else noData"
-              >
-                <tr
-                  *ngFor="
-                    let i = index;
-                    let item;
-                    of: faqs
-                      | filter : searchInput
-                      | sortBy : selectedSort
-                      | paginate
-                        : {
-                            itemsPerPage: 10,
-                            currentPage: duePage,
-                            totalItems: total
-                          }
-                  "
-                >
-                  <th scope="row">{{ item?.id }}</th>
-                  <td>{{ item?.name ? item?.name : "N/A" }}</td>
-                  <td>{{ item?.email ? item?.email : "N/A" }}</td>
-                  <td>{{ item?.phone ? item?.phone : "N/A" }}</td>
-                  <td>{{ item?.dob ? item?.dob : "N/A" }}</td>
-                  <td>
-                    <div class="toggle d-flex align-items-center w-100 justify-content-center">
-                      <input class="checkBox" type="checkbox" [checked]="item?.active_status =='1' ? true: false"
-                        [id]='"categoryStock"+i' /><label [for]='"categoryStock"+i'></label>
-                    </div>
-                  </td>
-                  <td class="d-flex justify-content-center align-items-center">
-                    <button
-                      class="actionbtn"
-                      placement="top"
-                      ngbTooltip="User Details"
-                      [routerLink]="['user-detail',item?.id]"
-                    >
-                      <i class="fa fa-share mlicon"></i>
-                    </button>
-                    <button
-                      class="actionbtn"
-                      placement="top"
-                      ngbTooltip="Edit User"
-                    >
-                      <i class="fa fa-edit mlicon"></i>
-                    </button>
-                  </td>
-                </tr>
-              </ng-container>
-              <ng-template #noData>
-                <tr *ngIf="faqs?.length">
-                  <td colspan="7" class="text-center white">
-                    No Matching Data Available
-                  </td>
-                </tr>
-              </ng-template>
-              <tr *ngIf="!faqs?.length">
-                <td class="text-center white" colspan="7">No data available</td>
-              </tr>
-            </tbody>
-          </table>
-          <ckeditor [editor]="Editor" data=""></ckeditor>
-        </div>
-      </div>
-      <div class="col-sm-12 d-flex justify-content-between" *ngIf="faqs?.length">
-          <pagination-controls
-          previousLabel="&lsaquo;"
-          nextLabel="&rsaquo;"
-          (pageChange)="duePage = $event"
-        >
-        </pagination-controls>
+  <div class="row mt-5 align-items-center">
+    <div class="col-sm-12 d-flex justify-content-end align-items-center">
+      <button class="addMenuBtn" (click)="open(addModal, 'add')">
+        <i class="fa fa-plus"></i> Add FAQ
+      </button>
+    </div>
+    <div class="col-sm-6 d-flex justify-content-start align-items-center">
+      <div class="searchField mt-1 w-100">
+        <input
+          type="text"
+          [(ngModel)]="searchInput"
+          placeholder="Search Item"
+          class="w-100 white"
+        />
+        <i class="fa fa-search"></i>
       </div>
     </div>
+    <div class="col-sm-12 mt-1 listView">
+      <div class="table-responsive">
+        <table
+          class="table table-dark table-borderless table-sm align-middle text-center"
+        >
+          <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Heading</th>
+              <th scope="col">Paragraph</th>
+              <th scope="col">Status</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container
+              *ngIf="(faqs | filter : searchInput)?.length; else noData"
+            >
+              <tr
+                *ngFor="
+                  let i = index;
+                  let item;
+                  of: faqs
+                    | filter : searchInput
+                    | sortBy : selectedSort
+                    | paginate
+                      : {
+                          itemsPerPage: 10,
+                          currentPage: duePage,
+                          totalItems: total
+                        }
+                "
+              >
+                <th scope="row">{{ item?.id }}</th>
+                <td>{{ item?.heading ? item?.heading : "N/A" }}</td>
+                <td><div [innerHTML]="(item?.paragraph | ellipsis :20)"></div></td>
+                <td>
+                  <div
+                    class="toggle d-flex align-items-center w-100 justify-content-center"
+                  >
+                    <input
+                      class="checkBox"
+                      type="checkbox"
+                      [checked]="item?.active_status == '1' ? true : false"
+                      [id]="'categoryStock' + i"
+                    /><label [for]="'categoryStock' + i"></label>
+                  </div>
+                </td>
+                <td class="d-flex justify-content-center align-items-center">
+                  <button
+                    class="actionbtn"
+                    placement="top"
+                    ngbTooltip="User Details"
+                    [routerLink]="['user-detail', item?.id]"
+                  >
+                    <i class="fa fa-share mlicon"></i>
+                  </button>
+                  <button
+                    class="actionbtn"
+                    placement="top"
+                    ngbTooltip="Edit User"
+                  >
+                    <i class="fa fa-edit mlicon"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-template #noData>
+              <tr *ngIf="faqs?.length">
+                <td colspan="4" class="text-center white">
+                  No Matching Data Available
+                </td>
+              </tr>
+            </ng-template>
+            <tr *ngIf="!faqs?.length">
+              <td class="text-center white" colspan="4">No data available</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-12 d-flex justify-content-between" *ngIf="faqs?.length">
+      <pagination-controls
+        previousLabel="&lsaquo;"
+        nextLabel="&rsaquo;"
+        (pageChange)="duePage = $event"
+      >
+      </pagination-controls>
+    </div>
   </div>
-  <!-- Edit User -->
+</div>
+<!-- Edit User -->
 <ng-container>
-    <ng-template #addModal let-modal>
-      <div class="modal-body checkoutModal completed">
-        <button class="btn-close" id="checkoutClose" aria-label="Close" (click)="proceed();"></button>
-        <h5 class="modal-title">Update User</h5>
-        <form [formGroup]="faqUserForm" class="form">
-          <div class="row mt-4">
-            <div class="col-lg-6 mt-3">
-                <label for="" class="text-light mb-3">Question</label>
-                <input formControlName="question" type="text" placeholder="Question" class="text-light w-100" />
-                <div
-                  *ngIf="faqUserForm.controls.question.invalid && (faqUserForm.controls.question.dirty || faqUserForm.controls.question.touched)">
-                  <small class="text-danger">Question is required</small>
-                </div>
-              </div>
-            <div class="col-lg-6 mt-3">
-              <label for="" class="text-light mb-3">Answer</label>
-              <input formControlName="answer" type="text" placeholder="Answer" class="text-light w-100" />
-              <div
-                *ngIf="faqUserForm.controls.answer.invalid && (faqUserForm.controls.answer.dirty || faqUserForm.controls.answer.touched)">
-                <small class="text-danger">Answer is required</small>
-              </div>
+  <ng-template #addModal let-modal>
+    <div class="modal-body checkoutModal completed">
+      <button
+        class="btn-close"
+        id="checkoutClose"
+        aria-label="Close"
+        (click)="proceed()"
+      ></button>
+      <h5 class="modal-title">Update User</h5>
+      <form [formGroup]="faqForm" class="form">
+        <div class="row mt-4">
+          <div class="col-lg-12 mt-3">
+            <label for="" class="text-light mb-3">Question</label>
+            <textarea
+              formControlName="question"
+              type="text"
+              placeholder="Question"
+              class="text-light w-100"
+            ></textarea>
+            <div
+              *ngIf="
+                faqForm.controls.question.invalid &&
+                (faqForm.controls.question.dirty ||
+                  faqForm.controls.question.touched)
+              "
+            >
+              <small class="text-danger">Question is required</small>
             </div>
-            
           </div>
-        </form>
-      </div>
-      <div class="modal-footer d-flex justify-content-start">
-        <button class="btn add-btn" [disabled]="faqUserForm.invalid" >Save</button>
-        <button class="btn cancel-btn" aria-label="Close" (click)="proceed();">
-          Cancel
-        </button>
-      </div>
-    </ng-template>
-  </ng-container> 
-  
+          <div class="col-lg-12 mt-3">
+            <label for="" class="text-light mb-3">Answer</label>
+            <ckeditor [editor]="Editor" formControlName="answer"></ckeditor>
+            <div
+              *ngIf="
+                faqForm.controls.answer.invalid &&
+                (faqForm.controls.answer.dirty ||
+                  faqForm.controls.answer.touched)
+              "
+            >
+              <small class="text-danger">Answer is required</small>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer d-flex justify-content-start">
+      <button class="btn add-btn" [disabled]="faqForm.invalid" (click)="save()">Save</button>
+      <button class="btn cancel-btn" aria-label="Close" (click)="proceed()">
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+</ng-container>

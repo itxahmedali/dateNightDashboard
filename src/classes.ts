@@ -137,3 +137,17 @@ export class Users implements Users {
     public type: string
   ) {}
 }
+export interface Faq {
+  id: number;
+  heading: string;
+  paragraph: string;
+  active_status: string;
+}
+export class Faq implements Faq {
+  constructor(
+    public id: number,
+    public heading: string,
+    public paragraph: string,
+    public active_status: string
+  ) {}
+}

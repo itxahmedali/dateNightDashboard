@@ -46,7 +46,6 @@ export class PingChildComponent {
   async ngOnInit() {
     await this.helper.setPingsChild()
     await this.getPingsAndModes();
-
   }
   open(content: any, state: string) {
     this.modalReference = this.modalService.open(content, {

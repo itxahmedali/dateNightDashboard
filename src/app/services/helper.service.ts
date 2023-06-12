@@ -11,6 +11,7 @@ import {
   Events,
   EventChild,
   Users,
+  Faq,
 } from 'src/classes';
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,7 @@ export class HelperService {
   private EventsPromise!: Promise<any>;
   private EventChildPromise!: Promise<any>;
   private UsersPromise!: Promise<any>;
+  private FaqsPromise!: Promise<any>;
   private hasAlertShown: boolean = false;
   constructor(private http: HttpService, private toastr: ToastrService) {
     if (localStorage.getItem('access_token')) {
@@ -277,6 +279,29 @@ export class HelperService {
       this.UsersPromise = this.loadUsers();
     }
     return this.UsersPromise;
+  }
+  public getFaqs(): Promise<Faq> {
+    if (!this.FaqsPromise) {
+      this.FaqsPromise = this.loadFaqs();
+    }
+    return this.FaqsPromise;
+  }
+  async setFaqs() {
+    this.FaqsPromise = this.loadFaqs();
+  }
+  public async loadFaqs(): Promise<Faq[]> {
+    const res: any = await this.http
+      .loaderGet('faq', true)
+      .toPromise();
+    const modesList = res?.data?.map((data: Faq) => {
+      return new Faq(
+        data.id,
+        data.heading,
+        data.paragraph,
+        data.active_status,
+      );
+    });
+    return modesList;
   }
   async exportToExcel(table: any[]) {
     console.log(table);

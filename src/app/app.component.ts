@@ -75,10 +75,11 @@ export class AppComponent {
     AuthService.signin.subscribe((res: boolean) => {
       this.login = res;
       this.helper.setModes();
-      this.helper.setEvents()
-      this.helper.setEventChild()
-      this.helper.setPings()
-      this.helper.setPingsChild()
+      this.helper.setEvents();
+      this.helper.setEventChild();
+      this.helper.setPings();
+      this.helper.setPingsChild();
+      this.helper.setFaqs()
       this.cd.detectChanges();
     });
     UniversalService.SideBar.subscribe(
