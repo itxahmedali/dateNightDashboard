@@ -69,6 +69,12 @@ export class SidebarComponent implements OnInit {
       title: 'Restaurants',
       icon: 'assets/images/restaurant.webp',
       type: 'link',
+    },
+    {
+      path: 'faq',
+      title: "FAQ's",
+      icon: 'assets/images/restaurant.webp',
+      type: 'link',
     }
   ];
   public menuItems:any = this.routes

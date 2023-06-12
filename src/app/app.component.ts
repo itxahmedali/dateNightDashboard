@@ -9,6 +9,7 @@ import { HelperService } from './services/helper.service';
 import { LoaderService } from './services/loader.service';
 import Swal from 'sweetalert2';
 import { Setting } from 'src/classes';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,6 +18,7 @@ import { Setting } from 'src/classes';
 })
 export class AppComponent {
   title = 'restaurant-management';
+  public Editor = ClassicEditor;
   public login: boolean = false;
   public cart: boolean = false;
   public windowHeight: number = window.innerHeight;

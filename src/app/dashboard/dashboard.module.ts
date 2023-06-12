@@ -22,6 +22,7 @@ import RestaurantsComponent from './restaurants/restaurants.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { AgmCoreModule } from '@agm/core';
 import { FaqComponent } from './faq/faq.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 // import { AgmCoreModule } from '@agm/core';
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { FaqComponent } from './faq/faq.component';
     NgxPaginationModule,
     CarouselModule,
     GooglePlaceModule,
+    CKEditorModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCYvOXB3SFyyeR0usVOgnLyoDiAd2XDunU'
     })

@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',
   styleUrls: ['./faq.component.scss']
 })
 export class FaqComponent {
+  public Editor = ClassicEditor;
   constructor(private fb: FormBuilder,
-    private modalService: NgbModal) { }
+  private modalService: NgbModal) { }
   public searchInput!: any;
   public duePage!: any;
   public total!: any;
