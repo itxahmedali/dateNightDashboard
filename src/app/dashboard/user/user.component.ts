@@ -14,7 +14,8 @@ import { Users } from 'src/classes';
 export class UserComponent {
   constructor(
     private modalService: NgbModal,
-    private helper: HelperService
+    private helper: HelperService,
+
   ) {}
   public modalReference: any;
   public searchInput!: any;
@@ -32,6 +33,7 @@ export class UserComponent {
     this.helper.setUsers();
     this.getUsers();
   }
+  
   async open(content: any) {
     this.modalReference = this.modalService.open(content, {
       centered: true,
@@ -39,6 +41,9 @@ export class UserComponent {
       windowClass: 'checkoutModal',
       size: 'xl',
     });
+  }
+  exportToExcel(): void {
+    this.helper.exportToExcel(this.users)
   }
   proceed() {
     this.modalReference.close();
@@ -48,4 +53,5 @@ export class UserComponent {
       this.users = Users;
     });
   }
+  
 }

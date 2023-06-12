@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { HttpService } from './http.service';
+import * as XLSX from 'xlsx';
+import { writeFile } from 'xlsx';
 import {
   Setting,
   DateMode,
@@ -274,5 +276,23 @@ export class HelperService {
       this.UsersPromise = this.loadUsers();
     }
     return this.UsersPromise;
+  }
+  async exportToExcel(table: any[]) {
+    console.log(table);
+
+    const array = [];
+    for (const { item, ...rest } of table) {
+      if (item !== undefined) {
+        array.push(item);
+      } else {
+        array.push(rest);
+      }
+    }
+    const worksheet = XLSX.utils.json_to_sheet(array);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    const date = new Date().toISOString().slice(0, 10);
+    const fileName = `table_${date}.xlsx`;
+    writeFile(workbook, fileName);
   }
 }

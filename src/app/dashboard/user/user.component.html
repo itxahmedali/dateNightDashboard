@@ -80,13 +80,18 @@
         </table>
       </div>
     </div>
-    <div class="col-sm-12 d-flex justify-content-end" *ngIf="users?.length">
-      <pagination-controls
+    <div class="col-sm-12 d-flex justify-content-between" *ngIf="users?.length">
+      <div>
+        <p class="exportFile white" (click)="exportToExcel()"> <i class="fa fa-file"></i> Export File</p>
+      </div>
+      <div>
+        <pagination-controls
         previousLabel="&lsaquo;"
         nextLabel="&rsaquo;"
         (pageChange)="duePage = $event"
       >
       </pagination-controls>
+      </div>
     </div>
   </div>
 </div>
