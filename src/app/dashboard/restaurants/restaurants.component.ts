@@ -62,7 +62,6 @@ export default class RestaurantsComponent {
   }
   async getRestaurant() {
     await this.http.loaderGet('restaurant', true)?.subscribe((res: any) => {
-      console.log(res);
       this.Restaurants = res?.data;
     });
   }

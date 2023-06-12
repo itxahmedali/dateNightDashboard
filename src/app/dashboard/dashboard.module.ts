@@ -21,6 +21,7 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import RestaurantsComponent from './restaurants/restaurants.component';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { AgmCoreModule } from '@agm/core';
+import { FaqComponent } from './faq/faq.component';
 // import { AgmCoreModule } from '@agm/core';
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AgmCoreModule } from '@agm/core';
     PingChildComponent,
     UserDetailComponent,
     RestaurantsComponent,
+    FaqComponent,
   ],
   imports: [
     CommonModule,
