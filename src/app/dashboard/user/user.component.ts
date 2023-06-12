@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { tap } from 'rxjs';
 import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from 'src/app/services/http.service';
 import { Users } from 'src/classes';
@@ -15,7 +16,9 @@ export class UserComponent {
   constructor(
     private modalService: NgbModal,
     private helper: HelperService,
-
+    private fb:FormBuilder,
+    private http:HttpService,
+    private toaster:ToastrService
   ) {}
   public modalReference: any;
   public searchInput!: any;
@@ -29,6 +32,13 @@ export class UserComponent {
     { id: 2, name: 'date' },
   ];
   public users!: any;
+  public EditUserForm: any = this.fb.group({
+    name: [null, Validators.required],
+    phone: [null, Validators.required],
+    dob: [null, Validators.required],
+    image: [null, Validators.required],
+    id: [null, Validators.required],
+  });
   async ngOnInit() {
     this.helper.setUsers();
     this.getUsers();
@@ -53,5 +63,27 @@ export class UserComponent {
       this.users = Users;
     });
   }
-  
+  save(modal: boolean) {
+    this.http
+      .loaderPost('events-child-add', this.EditUserForm.value, true)
+      .pipe(
+        tap((res: any) => {
+          this.toaster.success(res?.message ?? res?.messsage);
+        })
+      )
+      .subscribe({
+        next: () => {
+          if (modal) {
+            this.proceed();
+          }
+          this.helper.setUsers();
+          this.getUsers();
+          this.EditUserForm.reset();
+        },
+        complete: () => {
+          this.EditUserForm.removeControl('id');
+          this.EditUserForm.removeControl('active_status');
+        },
+      });
+  }
 }
