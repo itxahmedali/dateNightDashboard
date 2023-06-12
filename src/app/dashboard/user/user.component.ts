@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { tap } from 'rxjs';
@@ -16,17 +16,19 @@ export class UserComponent {
   constructor(
     private modalService: NgbModal,
     private helper: HelperService,
-    private fb:FormBuilder,
-    private http:HttpService,
-    private toaster:ToastrService
+    private fb: FormBuilder,
+    private http: HttpService,
+    private toaster: ToastrService
   ) {}
   public modalReference: any;
   public searchInput!: any;
   public selectedSort!: any;
+  public selectedUser!: any;
   public duePage!: any;
   public total!: any;
   public reminders!: any;
   public dates!: any;
+  public state!: boolean;
   public sorts = [
     { id: 1, name: 'name' },
     { id: 2, name: 'date' },
@@ -36,27 +38,37 @@ export class UserComponent {
     name: [null, Validators.required],
     phone: [null, Validators.required],
     dob: [null, Validators.required],
-    image: [null, Validators.required],
-    id: [null, Validators.required],
   });
   async ngOnInit() {
     this.helper.setUsers();
     this.getUsers();
   }
-  
-  async open(content: any) {
+
+  async open(content: any, state: string) {
     this.modalReference = this.modalService.open(content, {
       centered: true,
       backdrop: 'static',
       windowClass: 'checkoutModal',
       size: 'xl',
     });
+    this.state = state == 'edit' ? true : false;
+    if (state == 'edit') {
+      const { id, name, dob, phone } = this.selectedUser || {};
+      this.EditUserForm.addControl('id', new FormControl(id));
+      this.EditUserForm.patchValue({
+        ...this.EditUserForm.value,
+        name,
+        dob,
+        phone,
+      });
+    }
   }
   exportToExcel(): void {
-    this.helper.exportToExcel(this.users)
+    this.helper.exportToExcel(this.users);
   }
   proceed() {
     this.modalReference.close();
+    this.EditUserForm.reset();
   }
   async getUsers() {
     await this.helper.getUsers()?.then((Users: Users) => {
@@ -65,7 +77,7 @@ export class UserComponent {
   }
   save(modal: boolean) {
     this.http
-      .loaderPost('events-child-add', this.EditUserForm.value, true)
+      .loaderPost('user-update', this.EditUserForm.value, true)
       .pipe(
         tap((res: any) => {
           this.toaster.success(res?.message ?? res?.messsage);
@@ -85,5 +97,31 @@ export class UserComponent {
           this.EditUserForm.removeControl('active_status');
         },
       });
+  }
+  async stateItem(event: any, data: any) {
+    this.selectedUser = this.users?.find((e: any) => e?.id == event.id);
+    if (this.selectedUser) {
+      const { id, name, phone, dob } = this.selectedUser || {};
+      this.EditUserForm.patchValue({
+        ...this.EditUserForm.value,
+        name,
+        phone,
+        dob,
+      });
+      this.EditUserForm.addControl('id', new FormControl(id));
+      this.EditUserForm.addControl(
+        'active_status',
+        new FormControl(data.target.checked ? 1 : 0)
+      );
+    }
+    this.save(false);
+  }
+  delete(id: any) {
+    // this.http
+    //   .loaderGet(`faq-delete/${id}`, true)
+    //   .subscribe((res: any) => {
+    //     this.helper.setFaqs();
+    //     this.getFaqs();
+    //   });
   }
 }

@@ -54,7 +54,7 @@
                 <td>
                   <div class="toggle d-flex align-items-center w-100 justify-content-center">
                     <input class="checkBox" type="checkbox" [checked]="item?.active_status =='1' ? true: false"
-                      [id]='"categoryStock"+i' /><label [for]='"categoryStock"+i'></label>
+                      [id]='"categoryStock"+i' (change)="stateItem(item,$event)"/><label [for]='"categoryStock"+i'></label>
                   </div>
                 </td>
                 <td class="d-flex justify-content-center align-items-center">
@@ -70,8 +70,12 @@
                     class="actionbtn"
                     placement="top"
                     ngbTooltip="Edit User"
+                    (click)="selectedUser=item;open(addModal,'edit');"
                   >
                     <i class="fa fa-edit mlicon"></i>
+                  </button>
+                  <button class="actionbtn" (click)="delete(item?.id)">
+                    <i class="fa fa-trash mlicon"></i>
                   </button>
                 </td>
               </tr>
@@ -107,28 +111,36 @@
 </div>
 <!-- Edit User -->
 <ng-container>
-  <ng-template #addChild let-modal>
+  <ng-template #addModal let-modal>
     <div class="modal-body checkoutModal completed">
       <button class="btn-close" id="checkoutClose" aria-label="Close" (click)="proceed();"></button>
       <h5 class="modal-title">Update User</h5>
       <form [formGroup]="EditUserForm" class="form">
         <div class="row mt-4">
           <div class="col-lg-6 mt-3">
-            <label for="" class="text-light mb-3">Value</label>
-            <input formControlName="value" type="text" placeholder="Value" class="text-light w-100" />
+            <label for="" class="text-light mb-3">Name</label>
+            <input formControlName="name" type="text" placeholder="Name" class="text-light w-100" />
             <div
-              *ngIf="EditUserForm.controls.value.invalid && (EditUserForm.controls.value.dirty || EditUserForm.controls.value.touched)">
-              <small class="text-danger">Value is required</small>
+              *ngIf="EditUserForm.controls.name.invalid && (EditUserForm.controls.name.dirty || EditUserForm.controls.name.touched)">
+              <small class="text-danger">Name is required</small>
             </div>
           </div>
-          <!-- <div class="col-lg-6 mt-3">
-            <label for="" class="text-light mb-3">Label</label>
-            <input formControlName="label" type="text" placeholder="Label" class="text-light w-100" />
+          <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Number</label>
+            <input formControlName="phone" type="text" placeholder="Number" class="text-light w-100" />
             <div
-              *ngIf="EditUserForm.controls.label.invalid && (EditUserForm.controls.label.dirty || EditUserForm.controls.label.touched)">
-              <small class="text-danger">Label is required</small>
+              *ngIf="EditUserForm.controls.phone.invalid && (EditUserForm.controls.phone.dirty || EditUserForm.controls.phone.touched)">
+              <small class="text-danger">Number is required</small>
             </div>
-          </div> -->
+          </div>
+          <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">D.O.B</label>
+            <input formControlName="dob" type="text" placeholder="D.O.B" class="text-light w-100" />
+            <div
+              *ngIf="EditUserForm.controls.dob.invalid && (EditUserForm.controls.dob.dirty || EditUserForm.controls.dob.touched)">
+              <small class="text-danger">D.O.B is required</small>
+            </div>
+          </div>
         </div>
       </form>
     </div>
