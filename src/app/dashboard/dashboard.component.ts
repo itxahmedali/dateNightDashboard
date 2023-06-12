@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { HelperService } from '../services/helper.service';
 import { UniversalService } from '../services/universal.service';
 import { fadeIn } from 'src/animations/itemCardAnimation';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -10,6 +11,7 @@ import { fadeIn } from 'src/animations/itemCardAnimation';
   animations:[fadeIn]
 })
 export class DashboardComponent {
+  public Editor = ClassicEditor;
   public login: boolean = false;
   public cart: boolean = false;
   public windowHeight: number = window.innerHeight;

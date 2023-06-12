@@ -8,6 +8,7 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { LoginComponent } from './auth/login/login.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,6 +17,7 @@ import { LoginComponent } from './auth/login/login.component';
   ],
   imports: [
     BrowserModule,
+    CKEditorModule,
     AppRoutingModule,
     SharedModule,
     NgbModule,
