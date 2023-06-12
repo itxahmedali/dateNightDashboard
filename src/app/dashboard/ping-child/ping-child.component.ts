@@ -56,18 +56,19 @@ export class PingChildComponent {
     });
     this.state = state == 'edit' ? true : false;
     if (state == 'edit') {
-      let selectedPing: any;
-        this.Pings?.map((ping: any) => {
-          if (ping.id == this.selectedPingChild.category_id) {
-            selectedPing = ping;
-          }
-        });
+      let selectedPing: any = [];
+      this.selectedPingChild.category_id.forEach((id: any) => {
+        const ping = this.Pings.find((m: any) => m.id == id);
+        if (ping) {
+          selectedPing.push(ping?.id);
+        }        
+      });
       this.pingForm.addControl(
         'id',
         new FormControl(this.selectedPingChild?.id)
       );
       this.pingForm.patchValue({
-        category_id:selectedPing.id,
+        category_id:selectedPing,
         name: this.selectedPingChild?.name,
         description: this.selectedPingChild?.description,
         paid_or_free:'free',
@@ -132,18 +133,26 @@ export class PingChildComponent {
     this.save(false);
   }
   async getPingsAndModes() {
-    await this.helper.getPingsChilds()?.then((Pings: PingsChild) => {
-      this.PingsChild = Pings;
+    await this.helper.getModes()?.then((Modes: DateMode) => {
+      this.modes = Modes;
     });
     await this.helper.getPings()?.then((Pings: Pings) => {
       this.Pings = Pings;
     });
-    await this.helper.getModes()?.then((Modes: DateMode) => {
-      this.modes = Modes;
+    const pingChild: any = await this.helper.getPingsChilds();
+    pingChild.forEach((ping: any) => {
+      const categoryNames: string[] = [];
+      if (ping.category_id) {
+        ping.category_id.forEach((id: any) => {
+          const mode = this.Pings.find((m: any) => m.id == id);
+          if (mode) {
+            categoryNames.push(mode.name);
+          }
+        });
+      }
+      ping.categoryNames = categoryNames;
     });
-  }
-  matchPings(id: any) {
-    return this.Pings?.filter((ping: any) => ping.id == id).map((ping: any) => ping.name);
+    this.PingsChild = pingChild;
   }
   delete(id: any) {
     this.http
@@ -152,5 +161,25 @@ export class PingChildComponent {
         this.helper.setPingsChild();
           this.getPingsAndModes();
       });
+  }
+  checkPingCatrgoryName(array: any[]): string[] {
+    const pinCategoryNames: string[] = [];
+    if (!this.Pings) {
+      return pinCategoryNames;
+    }
+    for (const id of array) {
+      const ping = this.Pings.find((m: any) => m.id == id);
+  
+      if (ping) {
+        if (pinCategoryNames.length < 1) {
+          pinCategoryNames.push(ping.name);
+        } else if (pinCategoryNames.length == 1) {
+          pinCategoryNames.push("...");
+        } else {
+          return pinCategoryNames;
+        }
+      }
+    }
+    return pinCategoryNames;
   }
 }

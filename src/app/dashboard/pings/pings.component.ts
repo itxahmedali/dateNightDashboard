@@ -56,18 +56,19 @@ export class PingsComponent {
     this.state = state == 'edit' ? true : false;
     if (state == 'edit') {
       this.pingForm.addControl('id', new FormControl(this.selectedPing?.id));
-      let selectedModeId: any;
-      this.modes?.map((mode: any) => {
-        if (mode.id == this.selectedPing.mode_id) {
-          selectedModeId = mode.id;
+      let selectedModeId: any = [];
+      this.selectedPing.modes.forEach((id: any) => {
+        const mode = this.modes.find((m: any) => m.id == id);
+        if (mode) {
+          selectedModeId.push(mode.id);
         }
       });
       this.pingForm.patchValue({
         name: this.selectedPing?.name,
         description: this.selectedPing?.description,
-        mode_id:selectedModeId,
-        paid_or_free:this.selectedPing.paid_or_free,
-        price:this.selectedPing.price,
+        mode_id: selectedModeId,
+        paid_or_free: this.selectedPing.paid_or_free,
+        price: this.selectedPing.price,
       });
     }
   }
@@ -90,8 +91,8 @@ export class PingsComponent {
           }
           this.pingForm.reset();
           this.pingForm.patchValue({
-            paid_or_free:'free',
-            price:0,
+            paid_or_free: 'free',
+            price: 0,
           });
         },
         complete: () => {
@@ -102,24 +103,23 @@ export class PingsComponent {
         },
       });
   }
-  setPaidStatus(event:any){
-    if(event.name == 'free'){
+  setPaidStatus(event: any) {
+    if (event.name == 'free') {
       this.pingForm.patchValue({
-        price:0,
+        price: 0,
       });
-    }
-    else return
+    } else return;
   }
   async stateItem(event: any, data: any) {
     this.selectedPing = this.Pings?.find((e: any) => e?.id == event.id);
     if (this.selectedPing) {
-      const { id, name, mode_id, description, paid_or_free, price } =
+      const { id, name, modes, description, paid_or_free, price } =
         this.selectedPing;
       const activeStatus = data.target.checked ? 1 : 0;
       this.pingForm.patchValue({
         ...this.pingForm.value,
         name,
-        mode_id,
+        mode_id: modes,
         description,
         paid_or_free,
         price,
@@ -134,12 +134,26 @@ export class PingsComponent {
     this.save(false);
   }
   async getPingsAndModes() {
-    await this.helper.getPings()?.then((Pings: Pings) => {
-      this.Pings = Pings;
-    });
+    
     await this.helper.getModes()?.then((Modes: DateMode) => {
       this.modes = Modes;
     });
+    const pings: any = await this.helper.getPings();
+
+    pings.forEach((ping: any) => {
+      const modeNames: string[] = [];
+      if (ping.modes) {
+        ping.modes.forEach((id: any) => {
+          const mode = this.modes.find((m: any) => m.id == id);
+          if (mode) {
+            modeNames.push(mode.name);
+          }
+        });
+      }
+      ping.modeNames = modeNames;
+    });
+    
+    this.Pings = pings;
   }
   delete(id: any) {
     this.http
@@ -148,5 +162,25 @@ export class PingsComponent {
         this.helper.setPings();
         this.getPingsAndModes();
       });
+  }
+  checkModeName(array: any[]): string[] {
+    const modeNames: string[] = [];
+    if (!this.modes) {
+      return modeNames;
+    }
+    for (const id of array) {
+      const mode = this.modes.find((m: any) => m.id == id);
+  
+      if (mode) {
+        if (modeNames.length < 1) {
+          modeNames.push(mode.name);
+        } else if (modeNames.length == 1) {
+          modeNames.push("...");
+        } else {
+          return modeNames;
+        }
+      }
+    }
+    return modeNames;
   }
 }

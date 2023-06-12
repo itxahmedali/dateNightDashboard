@@ -50,6 +50,7 @@ export class DateMode implements DateMode {
 export interface Pings {
   id: number;
   mode_id: number;
+  modes: [any];
   name: string;
   description: string;
   paid_or_free: string;
@@ -60,6 +61,7 @@ export class Pings implements Pings {
   constructor(
     public id: number,
     public mode_id: number,
+    public modes: [any],
     public name: string,
     public description: string,
     public paid_or_free: string,

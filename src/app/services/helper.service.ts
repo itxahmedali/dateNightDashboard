@@ -167,6 +167,7 @@ export class HelperService {
       return new Pings(
         data.id,
         data.mode_id,
+        data.modes,
         data.name,
         data.description,
         data.paid_or_free,

@@ -38,7 +38,11 @@
                           }
                   ">
                   <th scope="row">{{ item?.id }}</th>
-                  <td>{{ item?.category_id ? matchPings(item?.category_id) : "N/A" }}</td>
+                  <td>
+                    <span class="pointer" placement="top" [ngbTooltip]="item?.categoryNames">
+                      {{ item?.category_id ? checkPingCatrgoryName(item?.category_id) : "N/A" }}
+                    </span>
+                  </td>
                   <td>{{ item?.name ? item?.name : "N/A" }}</td>
                   <td> <span class="pointer" placement="top" [ngbTooltip]="item?.description"> {{ item?.description ?
                     (item?.description | ellipsis:20) : "N/A" }} </span></td>
@@ -88,7 +92,7 @@
         <form [formGroup]="pingForm" class="form">
           <div class="row mt-4">
             <div class="col-lg-6 mt-3">
-              <ng-select placeholder="Select Category" [items]="Pings" bindLabel="name" bindValue="id" formControlName="category_id">
+              <ng-select placeholder="Select Category" [multiple]="true" [items]="Pings" bindLabel="name" bindValue="id" formControlName="category_id">
               </ng-select>
               <div
                 *ngIf="pingForm.controls.category_id.invalid && (pingForm.controls.category_id.dirty || pingForm.controls.category_id.touched)">
