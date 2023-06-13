@@ -126,7 +126,15 @@
               placeholder="Sponsored"
               class="text-light w-100"
             />
-            
+          </div>
+          <div class="col-lg-6 mt-3">
+            <label for="" class="text-light mb-3">Voucher</label>
+            <input
+              formControlName="voucher"
+              type="text"
+              placeholder="Voucher"
+              class="text-light w-100"
+            />
           </div>
           <div class="col-lg-6 mt-3">
             <label for="" class="text-light mb-3">Name</label>
@@ -136,7 +144,6 @@
               placeholder="Name"
               class="text-light w-100"
             />
-            
           </div>
           <div class="col-lg-6 mt-3">
             <label for="" class="text-light mb-3">Description</label>
@@ -146,28 +153,16 @@
               placeholder="Description"
               class="text-light w-100"
             />
-            
           </div>
           <div class="col-lg-6 mt-3">
             <label for="" class="text-light mb-3">Phone</label>
             <input
               formControlName="phone"
-              (keypress)="numberOnly($event)"
+              (input)="numberKeyup($event)"
               type="text"
               placeholder="Phone"
               class="text-light w-100"
             />
-            
-          </div>
-          <div class="col-lg-6 mt-3">
-            <label for="" class="text-light mb-3">Location</label>
-            <input
-              formControlName="location"
-              type="text"
-              placeholder="Location"
-              class="text-light w-100"
-            />
-            
           </div>
           <div class="col-lg-6 mt-3">
             <label for="" class="text-light mb-3">Website</label>
@@ -177,21 +172,19 @@
               placeholder="Website"
               class="text-light w-100"
             />
-           
           </div>
           <div class="col-lg-12 mt-3 d-flex w-100 flex-column">
-            <label for="" class="text-light mb-3">Address</label>
+            <label for="" class="text-light mb-3">Location</label>
             <input
-              [(ngModel)]="address"
-              [ngModelOptions]="{ standalone: true }"
+            formControlName="location"
               ngx-google-places-autocomplete
               (onAddressChange)="onPlaceSelected($event)"
-              placeholder="Enter Location"
+              placeholder="Enter Address"
             />
             <agm-map
               [latitude]="currentLat"
               [longitude]="currentLng"
-              [zoom]="17"
+              [zoom]="13"
               [disableDefaultUI]="false"
               [zoomControl]="false"
             >

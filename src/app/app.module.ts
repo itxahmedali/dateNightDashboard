@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { LoginComponent } from './auth/login/login.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     SharedModule,
     NgbModule,
     HttpClientModule,
-    LazyLoadImageModule
+    LazyLoadImageModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

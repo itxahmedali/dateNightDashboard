@@ -704,3 +704,9 @@ input[type="number"] {
   color: var(--headings-primary-color) !important;
   border-radius: 50px !important;
 }
+
+/* Importing Bootstrap SCSS file. */
+@import "./node_modules/bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";

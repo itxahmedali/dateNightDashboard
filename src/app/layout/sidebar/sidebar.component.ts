@@ -73,7 +73,7 @@ export class SidebarComponent implements OnInit {
     {
       path: 'faq',
       title: "FAQ's",
-      icon: 'assets/images/restaurant.webp',
+      icon: 'assets/images/faq.webp',
       type: 'link',
     }
   ];

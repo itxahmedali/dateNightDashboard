@@ -53,7 +53,7 @@
                 <td>{{ item?.dob ? item?.dob : "N/A" }}</td>
                 <td>
                   <div class="toggle d-flex align-items-center w-100 justify-content-center">
-                    <input class="checkBox" type="checkbox" [checked]="item?.active_status =='1' ? true: false"
+                    <input class="checkBox" type="checkbox" [checked]="item?.soft_delete_status =='1' ? true : false"
                       [id]='"categoryStock"+i' (change)="stateItem(item,$event)"/><label [for]='"categoryStock"+i'></label>
                   </div>
                 </td>
@@ -73,9 +73,6 @@
                     (click)="selectedUser=item;open(addModal,'edit');"
                   >
                     <i class="fa fa-edit mlicon"></i>
-                  </button>
-                  <button class="actionbtn" (click)="delete(item?.id)">
-                    <i class="fa fa-trash mlicon"></i>
                   </button>
                 </td>
               </tr>
@@ -117,6 +114,22 @@
       <h5 class="modal-title">Update User</h5>
       <form [formGroup]="EditUserForm" class="form">
         <div class="row mt-4">
+          <div class="col-lg-12 d-flex justify-content-center align-items-center">
+            <div class="userHead">
+              <div class="userProfile">
+                <app-img
+                  [src]="selectedUser?.image"
+                  [styles]="{
+                    width: '100%',
+                    height: '100%',
+                    'object-fit': 'contain'
+                  }"
+                ></app-img>
+              </div>
+              <label for="imageUpload"><i class="fa fa-edit editImage"></i></label>
+              <input type="file" name="" id="imageUpload" hidden (change)="upload($event)">
+            </div>
+          </div>
           <div class="col-lg-6 mt-3">
             <label for="" class="text-light mb-3">Name</label>
             <input formControlName="name" type="text" placeholder="Name" class="text-light w-100" />

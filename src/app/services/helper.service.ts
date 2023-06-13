@@ -77,10 +77,15 @@ export class HelperService {
           if (ctx) {
             ctx.drawImage(img, 0, 0, width, height);
             const base64String = canvas.toDataURL('image/webp', 0.8);
+            let substringToRemove = 'data:image/webp;base64,';
 
+            let resultAfterModify = base64String.replace(
+              substringToRemove,
+              ''
+            );
             if (base64String) {
               this.http
-                .loaderPost('image-upload-64', { image: base64String }, true)
+                .loaderPost('image-upload-64', { image: resultAfterModify }, true)
                 .subscribe(
                   (response: any) => {
                     resolve(response);
@@ -147,19 +152,17 @@ export class HelperService {
   async setPings() {
     this.pingsPromise = this.loadPings();
   }
-  getPosition(): Promise<any>
-  {
+  getPosition(): Promise<any> {
     return new Promise((resolve, reject) => {
-
-      navigator.geolocation.getCurrentPosition(resp => {
-
-          resolve({lng: resp.coords.longitude, lat: resp.coords.latitude});
+      navigator.geolocation.getCurrentPosition(
+        (resp) => {
+          resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
         },
-        err => {
+        (err) => {
           reject(err);
-        });
+        }
+      );
     });
-
   }
   public async loadPings(): Promise<Pings[]> {
     const res: any = await this.http
@@ -256,7 +259,7 @@ export class HelperService {
   }
   public async loadUsers(): Promise<Users[]> {
     const res: any = await this.http
-      .loaderPost('all-users',{}, true)
+      .loaderPost('all-users', {}, true)
       .toPromise();
     const modesList = res.map((data: Users) => {
       return new Users(
@@ -265,10 +268,12 @@ export class HelperService {
         data.email,
         data.phone,
         data.dob,
+        data.image,
         data.dates,
         data.reminders,
         data.active_status,
-        data.type,
+        data.soft_delete_status,
+        data.type
       );
     });
     return modesList;
@@ -290,16 +295,9 @@ export class HelperService {
     this.FaqsPromise = this.loadFaqs();
   }
   public async loadFaqs(): Promise<Faq[]> {
-    const res: any = await this.http
-      .loaderGet('faq', true)
-      .toPromise();
+    const res: any = await this.http.loaderGet('faq', true).toPromise();
     const modesList = res?.data?.map((data: Faq) => {
-      return new Faq(
-        data.id,
-        data.heading,
-        data.paragraph,
-        data.active_status,
-      );
+      return new Faq(data.id, data.heading, data.paragraph, data.active_status);
     });
     return modesList;
   }

@@ -119,9 +119,11 @@ export interface Users {
   email: string;
   phone: string;
   dob: string;
+  image: string;
   dates: [];
   reminders: [];
   active_status: string;
+  soft_delete_status: string;
   type: string;
 }
 export class Users implements Users {
@@ -131,9 +133,11 @@ export class Users implements Users {
     public email: string,
     public phone: string,
     public dob: string,
+    public image: string,
     public dates: [],
     public reminders: [],
     public active_status: string,
+    public soft_delete_status: string,
     public type: string
   ) {}
 }

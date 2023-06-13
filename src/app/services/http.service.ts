@@ -79,11 +79,17 @@ export class HttpService {
         }),
         catchError((error: HttpErrorResponse) => {
           LoaderService.loader.next(false);
-          console.log(error);
+          console.log(error,"hello errors");
           if (error.status === 401) {
             this.authService.logout();
-          } else {
             this.toastr.error(error?.error?.message);
+          } else {
+            if(error?.error){
+              this.toastr.error(error?.error?.message);
+            }
+            else{
+              this.toastr.error(error?.message);
+            }
           }
           return throwError(error.message || 'Server error');
         })

@@ -41,24 +41,36 @@ export default class RestaurantsComponent {
     { id: 2, name: 'date' },
   ];
   public Restaurants!: any;
+  public formattedAddress!: any;
   currentLat!: number;
   currentLng!: number;
+
   public restuarantForm: any = this.fb.group({
-    sponsored: [null],
-    desc: [null],
-    name: [null],
-    phone: [null],
-    location: [null],
-    website: [null],
-    lat: [null],
-    lng: [null],
+    sponsored: [null, Validators.required],
+    voucher: [null],
+    desc: [null, Validators.required],
+    name: [null, Validators.required],
+    phone: [null, Validators.required],
+    location: [null, Validators.required],
+    website: [null, Validators.required],
+    lat: [null, Validators.required],
+    lng: [null, Validators.required],
   });
   public modes: any;
   public selectedRestaurant: any;
   public pings: any;
-  public address!: any;
   async ngOnInit() {
     this.getRestaurant();
+    this.getCurrentLocation();
+  }
+  async getCurrentLocation() {
+    await this.helper.getPosition().then(async (pos: any) => {
+      this.currentLat = pos.lat;
+      this.currentLng = pos.lng;
+      localStorage.setItem('currentLat', JSON.stringify(pos.lat));
+      localStorage.setItem('currentLng', JSON.stringify(pos.lng));
+      await this.setPlaceByLatLng(pos.lat, pos.lng, true);
+    });
   }
   async getRestaurant() {
     await this.http.loaderGet('restaurant', true)?.subscribe((res: any) => {
@@ -84,8 +96,9 @@ export default class RestaurantsComponent {
         lat,
         lng,
         active_status,
+        voucher,
       } = this.selectedRestaurant;
-      this.setPlaceByLatLng(lat, lng);
+      this.setPlaceByLatLng(lat, lng, false);
       this.restuarantForm.patchValue({
         ...this.restuarantForm.value,
         sponsored,
@@ -96,6 +109,7 @@ export default class RestaurantsComponent {
         website,
         lat,
         lng,
+        voucher,
       });
       this.restuarantForm.addControl('id', new FormControl(id));
       this.restuarantForm.addControl(
@@ -103,25 +117,40 @@ export default class RestaurantsComponent {
         new FormControl(active_status)
       );
     } else {
-      this.address = null;
-      this.helper.getPosition().then((pos: any) => {
-        this.currentLat = pos.lat;
-        this.currentLng = pos.lng;
-        console.log(`Positon: ${pos.lng} ${pos.lat}`);
+      const currentLat:any = localStorage.getItem('currentLat');
+      const currentLng:any = localStorage.getItem('currentLng');
+      const formattedAddress:any = localStorage.getItem('formattedAddress');
+      this.currentLat = Number(JSON.parse(currentLat));
+      this.currentLng = Number(JSON.parse(currentLng));
+      this.restuarantForm.patchValue({
+        lat: this.currentLat,
+        lng: this.currentLng,
+        location: JSON.parse(formattedAddress),
       });
     }
   }
   proceed() {
     this.modalReference.close();
     this.restuarantForm.reset();
+    this.formattedAddress = null;
   }
   async stateItem(event: any, data: any) {
     this.selectedRestaurant = this.Restaurants?.find(
       (e: any) => e?.id == event.id
     );
     if (this.selectedRestaurant) {
-      const { id, sponsored, desc, name, phone, location, website, lat, lng } =
-        this.selectedRestaurant;
+      const {
+        id,
+        sponsored,
+        desc,
+        name,
+        phone,
+        location,
+        website,
+        lat,
+        lng,
+        voucher,
+      } = this.selectedRestaurant;
       this.restuarantForm.patchValue({
         ...this.restuarantForm.value,
         sponsored,
@@ -132,6 +161,7 @@ export default class RestaurantsComponent {
         website,
         lat,
         lng,
+        voucher,
       });
       this.restuarantForm.addControl('id', new FormControl(id));
       this.restuarantForm.addControl(
@@ -167,6 +197,24 @@ export default class RestaurantsComponent {
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
+    
+    // Get the phone control from the form group
+    const phoneControl = this.restuarantForm.get('phone');
+  
+    if (phoneControl) {
+      // Get the current value of the phone control
+      let currentValue = phoneControl.value || '';
+      
+      // Remove non-digit characters from the current value
+      currentValue = currentValue.replace(/\D/g, '');
+      
+      // Format the phone number in US format
+      // const formattedValue = this.formatPhoneNumber(currentValue);
+      
+      // Update the value in the form control
+      // phoneControl.setValue(formattedValue, { emitEvent: false });
+    }
+    
     return true;
   }
   onPlaceSelected(predictions: any) {
@@ -179,26 +227,47 @@ export default class RestaurantsComponent {
       lng: this.currentLng,
     });
   }
-  
-  setPlaceByLatLng(lat: number, lng: number): void {
+
+  setPlaceByLatLng(lat: number, lng: number, setInLocal:boolean): void {
     const latitude = Number(lat);
     const longitude = Number(lng);
     this.currentLat = latitude;
     this.currentLng = longitude;
-    this.http.getAddressFromLatLng(latitude, longitude).subscribe((res: any) => {
-      const formattedAddress = res.results[0].formatted_address;
-      this.address = formattedAddress;
-    });
-    this.restuarantForm.patchValue({
-      lat: latitude,
-      lng: longitude,
-    });
+    this.http
+      .getAddressFromLatLng(latitude, longitude)
+      .subscribe((res: any) => {
+        this.formattedAddress = res.results[0].formatted_address;
+        if(setInLocal){
+          localStorage.setItem(
+            'formattedAddress',
+            JSON.stringify(res.results[0].formatted_address)
+          );
+        }
+        this.restuarantForm.patchValue({
+          lat: latitude,
+          lng: longitude,
+          location: this.formattedAddress,
+        });
+      });
   }
-  
+
   markerDragEnd($event: any) {
     this.currentLat = $event.coords.lat;
     this.currentLng = $event.coords.lng;
-    this.setPlaceByLatLng(this.currentLat, this.currentLng);
+    this.setPlaceByLatLng(this.currentLat, this.currentLng,false);
   }
-  
+  numberKeyup(event: any): void {
+    const input = event.target as HTMLInputElement;
+    const value = input.value.replace(/\D/g, '');
+
+    if (value.length >= 1) {
+      input.value = '(' + value.substring(0, 3);
+    }
+    if (value.length >= 4) {
+      input.value = '(' + value.substring(0, 3) + ') ' + value.substring(3, 6);
+    }
+    if (value.length >= 7) {
+      input.value = '(' + value.substring(0, 3) + ') ' + value.substring(3, 6) + '-' + value.substring(6, 10);
+    }
+  }
 }

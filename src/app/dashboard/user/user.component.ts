@@ -38,6 +38,7 @@ export class UserComponent {
     name: [null, Validators.required],
     phone: [null, Validators.required],
     dob: [null, Validators.required],
+    image: [null, Validators.required],
   });
   async ngOnInit() {
     this.helper.setUsers();
@@ -52,14 +53,17 @@ export class UserComponent {
       size: 'xl',
     });
     this.state = state == 'edit' ? true : false;
+    console.log(this.selectedUser,"selectedUser");
+    
     if (state == 'edit') {
-      const { id, name, dob, phone } = this.selectedUser || {};
+      const { id, name, dob, phone, image } = this.selectedUser || {};
       this.EditUserForm.addControl('id', new FormControl(id));
       this.EditUserForm.patchValue({
         ...this.EditUserForm.value,
         name,
         dob,
         phone,
+        image
       });
     }
   }
@@ -73,6 +77,8 @@ export class UserComponent {
   async getUsers() {
     await this.helper.getUsers()?.then((Users: Users) => {
       this.users = Users;
+      console.log(Users,'huellouser');
+      
     });
   }
   save(modal: boolean) {
@@ -100,28 +106,38 @@ export class UserComponent {
   }
   async stateItem(event: any, data: any) {
     this.selectedUser = this.users?.find((e: any) => e?.id == event.id);
+    const { id } = this.selectedUser || {};
+    const form = {
+      soft_delete_status: data.target.checked ? 1 : 0,
+      id,
+    };
     if (this.selectedUser) {
-      const { id, name, phone, dob } = this.selectedUser || {};
-      this.EditUserForm.patchValue({
-        ...this.EditUserForm.value,
-        name,
-        phone,
-        dob,
+      this.http.loaderPost('user-active-deactive', form, true).subscribe({
+        next: () => {
+          this.helper.setUsers();
+          this.getUsers();
+        }
       });
-      this.EditUserForm.addControl('id', new FormControl(id));
-      this.EditUserForm.addControl(
-        'active_status',
-        new FormControl(data.target.checked ? 1 : 0)
-      );
     }
-    this.save(false);
   }
-  delete(id: any) {
-    // this.http
-    //   .loaderGet(`faq-delete/${id}`, true)
-    //   .subscribe((res: any) => {
-    //     this.helper.setFaqs();
-    //     this.getFaqs();
-    //   });
+  upload(event: any) {
+    const { id } = this.selectedUser || {};
+    this.helper
+      .fileUploadHttp(event)
+      .then((result: any) => {
+        this.selectedUser.image = result.data.image_url;
+        this.EditUserForm.patchValue({
+          image: result.data.image_url,
+        });
+        this.EditUserForm.patchValue({
+          ...this.EditUserForm.value,
+          image: result.data.image_url,
+        });
+        this.EditUserForm.addControl('id', new FormControl(id));
+        this.save(true)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }

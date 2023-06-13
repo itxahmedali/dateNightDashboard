@@ -19,7 +19,6 @@
               <th scope="col">Id</th>
               <th scope="col">Event Id</th>
               <th scope="col">Value</th>
-              <th scope="col">Label</th>
               <th scope="col">Status</th>
               <th scope="col">Actions</th>
             </tr>
@@ -40,7 +39,6 @@
                 <th scope="row">{{ item?.id }}</th>
                 <td>{{ item?.event_id ? matchEvents(item?.event_id) : "N/A" }}</td>
                   <td>{{ item?.value ? item?.value : "N/A" }}</td>
-                  <td>{{ item?.label ? item?.label : "N/A" }}</td>
                   <td>
                   <div class="toggle d-flex align-items-center w-100 justify-content-center">
                     <input class="checkBox" type="checkbox" [checked]="item?.active_status =='1' ? true: false"
@@ -59,11 +57,11 @@
             </ng-container>
             <ng-template #noData>
               <tr *ngIf="eventsChild?.length">
-                <td colspan="6" class="text-center white">No Matching Data Available</td>
+                <td colspan="5" class="text-center white">No Matching Data Available</td>
               </tr>
             </ng-template>
             <tr *ngIf="!eventsChild?.length">
-              <td class="text-center white" colspan="6">
+              <td class="text-center white" colspan="5">
                 No data available
               </td>
             </tr>

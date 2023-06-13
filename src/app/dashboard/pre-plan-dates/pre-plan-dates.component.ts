@@ -127,8 +127,6 @@ export class PrePlanDatesComponent {
         'active_status',
         new FormControl(data.target.checked ? 1 : 0)
       );
-      console.log(this.modeForm.value,"hellovlaue");
-      
       this.save(false);
     }
   }
@@ -149,7 +147,6 @@ export class PrePlanDatesComponent {
     return pingIds.join(',');
   }
   save(modal:boolean) {
-    // Convert the array to a comma-separated string
     const pingIds = this.modeForm.controls['ping_id'].value.join(',');
     this.modeForm.patchValue({
       ping_id: pingIds,
