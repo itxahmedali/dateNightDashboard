@@ -14,28 +14,31 @@
         </div>
       </div>
       <div class="userBody">
-        <div class="row">
-          <div class="col-sm-6 mt-3 mb-3 text-light text-center">
-            <span class="title">Name:</span>
-            <span class="content">{{ user?.name }}</span>
-          </div>
-          <div class="col-sm-6 mt-3 mb-3 text-light text-center">
-            <span class="title">Email:</span>
-            <span class="content">{{ user?.email }}</span>
-          </div>
-          <div class="col-sm-6 mt-3 mb-3 text-light text-center">
-            <span class="title">Phone:</span>
-            <span class="content">{{ user?.phone }}</span>
-          </div>
-          <div class="col-sm-6 mt-3 mb-3 text-light text-center">
-            <span class="title">DOB:</span>
-            <span class="content">{{ user?.dob }}</span>
+        <div class="row ">
+          <div class="col-sm-12">
+            <div class="row headRow">
+              <div class="col-sm-3 mt-3 mb-3 text-light text-center">
+                <span class="title">Name:</span>
+                <span class="content">{{ user?.name }}</span>
+              </div>
+              <div class="col-sm-3 mt-3 mb-3 text-light text-center">
+                <span class="title">Email:</span>
+                <span class="content">{{ user?.email }}</span>
+              </div>
+              <div class="col-sm-3 mt-3 mb-3 text-light text-center">
+                <span class="title">Phone:</span>
+                <span class="content">{{ user?.phone }}</span>
+              </div>
+              <div class="col-sm-3 mt-3 mb-3 text-light text-center">
+                <span class="title">DOB:</span>
+                <span class="content">{{ user?.dob }}</span>
+              </div>
+            </div>
           </div>
           <div class="col-sm-12 mt-5">
             <div ngbAccordion [closeOthers]="true">
-
               <!-- Dates -->
-              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="false" *ngIf="user?.dates && user?.dates?.length">
+              <div ngbAccordionItem  [collapsed]="false" *ngIf="user?.dates && user?.dates?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Dates</button>
                 </h2>
@@ -45,7 +48,7 @@
                       <div class="row">
                         <div class="col-sm-12">
                           <div ngbAccordion [closeOthers]="true">
-                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="false" *ngIf="user?.dates && user?.dates?.length">
+                            <div ngbAccordionItem  [collapsed]="false" *ngIf="user?.dates && user?.dates?.length">
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Person</button>
                               </h2>
@@ -57,7 +60,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
+                            <div ngbAccordionItem  [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Mode</button>
                               </h2>
@@ -69,7 +72,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
+                            <div ngbAccordionItem  [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Events</button>
                               </h2>
@@ -90,7 +93,7 @@
               </div>
 
               <!-- Reminders -->
-              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.reminders && user?.reminders?.length">
+              <div ngbAccordionItem  [collapsed]="true" *ngIf="user?.reminders && user?.reminders?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Reminders</button>
                 </h2>
@@ -104,7 +107,7 @@
               </div>
 
               <!-- Purchases -->
-              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.user_purchases && user?.user_purchases?.length">
+              <div ngbAccordionItem  [collapsed]="true" *ngIf="user?.user_purchases && user?.user_purchases?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Purchases</button>
                 </h2>
@@ -118,30 +121,17 @@
               </div>
 
               <!-- Pre Plan Dates -->
-              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
+              <div ngbAccordionItem  [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Pre Plan Dates</button>
                 </h2>
                 <div ngbAccordionCollapse>
                   <div ngbAccordionBody>
-                    <div class="row">
-                      <div class="col" *ngFor="let item of user?.preplan_dates">
-                        <div class="tabs">
-                          <div class="tab">
-                            <input type="checkbox" id="chck1">
-                            <label class="tab-label" for="chck1">Item 1</label>
-                            <div class="tab-content">
-                              
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- <ng-template>
+                    <ng-template>
                       <div class="row">
                         <div class="col-sm-12">
                           <div ngbAccordion [closeOthers]="true">
-                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
+                            <div ngbAccordionItem  [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Mode</button>
                               </h2>
@@ -153,7 +143,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
+                            <div ngbAccordionItem  [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Ping Categories</button>
                               </h2>
@@ -162,7 +152,7 @@
                                   <ng-template>
                                     <app-table tableName="prePlanPingsCategories" [Page]="dateEventPage" [total]="Eventtotal" [tableData]="user?.preplan_dates"></app-table>
                                     <div ngbAccordion [closeOthers]="true">
-                                      <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
+                                      <div ngbAccordionItem  [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">
                                         <h2 ngbAccordionHeader>
                                           <button ngbAccordionButton>Pre Plan Dates Pings</button>
                                         </h2>
@@ -182,13 +172,13 @@
                           </div>
                         </div>
                       </div>
-                    </ng-template> -->
+                    </ng-template>
                   </div>
                 </div>
               </div>
 
               <!-- Pings -->
-              <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
+              <div ngbAccordionItem  [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
                 <h2 ngbAccordionHeader>
                   <button ngbAccordionButton>Pings</button>
                 </h2>
@@ -198,7 +188,7 @@
                       <div class="row">
                         <div class="col-sm-12">
                           <div ngbAccordion [closeOthers]="true">
-                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="false" *ngIf="user?.dates && user?.dates?.length">
+                            <div ngbAccordionItem  [collapsed]="false" *ngIf="user?.dates && user?.dates?.length">
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Ping Categories</button>
                               </h2>
@@ -210,7 +200,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div ngbAccordionItem [destroyOnHide]="true" [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
+                            <div ngbAccordionItem  [collapsed]="true" *ngIf="user?.dates && user?.dates?.length">
                               <h2 ngbAccordionHeader>
                                 <button ngbAccordionButton>Date Pings</button>
                               </h2>
