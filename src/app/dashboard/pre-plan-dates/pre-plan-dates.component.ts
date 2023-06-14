@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from 'src/app/services/http.service';
-import { DateMode } from 'src/classes';
+import { DateMode, Pings } from 'src/classes';
 
 @Component({
   selector: 'app-pre-plan-dates',
@@ -42,6 +42,7 @@ export class PrePlanDatesComponent {
   public modes: any;
   public selectedPing: any;
   public pings: any;
+  public pingCategory: any;
   async ngOnInit() {
     this.getDates();
     this.getModes();
@@ -49,6 +50,9 @@ export class PrePlanDatesComponent {
   async getModes() {
     await this.helper.getModes()?.then((modes: DateMode) => {
       this.modes = modes;
+    });
+    await this.helper.getPings()?.then((Pings: Pings) => {
+      this.pingCategory = Pings;
     });
   }
   async open(content: any, state: string) {
@@ -167,5 +171,26 @@ export class PrePlanDatesComponent {
     this.http.loaderGet(`pre-plan-dates-delete/${id}`,true).subscribe((res:any)=>{
       this.getDates();
     })
+  }
+  checkModeName(array:any): string[] {
+    
+    const newarr = array?.split(',')
+    const modeNames: string[] = [];
+    if (!this.modes) {
+      return modeNames;
+    }
+    for (const id of newarr) {
+      const mode = this.pingCategory?.find((m: any) => m.id == id);
+      if (mode) {
+        if (modeNames.length < 1) {
+          modeNames.push(mode.name);
+        } else if (modeNames.length == 1) {
+          modeNames.push("...");
+        } else {
+          return modeNames;
+        }
+      }
+    }
+    return modeNames;
   }
 }

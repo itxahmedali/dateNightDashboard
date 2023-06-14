@@ -18,7 +18,7 @@
             <tr>
               <th scope="col">Id</th>
               <th scope="col">Event Id</th>
-              <th scope="col">Value</th>
+              <th scope="col">Name</th>
               <th scope="col">Status</th>
               <th scope="col">Actions</th>
             </tr>
@@ -94,20 +94,12 @@
           </div>
           <div class="col-lg-6 mt-3">
             <label for="" class="text-light mb-3">Value</label>
-            <input formControlName="value" type="text" placeholder="Value" class="text-light w-100" />
+            <input formControlName="value" type="text" placeholder="Name" class="text-light w-100" />
             <div
               *ngIf="eventChildForm.controls.value.invalid && (eventChildForm.controls.value.dirty || eventChildForm.controls.value.touched)">
-              <small class="text-danger">Value is required</small>
+              <small class="text-danger">Name is required</small>
             </div>
           </div>
-          <!-- <div class="col-lg-6 mt-3">
-            <label for="" class="text-light mb-3">Label</label>
-            <input formControlName="label" type="text" placeholder="Label" class="text-light w-100" />
-            <div
-              *ngIf="eventChildForm.controls.label.invalid && (eventChildForm.controls.label.dirty || eventChildForm.controls.label.touched)">
-              <small class="text-danger">Label is required</small>
-            </div>
-          </div> -->
         </div>
       </form>
     </div>

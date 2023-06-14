@@ -18,7 +18,7 @@
             <tr>
               <th scope="col">Id</th>
               <th scope="col">Mode Id</th>
-              <th scope="col">Ping Id's</th>
+              <th scope="col">Ping Category</th>
               <th scope="col">Name</th>
               <th scope="col">Price</th>
               <th scope="col">Status</th>
@@ -40,7 +40,15 @@
                 ">
                 <th scope="row">{{ item?.id }}</th>
                 <td>{{ item?.mode_id ? item?.mode_id : "N/A" }}</td>
-                <td>{{ item?.ping_id ? item?.ping_id : "N/A" }}</td>
+                <td>
+                  <span
+                    class="pointer"
+                    placement="top"
+                    [ngbTooltip]="item?.ping_id"
+                  >
+                  {{ item?.ping_id ? checkModeName(item?.ping_id) : "N/A" }}
+                </span>
+                </td>
                 <td>{{ item?.name ? item?.name : "N/A" }}</td>
                 <td>{{ item?.price ? (item?.price | currency : 'USD') : "N/A" }}</td>
                 <td>
@@ -98,7 +106,7 @@
             </div>
           </div>
           <div class="col-lg-6 mt-3">
-            <label for="" class="text-light mb-3">Pings</label>
+            <label for="" class="text-light mb-3">Ping Category</label>
             <ng-select placeholder="Select Pings" [multiple]="true" [items]="pings" bindLabel="name"
               bindValue="id" formControlName="ping_id">
             </ng-select>
