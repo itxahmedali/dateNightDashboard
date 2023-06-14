@@ -11,6 +11,11 @@
           <i class="fa fa-search"></i>
         </div>
       </div>
+      <div class="col-sm-6 d-flex justify-content-end align-items-center sortBox">
+        <ng-select placeholder="Sort By Ping Category" [(ngModel)]="selectedSort">
+          <ng-option *ngFor="let sort of sorts" [value]="sort?.name">{{sort.name}}</ng-option>
+        </ng-select>
+      </div>
       <div class="col-sm-12 mt-1 listView">
         <div class="table-responsive">
           <table class="table table-dark table-borderless table-sm align-middle text-center">
@@ -25,7 +30,7 @@
               </tr>
             </thead>
             <tbody>
-              <ng-container *ngIf="(PingsChild | filter: searchInput)?.length; else noData">
+              <ng-container *ngIf="(PingsChild | filter: searchInput | sortBy:selectedSort)?.length; else noData">
                 <tr *ngFor="
                     let i = index;
                     let item;

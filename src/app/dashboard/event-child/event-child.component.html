@@ -28,7 +28,7 @@
               <tr *ngFor="
                   let i = index;
                   let item;
-                  of: eventsChild | filter: searchInput | sortBy:selectedSort
+                  of: eventsChild | filter: searchInput
                     | paginate
                       : {
                           itemsPerPage: 10,

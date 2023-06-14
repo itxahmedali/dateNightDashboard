@@ -24,10 +24,7 @@ export class PingChildComponent {
   public modalReference: any;
   public MenuSelected: any;
   public state!: boolean;
-  public sorts = [
-    { id: 1, name: 'name' },
-    { id: 2, name: 'date' },
-  ];
+  public sorts:any = [];
   public pingForm: any = this.fb.group({
     category_id: [null, Validators.required],
     name: [null, Validators.required],
@@ -137,6 +134,10 @@ export class PingChildComponent {
     });
     await this.helper.getPings()?.then((Pings: Pings) => {
       this.Pings = Pings;
+      this.selectedSort = this.Pings?.[0]?.name
+      this.Pings?.map((ping:any)=>{
+        this.sorts.push({name:ping?.name})
+      })
     });
     const pingChild: any = await this.helper.getPingsChilds();
     pingChild.forEach((ping: any) => {
