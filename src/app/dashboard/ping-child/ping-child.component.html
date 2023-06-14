@@ -5,13 +5,13 @@
           <i class="fa fa-plus"></i> Add Ping
         </button>
       </div>
-      <div class="col-sm-6 d-flex justify-content-start align-items-center">
+      <div class="col-sm-6 mt-1 mb-1 d-flex justify-content-start align-items-center">
         <div class="searchField mt-1 w-100">
           <input type="text" [(ngModel)]="searchInput" placeholder="Search Item" class="w-100 white" />
           <i class="fa fa-search"></i>
         </div>
       </div>
-      <div class="col-sm-6 d-flex justify-content-end align-items-center sortBox">
+      <div class="col-sm-6 mt-1 mb-1 d-flex justify-content-end align-items-center sortBox">
         <ng-select placeholder="Sort By Ping Category" [(ngModel)]="selectedSort">
           <ng-option *ngFor="let sort of sorts" [value]="sort?.name">{{sort.name}}</ng-option>
         </ng-select>

@@ -27,21 +27,6 @@
                 }} pull-right" *ngIf="menuItem?.children"></i>
             </div>
           </a>
-          <ul class="sidebar-submenu scrollMenu" *ngIf="menuItem?.children"
-            [style.display]="menuItem?.active ? 'block' : 'none'">
-            <li class="activeSide submenuItems" *ngFor="let childrenItem of menuItem?.children"
-              [ngClass]="{ linkActive: childrenItem?.active }">
-              <!-- Submenu Link -->
-              <button class="w-100" (click)="routerHead($event, childrenItem?.title);toggletNavActive(menuItem)"
-                [routerLink]="childrenItem?.path" routerLinkActive="is-active">
-                <a class="submenu-title w-100" *ngIf="childrenItem?.type === 'link'">
-                  <i
-                    class="fa {{childrenItem?.title == 'Add Item' || childrenItem?.title == 'Category' || childrenItem?.title == 'Food Items' || childrenItem?.title == 'Add Ons' || childrenItem?.title == 'Sub Category' ? 'fa-plus' : 'fa-minus'}}"></i>
-                  <span>{{ childrenItem?.title }}</span>
-                </a>
-              </button>
-            </li>
-          </ul>
           <!--Main menu Link -->
           <button (click)="routerHead($event, menuItem?.title)" [routerLink]="menuItem?.path"
             routerLinkActive="is-active">

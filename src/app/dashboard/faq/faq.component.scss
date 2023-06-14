@@ -1,3 +1,6 @@
 .ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset_all{
     background-color: red!important;
 }
+.table{
+    min-width: 800px;
+  }

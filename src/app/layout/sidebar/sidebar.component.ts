@@ -86,6 +86,7 @@ export class SidebarComponent implements OnInit {
   }
   // Click Toggle menu
   routerHead(event: any, heading: any) {
+    UniversalService.expand.next(false);
     UniversalService.headerHeading.next(heading);
     let path = heading.replace(/[\s,]/g, '');
     UniversalService.itemDetailView.next(false);
