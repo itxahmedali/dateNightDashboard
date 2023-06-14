@@ -124,7 +124,20 @@
                 </h2>
                 <div ngbAccordionCollapse>
                   <div ngbAccordionBody>
-                    <ng-template>
+                    <div class="row">
+                      <div class="col" *ngFor="let item of user?.preplan_dates">
+                        <div class="tabs">
+                          <div class="tab">
+                            <input type="checkbox" id="chck1">
+                            <label class="tab-label" for="chck1">Item 1</label>
+                            <div class="tab-content">
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <ng-template>
                       <div class="row">
                         <div class="col-sm-12">
                           <div ngbAccordion [closeOthers]="true">
@@ -169,7 +182,7 @@
                           </div>
                         </div>
                       </div>
-                    </ng-template>
+                    </ng-template> -->
                   </div>
                 </div>
               </div>
