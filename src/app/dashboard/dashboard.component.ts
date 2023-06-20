@@ -8,7 +8,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  animations:[fadeIn]
+  animations: [fadeIn],
 })
 export class DashboardComponent {
   public Editor = ClassicEditor;
@@ -22,9 +22,8 @@ export class DashboardComponent {
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private cd: ChangeDetectorRef,
-    private helper: HelperService,
-  ) {
-  }
+    private helper: HelperService
+  ) {}
 
   ngOnInit(): void {
     if (window.innerWidth < 415) {
@@ -36,10 +35,10 @@ export class DashboardComponent {
     } else {
       this.login = false;
     }
-      const themecolor = JSON.stringify(['red', 'black']);
-      this.colorTheme(themecolor);
-      const color = JSON.stringify(['red', 'black']);
-      this.colorBanner(color);
+    const themecolor = JSON.stringify(['red', 'black']);
+    this.colorTheme(themecolor);
+    const color = JSON.stringify(['red', 'black']);
+    this.colorBanner(color);
     if (localStorage.hasOwnProperty('orderview')) {
       if (
         localStorage.getItem('orderview') == 'true' ||
@@ -68,11 +67,13 @@ export class DashboardComponent {
       (res: boolean) => {
         if (res) {
           this.expanded = true;
+          document.body.classList.add('expand');
           setTimeout(() => {
             this.expandedBody = true;
           }, 500);
         } else {
           this.expanded = false;
+          document.body.classList.remove('expand');
           setTimeout(() => {
             this.expandedBody = false;
           }, 500);

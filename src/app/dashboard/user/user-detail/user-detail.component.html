@@ -17,19 +17,19 @@
         <div class="row ">
           <div class="col-sm-12">
             <div class="row headRow">
-              <div class="col-sm-3 mt-3 mb-3 text-light text-center">
+              <div class="col-md-6 col-sm-3 mt-3 mb-3 text-light text-center">
                 <span class="title">Name:</span>
                 <span class="content">{{ user?.name }}</span>
               </div>
-              <div class="col-sm-3 mt-3 mb-3 text-light text-center">
+              <div class="col-md-6 col-sm-3 mt-3 mb-3 text-light text-center">
                 <span class="title">Email:</span>
                 <span class="content">{{ user?.email }}</span>
               </div>
-              <div class="col-sm-3 mt-3 mb-3 text-light text-center">
+              <div class="col-md-6 col-sm-3 mt-3 mb-3 text-light text-center">
                 <span class="title">Phone:</span>
                 <span class="content">{{ user?.phone }}</span>
               </div>
-              <div class="col-sm-3 mt-3 mb-3 text-light text-center">
+              <div class="col-md-6 col-sm-3 mt-3 mb-3 text-light text-center">
                 <span class="title">DOB:</span>
                 <span class="content">{{ user?.dob }}</span>
               </div>
@@ -129,6 +129,9 @@
                   <div ngbAccordionBody>
                     <ng-template>
                       <div class="row">
+                        <div class="col-sm-12">
+                          <app-table tableName="prePlanDateTable" [Page]="dateEventPage" [total]="Eventtotal" [tableData]="user?.preplan_dates"></app-table>
+                        </div>
                         <div class="col-sm-12">
                           <div ngbAccordion [closeOthers]="true">
                             <div ngbAccordionItem  [collapsed]="true" *ngIf="user?.preplan_dates && user?.preplan_dates?.length">

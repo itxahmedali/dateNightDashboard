@@ -31,7 +31,7 @@ export class EventChildComponent {
   public data!: any;
   public eventChildForm: any = this.fb.group({
     value: [null, Validators.required],
-    label: [null, Validators.required],
+    label: [null],
     event_id: [null],
   });
   async ngOnInit() {
@@ -47,13 +47,15 @@ export class EventChildComponent {
     });
     this.state = state == 'editChild' ? true : false;
     const { id, event_id, value, label } = this.selectedEventsChild || {};
-    this.eventChildForm.addControl('id', new FormControl(id));
-    this.eventChildForm.patchValue({
-      ...this.eventChildForm.value,
-      event_id: JSON.parse(event_id),
-      value,
-      label:label,
-    });
+    if(this.state){
+      this.eventChildForm.addControl('id', new FormControl(id));
+      this.eventChildForm.patchValue({
+        ...this.eventChildForm.value,
+        event_id: JSON.parse(event_id),
+        value,
+        label:value,
+      });
+    }
   }
   proceed() {
     this.modalReference.close();
@@ -123,6 +125,7 @@ export class EventChildComponent {
       .loaderGet(`events-child-delete/${id}`, true)
       .subscribe((res: any) => {
         this.helper.setEventChild();
+        this.eventChildForm.reset();
         this.getEvent();
       });
   }

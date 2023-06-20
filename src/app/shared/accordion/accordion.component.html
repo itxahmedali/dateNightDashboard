@@ -279,6 +279,27 @@
     </table>
   </div>
 </ng-container>
+<ng-container *ngIf="tableName == 'prePlanDateTable'">
+  <div class="table-responsive">
+    <table datatable [dtOptions]="dtOptions" class="table table-dark table-borderless table-sm align-middle text-center">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of tableData">
+          <th scope="row">{{ item?.id }}</th>
+          <td>{{ item?.name || "N/A" }}</td>
+          <td>{{ (item?.price | currency : "USD") || "N/A" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+
 
 
 

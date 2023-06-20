@@ -53,8 +53,6 @@ export class UserComponent {
       size: 'xl',
     });
     this.state = state == 'edit' ? true : false;
-    console.log(this.selectedUser,"selectedUser");
-    
     if (state == 'edit') {
       const { id, name, dob, phone, image } = this.selectedUser || {};
       this.EditUserForm.addControl('id', new FormControl(id));
