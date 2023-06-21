@@ -71,7 +71,8 @@ export class Pings implements Pings {
 }
 export interface PingsChild {
   id: number;
-  category_id: number;
+  mode_id:any;
+  category_id: any;
   name: string;
   description: string;
   active_status: string;
@@ -79,7 +80,8 @@ export interface PingsChild {
 export class PingsChild implements PingsChild {
   constructor(
     public id: number,
-    public category_id: number,
+    public mode_id: any,
+    public category_id: any,
     public name: string,
     public description: string,
     public active_status: string
@@ -145,6 +147,7 @@ export interface Faq {
   id: number;
   heading: string;
   paragraph: string;
+  position: any;
   active_status: string;
 }
 export class Faq implements Faq {
@@ -152,6 +155,7 @@ export class Faq implements Faq {
     public id: number,
     public heading: string,
     public paragraph: string,
+    public position: any,
     public active_status: string
   ) {}
 }

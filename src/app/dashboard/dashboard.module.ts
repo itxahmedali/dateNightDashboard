@@ -23,6 +23,7 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { AgmCoreModule } from '@agm/core';
 import { FaqComponent } from './faq/faq.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 // import { AgmCoreModule } from '@agm/core';
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     ReactiveFormsModule,
     FormsModule,
     NgxPaginationModule,
+    DragDropModule,
     CarouselModule,
     GooglePlaceModule,
     CKEditorModule,

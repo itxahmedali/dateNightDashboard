@@ -197,6 +197,7 @@ export class HelperService {
     const modesList = res.data.map((data: PingsChild) => {
       return new PingsChild(
         data.id,
+        data.mode_id,
         data.category_id,
         data.name,
         data.description,
@@ -297,7 +298,7 @@ export class HelperService {
   public async loadFaqs(): Promise<Faq[]> {
     const res: any = await this.http.loaderGet('faq', true).toPromise();
     const modesList = res?.data?.map((data: Faq) => {
-      return new Faq(data.id, data.heading, data.paragraph, data.active_status);
+      return new Faq(data.id, data.heading, data.paragraph,data.position, data.active_status);
     });
     return modesList;
   }

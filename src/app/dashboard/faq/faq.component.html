@@ -29,11 +29,13 @@
               <th scope="col">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody cdkDropList (cdkDropListDropped)="drop($event)">
             <ng-container
               *ngIf="(faqs | filter : searchInput)?.length; else noData"
             >
               <tr
+                cdkDrag
+                cdkDragLockAxis="y"
                 *ngFor="
                   let i = index;
                   let item;
@@ -47,7 +49,32 @@
                         }
                 "
               >
-                <th scope="row">{{ item?.id }}</th>
+                <th
+                  cdkDragHandle
+                  class="handleCol"
+                  scope="row"
+                  (mousedown)="selectedFaq = item"
+                  (mouseup)="selectedFaq = item"
+                >
+                  <span class="d-flex align-items-center">
+                    <span placement="top" ngbTooltip="Drag to change position">
+                      <svg
+                        class="ps-3"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1em"
+                        viewBox="0 0 320 512"
+                      >
+                        <path
+                          d="M40 352l48 0c22.1 0 40 17.9 40 40l0 48c0 22.1-17.9 40-40 40l-48 0c-22.1 0-40-17.9-40-40l0-48c0-22.1 17.9-40 40-40zm192 0l48 0c22.1 0 40 17.9 40 40l0 48c0 22.1-17.9 40-40 40l-48 0c-22.1 0-40-17.9-40-40l0-48c0-22.1 17.9-40 40-40zM40 320c-22.1 0-40-17.9-40-40l0-48c0-22.1 17.9-40 40-40l48 0c22.1 0 40 17.9 40 40l0 48c0 22.1-17.9 40-40 40l-48 0zM232 192l48 0c22.1 0 40 17.9 40 40l0 48c0 22.1-17.9 40-40 40l-48 0c-22.1 0-40-17.9-40-40l0-48c0-22.1 17.9-40 40-40zM40 160c-22.1 0-40-17.9-40-40L0 72C0 49.9 17.9 32 40 32l48 0c22.1 0 40 17.9 40 40l0 48c0 22.1-17.9 40-40 40l-48 0zM232 32l48 0c22.1 0 40 17.9 40 40l0 48c0 22.1-17.9 40-40 40l-48 0c-22.1 0-40-17.9-40-40l0-48c0-22.1 17.9-40 40-40z"
+                          fill="#FFFFFF"
+                        />
+                      </svg>
+                    </span>
+                    <span class="mt-1 ps-5">
+                      {{ item?.id }}
+                    </span>
+                  </span>
+                </th>
                 <td>{{ item?.heading ? item?.heading : "N/A" }}</td>
                 <td>
                   <div
@@ -56,7 +83,7 @@
                     <input
                       class="checkBox"
                       type="checkbox"
-                      (change)="stateItem(item,$event)"
+                      (change)="stateItem(item, $event)"
                       [checked]="item?.active_status == '1' ? true : false"
                       [id]="'categoryStock' + i"
                     /><label [for]="'categoryStock' + i"></label>
@@ -67,7 +94,7 @@
                     class="actionbtn"
                     placement="top"
                     ngbTooltip="Edit Faq"
-                    (click)="selectedFaq=item;open(addModal,'edit');"
+                    (click)="selectedFaq = item; open(addModal, 'edit')"
                   >
                     <i class="fa fa-edit mlicon"></i>
                   </button>
@@ -75,6 +102,13 @@
                     <i class="fa fa-trash mlicon"></i>
                   </button>
                 </td>
+                <div
+                  *cdkDragPreview
+                  matchSize="true"
+                  class="container dragdrop-placeholder"
+                >
+                  {{ item?.heading }}
+                </div>
               </tr>
             </ng-container>
             <ng-template #noData>
@@ -149,7 +183,13 @@
       </form>
     </div>
     <div class="modal-footer d-flex justify-content-start">
-      <button class="btn add-btn" [disabled]="faqForm.invalid" (click)="save(true)">Save</button>
+      <button
+        class="btn add-btn"
+        [disabled]="faqForm.invalid"
+        (click)="save(true)"
+      >
+        Save
+      </button>
       <button class="btn cancel-btn" aria-label="Close" (click)="proceed()">
         Cancel
       </button>

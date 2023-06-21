@@ -22,6 +22,7 @@
             <thead>
               <tr>
                 <th scope="col">Id</th>
+                <th scope="col">Mode</th>
                 <th scope="col">Ping Category</th>
                 <th scope="col">Pings</th>
                 <th scope="col">Description</th>
@@ -43,6 +44,11 @@
                           }
                   ">
                   <th scope="row">{{ item?.id }}</th>
+                  <td>
+                    <span class="pointer" placement="top" [ngbTooltip]="item?.modeNames">
+                      {{ item?.mode_id ? checkModeName(item?.mode_id) : "N/A" }}
+                    </span>
+                  </td>
                   <td>
                     <span class="pointer" placement="top" [ngbTooltip]="item?.categoryNames">
                       {{ item?.category_id ? checkPingCatrgoryName(item?.category_id) : "N/A" }}
@@ -96,6 +102,26 @@
         <h5 class="modal-title">{{state ? 'Edit Ping' : 'Add Ping'}}</h5>
         <form [formGroup]="pingForm" class="form">
           <div class="row mt-4">
+            <div class="col-lg-6 mt-3">
+              <ng-select
+                placeholder="Select Mode"
+                [items]="modes"
+                bindLabel="name"
+                bindValue="id"
+                formControlName="mode_id"
+                [multiple]="true"
+              >
+              </ng-select>
+              <div
+                *ngIf="
+                  pingForm.controls.mode_id.invalid &&
+                  (pingForm.controls.mode_id.dirty ||
+                    pingForm.controls.mode_id.touched)
+                "
+              >
+                <small class="text-danger">Mode is required</small>
+              </div>
+            </div>
             <div class="col-lg-6 mt-3">
               <ng-select placeholder="Select Category" [multiple]="true" [items]="Pings" bindLabel="name" bindValue="id" formControlName="category_id">
               </ng-select>

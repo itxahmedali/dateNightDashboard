@@ -48,13 +48,13 @@ export default class RestaurantsComponent {
   public restuarantForm: any = this.fb.group({
     sponsored: [null, Validators.required],
     voucher: [null],
-    desc: [null, Validators.required],
+    desc: [null],
     name: [null, Validators.required],
-    phone: [null, Validators.required],
+    phone: [null],
     location: [null, Validators.required],
-    website: [null, Validators.required],
-    lat: [null, Validators.required],
-    lng: [null, Validators.required],
+    website: [null],
+    lat: [null],
+    lng: [null],
   });
   public modes: any;
   public selectedRestaurant: any;
