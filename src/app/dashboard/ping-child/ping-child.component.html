@@ -103,9 +103,17 @@
         <form [formGroup]="pingForm" class="form">
           <div class="row mt-4">
             <div class="col-lg-6 mt-3">
+              <ng-select placeholder="Select Category" (change)="checkForMode($event)" [multiple]="true" [items]="Pings" bindLabel="name" bindValue="id" formControlName="category_id">
+              </ng-select>
+              <div
+                *ngIf="pingForm.controls.category_id.invalid && (pingForm.controls.category_id.dirty || pingForm.controls.category_id.touched)">
+                <small class="text-danger">Category is required</small>
+              </div>
+            </div>
+            <div class="col-lg-6 mt-3">
               <ng-select
                 placeholder="Select Mode"
-                [items]="modes"
+                [items]="pingModes"
                 bindLabel="name"
                 bindValue="id"
                 formControlName="mode_id"
@@ -120,14 +128,6 @@
                 "
               >
                 <small class="text-danger">Mode is required</small>
-              </div>
-            </div>
-            <div class="col-lg-6 mt-3">
-              <ng-select placeholder="Select Category" [multiple]="true" [items]="Pings" bindLabel="name" bindValue="id" formControlName="category_id">
-              </ng-select>
-              <div
-                *ngIf="pingForm.controls.category_id.invalid && (pingForm.controls.category_id.dirty || pingForm.controls.category_id.touched)">
-                <small class="text-danger">Category is required</small>
               </div>
             </div>
             <div class="col-lg-6 mt-3">

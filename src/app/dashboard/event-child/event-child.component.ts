@@ -47,23 +47,25 @@ export class EventChildComponent {
     });
     this.state = state == 'editChild' ? true : false;
     const { id, event_id, value, label } = this.selectedEventsChild || {};
-    if(this.state){
+    if (this.state) {
       this.eventChildForm.addControl('id', new FormControl(id));
       this.eventChildForm.patchValue({
         ...this.eventChildForm.value,
         event_id: JSON.parse(event_id),
         value,
-        label:value,
+        label: value,
       });
     }
   }
   proceed() {
     this.modalReference.close();
     this.eventChildForm.reset();
+    this.eventChildForm.removeControl('id');
+    this.eventChildForm.removeControl('active_status');
   }
   save(modal: boolean) {
     this.eventChildForm.patchValue({
-      label:this.eventChildForm.get('value').value,
+      label: this.eventChildForm.get('value').value,
     });
     this.http
       .loaderPost('events-child-add', this.eventChildForm.value, true)

@@ -59,11 +59,14 @@ export class FaqComponent {
   proceed() {
     this.modalReference.close();
     this.faqForm.reset();
+    this.faqForm.removeControl('id');
+    this.faqForm.removeControl('active_status');
+    this.state = false;
   }
   save(modal: boolean) {
     console.log(this.state);
-    
-    if(!this.state){
+
+    if (!this.state) {
       this.faqForm.patchValue({
         ...this.faqForm.value,
         position: this.faqs?.length + 1,
@@ -88,7 +91,7 @@ export class FaqComponent {
           this.getFaqs();
           this.faqForm.removeControl('id');
           this.faqForm.removeControl('active_status');
-          this.state = false
+          this.state = false;
         },
       });
   }

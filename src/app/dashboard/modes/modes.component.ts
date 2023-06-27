@@ -61,6 +61,7 @@ export class ModesComponent {
   proceed() {
     this.modalReference.close();
     this.modeForm.reset()
+    this.modeForm.removeControl('id');
   }
   save(modal:boolean) {
     this.http

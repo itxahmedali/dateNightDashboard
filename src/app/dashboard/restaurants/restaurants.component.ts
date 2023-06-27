@@ -52,7 +52,7 @@ export default class RestaurantsComponent {
     name: [null, Validators.required],
     phone: [null],
     location: [null, Validators.required],
-    website: [null],
+    website: ['https://', [Validators.required, Validators.pattern(/^https:\/\/.*/)]],
     lat: [null],
     lng: [null],
   });
@@ -117,9 +117,9 @@ export default class RestaurantsComponent {
         new FormControl(active_status)
       );
     } else {
-      const currentLat:any = localStorage.getItem('currentLat');
-      const currentLng:any = localStorage.getItem('currentLng');
-      const formattedAddress:any = localStorage.getItem('formattedAddress');
+      const currentLat: any = localStorage.getItem('currentLat');
+      const currentLng: any = localStorage.getItem('currentLng');
+      const formattedAddress: any = localStorage.getItem('formattedAddress');
       this.currentLat = Number(JSON.parse(currentLat));
       this.currentLng = Number(JSON.parse(currentLng));
       this.restuarantForm.patchValue({
@@ -133,6 +133,8 @@ export default class RestaurantsComponent {
     this.modalReference.close();
     this.restuarantForm.reset();
     this.formattedAddress = null;
+    this.restuarantForm.removeControl('id');
+    this.restuarantForm.removeControl('active_status');
   }
   async stateItem(event: any, data: any) {
     this.selectedRestaurant = this.Restaurants?.find(
@@ -197,24 +199,11 @@ export default class RestaurantsComponent {
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
-    
-    // Get the phone control from the form group
     const phoneControl = this.restuarantForm.get('phone');
-  
     if (phoneControl) {
-      // Get the current value of the phone control
       let currentValue = phoneControl.value || '';
-      
-      // Remove non-digit characters from the current value
       currentValue = currentValue.replace(/\D/g, '');
-      
-      // Format the phone number in US format
-      // const formattedValue = this.formatPhoneNumber(currentValue);
-      
-      // Update the value in the form control
-      // phoneControl.setValue(formattedValue, { emitEvent: false });
     }
-    
     return true;
   }
   onPlaceSelected(predictions: any) {
@@ -228,7 +217,7 @@ export default class RestaurantsComponent {
     });
   }
 
-  setPlaceByLatLng(lat: number, lng: number, setInLocal:boolean): void {
+  setPlaceByLatLng(lat: number, lng: number, setInLocal: boolean): void {
     const latitude = Number(lat);
     const longitude = Number(lng);
     this.currentLat = latitude;
@@ -237,7 +226,7 @@ export default class RestaurantsComponent {
       .getAddressFromLatLng(latitude, longitude)
       .subscribe((res: any) => {
         this.formattedAddress = res.results[0].formatted_address;
-        if(setInLocal){
+        if (setInLocal) {
           localStorage.setItem(
             'formattedAddress',
             JSON.stringify(res.results[0].formatted_address)
@@ -254,7 +243,7 @@ export default class RestaurantsComponent {
   markerDragEnd($event: any) {
     this.currentLat = $event.coords.lat;
     this.currentLng = $event.coords.lng;
-    this.setPlaceByLatLng(this.currentLat, this.currentLng,false);
+    this.setPlaceByLatLng(this.currentLat, this.currentLng, false);
   }
   numberKeyup(event: any): void {
     const input = event.target as HTMLInputElement;
@@ -267,7 +256,13 @@ export default class RestaurantsComponent {
       input.value = '(' + value.substring(0, 3) + ') ' + value.substring(3, 6);
     }
     if (value.length >= 7) {
-      input.value = '(' + value.substring(0, 3) + ') ' + value.substring(3, 6) + '-' + value.substring(6, 10);
+      input.value =
+        '(' +
+        value.substring(0, 3) +
+        ') ' +
+        value.substring(3, 6) +
+        '-' +
+        value.substring(6, 10);
     }
   }
 }

@@ -75,6 +75,8 @@ export class PingsComponent {
   proceed() {
     this.modalReference.close();
     this.pingForm.reset();
+    this.pingForm.removeControl('id');
+    this.pingForm.removeControl('active_status');
   }
   save(modal: boolean) {
     this.http
@@ -134,7 +136,6 @@ export class PingsComponent {
     this.save(false);
   }
   async getPingsAndModes() {
-    
     await this.helper.getModes()?.then((Modes: DateMode) => {
       this.modes = Modes;
     });
@@ -152,7 +153,7 @@ export class PingsComponent {
       }
       ping.modeNames = modeNames;
     });
-    
+
     this.Pings = pings;
   }
   delete(id: any) {
@@ -170,12 +171,12 @@ export class PingsComponent {
     }
     for (const id of array) {
       const mode = this.modes.find((m: any) => m.id == id);
-  
+
       if (mode) {
         if (modeNames.length < 1) {
           modeNames.push(mode.name);
         } else if (modeNames.length == 1) {
-          modeNames.push("...");
+          modeNames.push('...');
         } else {
           return modeNames;
         }

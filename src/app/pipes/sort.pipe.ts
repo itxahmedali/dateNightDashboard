@@ -6,11 +6,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SortByPipe implements PipeTransform {
 
   transform(data: any[], selectedSort: string): any[] {
+    console.log(selectedSort);
+
+    if (!selectedSort) {
+      return data; // Return the original data array as it is
+    }
+
     const filteredData = data?.filter(item => item?.categoryNames?.includes(selectedSort));
-    console.log(filteredData);
-    
-    if (filteredData?.length == 0) {
-      return [];
+
+    if (filteredData?.length === 0) {
+      return []; // No matching category names found, return an empty array
     }
 
     return filteredData?.sort((a, b) => {

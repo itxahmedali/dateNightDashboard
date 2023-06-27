@@ -36,7 +36,7 @@ export class EventComponent {
     name: [null, Validators.required],
   });
   async ngOnInit() {
-    this.helper.showAlert('events')
+    this.helper.showAlert('events');
     this.getEvent();
   }
   open(content: any, state: string) {
@@ -59,6 +59,8 @@ export class EventComponent {
   proceed() {
     this.modalReference.close();
     this.eventForm.reset();
+    this.eventForm.removeControl('id');
+    this.eventForm.removeControl('active_status');
   }
   save(modal: boolean) {
     this.http
@@ -70,7 +72,7 @@ export class EventComponent {
       )
       .subscribe({
         next: () => {
-          if(modal){
+          if (modal) {
             this.proceed();
           }
           this.eventForm.reset();

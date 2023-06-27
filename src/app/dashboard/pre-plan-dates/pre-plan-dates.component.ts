@@ -94,6 +94,7 @@ export class PrePlanDatesComponent {
   proceed() {
     this.modalReference.close();
     this.modeForm.reset();
+    this.modeForm.removeControl('id');
   }
   async stateItem(event: any, data: any) {
     this.selectedPing = this.Dates?.find((e: any) => e?.id == event.id);

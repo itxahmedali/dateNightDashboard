@@ -61,7 +61,7 @@ export class UserComponent {
         name,
         dob,
         phone,
-        image
+        image,
       });
     }
   }
@@ -71,12 +71,13 @@ export class UserComponent {
   proceed() {
     this.modalReference.close();
     this.EditUserForm.reset();
+    this.EditUserForm.removeControl('id');
+    this.EditUserForm.removeControl('active_status');
   }
   async getUsers() {
     await this.helper.getUsers()?.then((Users: Users) => {
       this.users = Users;
-      console.log(Users,'huellouser');
-      
+      console.log(Users, 'huellouser');
     });
   }
   save(modal: boolean) {
@@ -114,7 +115,7 @@ export class UserComponent {
         next: () => {
           this.helper.setUsers();
           this.getUsers();
-        }
+        },
       });
     }
   }
@@ -132,7 +133,7 @@ export class UserComponent {
           image: result.data.image_url,
         });
         this.EditUserForm.addControl('id', new FormControl(id));
-        this.save(true)
+        this.save(true);
       })
       .catch((error) => {
         console.error(error);

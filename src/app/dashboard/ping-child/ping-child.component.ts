@@ -16,6 +16,7 @@ export class PingChildComponent {
   selectedPingChild!: any;
   PingsChild!: any;
   modes!: any;
+  pingModes!: any;
   Pings!: any;
   public duePage!: any;
   public total!: any;
@@ -24,7 +25,7 @@ export class PingChildComponent {
   public modalReference: any;
   public MenuSelected: any;
   public state!: boolean;
-  public sorts:any = [];
+  public sorts: any = [];
   public pingForm: any = this.fb.group({
     mode_id: [null, Validators.required],
     category_id: [null, Validators.required],
@@ -42,7 +43,7 @@ export class PingChildComponent {
     private helper: HelperService
   ) {}
   async ngOnInit() {
-    await this.helper.setPingsChild()
+    await this.helper.setPingsChild();
     await this.getPingsAndModes();
   }
   open(content: any, state: string) {
@@ -58,33 +59,38 @@ export class PingChildComponent {
         const ping = this.Pings.find((m: any) => m.id == id);
         if (ping) {
           selectedPing.push(ping?.id);
-        }        
+        }
       });
       let selectedMode: any = [];
+      let pingMode: any = [];
       this.selectedPingChild.mode_id.forEach((id: any) => {
         const ping = this.modes.find((m: any) => m.id == id);
         if (ping) {
+          pingMode.push(ping);
           selectedMode.push(ping?.id);
-        }        
+        }
       });
+      this.pingModes = pingMode;
       this.pingForm.addControl(
         'id',
         new FormControl(this.selectedPingChild?.id)
       );
       this.pingForm.patchValue({
-        mode_id:selectedMode,
-        category_id:selectedPing,
+        mode_id: selectedMode,
+        category_id: selectedPing,
         name: this.selectedPingChild?.name,
         description: this.selectedPingChild?.description,
-        paid_or_free:'free',
-        price:0,
-        show_everyone:1
+        paid_or_free: 'free',
+        price: 0,
+        show_everyone: 1,
       });
     }
   }
   proceed() {
     this.modalReference.close();
     this.pingForm.reset();
+    this.pingForm.removeControl('id');
+    this.pingForm.removeControl('active_status');
   }
   save(modal: boolean) {
     this.http
@@ -99,9 +105,9 @@ export class PingChildComponent {
           this.proceed();
           this.pingForm.reset();
           this.pingForm.patchValue({
-            paid_or_free:'free',
-            price:0,
-            show_everyone:1
+            paid_or_free: 'free',
+            price: 0,
+            show_everyone: 1,
           });
         },
         complete: () => {
@@ -126,15 +132,15 @@ export class PingChildComponent {
         mode_id,
         category_id,
         description,
-        paid_or_free:'free',
-        price:0,
+        paid_or_free: 'free',
+        price: 0,
         active_status: activeStatus,
       });
       this.pingForm.addControl('id', new FormControl(id));
       this.pingForm.addControl(
         'active_status',
         new FormControl(data.target.checked ? 1 : 0)
-      );      
+      );
     }
     this.save(false);
   }
@@ -144,13 +150,13 @@ export class PingChildComponent {
     });
     await this.helper.getPings()?.then((Pings: Pings) => {
       this.Pings = Pings;
-      this.selectedSort = this.Pings?.[0]?.name
-      this.Pings?.map((ping:any)=>{
-        this.sorts.push({name:ping?.name})
-      })
-      this.sorts = this.sorts.filter((sort:any, index:any, array:any) => {
+      this.Pings?.map((ping: any) => {
+        this.sorts.push({ name: ping?.name });
+      });
+      this.sorts = this.sorts.filter((sort: any, index: any, array: any) => {
         return (
-          index === array.findIndex((item:any) => {
+          index ===
+          array.findIndex((item: any) => {
             return item.name === sort.name;
           })
         );
@@ -180,16 +186,12 @@ export class PingChildComponent {
       }
     });
     this.PingsChild = pingChild;
-    console.log(pingChild,"hello ping");
-    
   }
   delete(id: any) {
-    this.http
-      .loaderGet(`pings-delete/${id}`, true)
-      .subscribe((res: any) => {
-        this.helper.setPingsChild();
-          this.getPingsAndModes();
-      });
+    this.http.loaderGet(`pings-delete/${id}`, true).subscribe((res: any) => {
+      this.helper.setPingsChild();
+      this.getPingsAndModes();
+    });
   }
   checkPingCatrgoryName(array: any[]): string[] {
     const pinCategoryNames: string[] = [];
@@ -198,12 +200,12 @@ export class PingChildComponent {
     }
     for (const id of array) {
       const ping = this.Pings.find((m: any) => m.id == id);
-  
+
       if (ping) {
         if (pinCategoryNames.length < 1) {
           pinCategoryNames.push(ping.name);
         } else if (pinCategoryNames.length == 1) {
-          pinCategoryNames.push("...");
+          pinCategoryNames.push('...');
         } else {
           return pinCategoryNames;
         }
@@ -218,17 +220,30 @@ export class PingChildComponent {
     }
     for (const id of array) {
       const mode = this.modes.find((m: any) => m.id == id);
-  
+
       if (mode) {
         if (modeNames.length < 1) {
           modeNames.push(mode.name);
         } else if (modeNames.length == 1) {
-          modeNames.push("...");
+          modeNames.push('...');
         } else {
           return modeNames;
         }
       }
     }
     return modeNames;
+  }
+  checkForMode(events: any) {
+    let selectedModes: any = [];
+    events?.map((event: any) => {
+      this.modes?.map((mode: any) => {
+        event?.modes?.map((eventMode: any) => {
+          if (eventMode == mode?.id) {
+            selectedModes.push(mode);
+          }
+        });
+      });
+    });
+    this.pingModes = selectedModes;
   }
 }
