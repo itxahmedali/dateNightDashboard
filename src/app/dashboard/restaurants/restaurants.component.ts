@@ -125,6 +125,7 @@ export default class RestaurantsComponent {
       this.restuarantForm.patchValue({
         lat: this.currentLat,
         lng: this.currentLng,
+        website:'https://',
         location: JSON.parse(formattedAddress),
       });
     }

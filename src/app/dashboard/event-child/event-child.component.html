@@ -80,7 +80,7 @@
   <ng-template #addChild let-modal>
     <div class="modal-body checkoutModal completed">
       <button class="btn-close" id="checkoutClose" aria-label="Close" (click)="proceed();"></button>
-      <h5 class="modal-title">{{state ? 'Edit Mode' : 'Add Mode'}}</h5>
+      <h5 class="modal-title">{{state ? 'Edit Event Details' : 'Add Event Details'}}</h5>
       <form [formGroup]="eventChildForm" class="form">
         <div class="row mt-4">
           <div class="col-lg-6 mt-3">
