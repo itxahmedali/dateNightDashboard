@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { tap } from 'rxjs';
 import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from 'src/app/services/http.service';
-import { DateMode, Pings, PingsChild } from 'src/classes';
+import { DateMode, Pings } from 'src/classes';
 
 @Component({
   selector: 'app-ping-child',
@@ -18,6 +19,7 @@ export class PingChildComponent {
   modes!: any;
   pingModes!: any;
   Pings!: any;
+  public Editor:any = ClassicEditor;
   public duePage!: any;
   public total!: any;
   public searchInput!: any;

@@ -713,3 +713,6 @@ input[type="number"] {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.ck.ck-editor__main>.ck-editor__editable{
+  min-height: 150px;
+}

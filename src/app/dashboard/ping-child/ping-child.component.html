@@ -138,7 +138,7 @@
               </div>
             </div>
             <div class="col-lg-12 mt-3">
-              <textarea rows="6" formControlName="description" type="text" placeholder="Description" class="text-light w-100"></textarea>
+              <ckeditor [editor]="Editor" formControlName="description"></ckeditor>
               <div
                 *ngIf="pingForm.controls.description.invalid && (pingForm.controls.description.dirty || pingForm.controls.description.touched)">
                 <small class="text-danger">Description is required</small>

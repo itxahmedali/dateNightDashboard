@@ -1,20 +1,20 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { HelperService } from 'src/app/services/helper.service';
-import { Faq } from 'src/classes';
-import { HttpService } from 'src/app/services/http.service';
-import { tap } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { tap } from 'rxjs';
+import { HelperService } from 'src/app/services/helper.service';
+import { HttpService } from 'src/app/services/http.service';
+import { Faq } from 'src/classes';
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',
   styleUrls: ['./faq.component.scss'],
 })
 export class FaqComponent {
-  public Editor = ClassicEditor;
+  public Editor:any = ClassicEditor;
   constructor(
     private fb: FormBuilder,
     private modalService: NgbModal,
@@ -64,8 +64,6 @@ export class FaqComponent {
     this.state = false;
   }
   save(modal: boolean) {
-    console.log(this.state);
-
     if (!this.state) {
       this.faqForm.patchValue({
         ...this.faqForm.value,
